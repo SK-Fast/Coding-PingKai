@@ -1,0 +1,30 @@
+$theme-colors: (
+    "primary": #FF7733,
+    "secondary": #CC8866,
+    "warning": #F2AA18,
+    "success": #26BF59,
+    "link": #ED6012,
+    "danger": #F23051
+);
+
+$white-colors: (
+    "light-100": #FFFFFF,
+    "light-200": #F3F3F3,
+    "light-300": #EDEDED,
+    "light-400": #DFDFDF,
+    "light-500": #CECECE,
+    "light-600": #C0C0C0,
+    "light-700": #B3B3B3
+);
+
+$font-sizes: (
+  1: 50.83px,
+  2: 41.06px,
+  3: 33.25px,
+  4: 27px,
+  5: 18px,
+  6: 18px
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $white-colors);
