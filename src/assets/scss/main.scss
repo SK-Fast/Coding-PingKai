@@ -1,0 +1,14 @@
+@use "sass:color";
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+@import "@/assets/scss/themes/light.scss";
+
+@import "node_modules/bootstrap/scss/maps";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/root";
+
+.btn {
+    box-shadow: inset 0px -1px 0px rgba(21, 21, 21, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.25);
+}
