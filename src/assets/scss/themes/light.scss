@@ -17,6 +17,11 @@ $white-colors: (
     "light-700": #B3B3B3
 );
 
+$text-colors: (
+    "text": #FFFFFF,
+    "text-invert": #000000,
+);
+
 $font-sizes: (
   1: 50.83px,
   2: 41.06px,
@@ -26,5 +31,6 @@ $font-sizes: (
   6: 18px
 );
 
-// Merge the maps
-//$theme-colors: map-merge($theme-colors, $white-colors);
+$btn-link-color: map.get($text-colors, "text");;
+
+$theme-colors: map-merge($theme-colors, $white-colors);
