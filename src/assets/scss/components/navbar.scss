@@ -1,0 +1,28 @@
+.navbar .avatar-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.avatar-status {
+    width: 12px;
+    height: 12px;
+
+    background-color: map-get($map: $theme-colors, $key: "success");
+    border-radius: 12px;
+    
+    outline: 3px solid map-get($map: $white-colors, $key: "light-300");
+
+    position: relative;
+    left: 2px;
+}
