@@ -6,6 +6,7 @@
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 @import "./components/navbar.scss";
+@import "./components/modal.scss";
 
 html, body {
     font-family: 'Bai Jamjuree', sans-serif;
@@ -20,4 +21,40 @@ html, body {
     background-repeat: no-repeat;
     background-position: center;
     border-radius:50%;
+}
+
+.text-subtext {
+    color: rgba($color: #000000, $alpha: 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 14.8px;
+}
+
+.btn-with-left {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.button-left {
+    background-color: map-get($map: $white-colors, $key: "light-400");
+    border-top-left-radius: var(--bs-btn-border-radius);
+    border-bottom-left-radius: var(--bs-btn-border-radius);
+    padding: 10px;
+    margin-right: 10px;
+
+    box-shadow: inset 0px -1px 0px rgba(21, 21, 21, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.25);
+}
+
+.button-left::after {
+    content: " ";
+    position: absolute;
+    width: 7px;
+    height: 12px;
+    background-image: url(@/assets/ButtonArrow.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: red;
 }
