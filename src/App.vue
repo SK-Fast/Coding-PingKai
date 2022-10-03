@@ -6,6 +6,8 @@
       <router-link to="/lesson">Lesson</router-link>
        |
       <router-link to="/World1">World1</router-link>
+      |
+      <router-link to="/settings">settings</router-link>
     </nav><br>
     <router-view></router-view>
   </div>

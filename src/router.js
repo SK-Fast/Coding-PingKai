@@ -1,7 +1,8 @@
 import LandingPage from '@/pages/index.vue'
 import LessonPage from '@/pages/lesson-select/index.vue'
 import World1    from '@/pages/lesson-select/world1.vue'
-
+import settings from '@/pages/settings/index.vue'
+import rick_roll from '@/pages/settings/rick_roll.vue'
 export default [
     {
         path: '/',
@@ -15,4 +16,13 @@ export default [
         path: '/world1',
         component: World1
     },
+    {
+        path: '/settings',
+        component: settings
+    },
+    {
+        path: '/rick_roll',
+        component: rick_roll
+    },
+
 ]
