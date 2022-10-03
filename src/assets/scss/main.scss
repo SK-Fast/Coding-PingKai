@@ -2,9 +2,22 @@
 @use "sass:map";
 
 @import "@/assets/scss/themes/light.scss";
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "./components/navbar.scss";
+
+html, body {
+    font-family: 'Bai Jamjuree', sans-serif;
+}
 
 .btn {
     box-shadow: inset 0px -1px 0px rgba(21, 21, 21, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.25);
+}
+
+.avatar {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:50%;
 }
