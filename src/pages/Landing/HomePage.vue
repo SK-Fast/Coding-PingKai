@@ -17,13 +17,13 @@
     background: rgb(190,33,33);
     background: linear-gradient(0deg, rgba(190,33,33,1) 0%, rgba(211,84,37,1) 33%, rgba(253,187,45,1) 100%);
     width: 100%;
-    height: auto;
+
 }
 .cat {
     display: flex;
     justify-content: space-evenly;
-    background: rgb(19,255,0);
-    background: linear-gradient(90deg, rgba(19,255,0,1) 0%, rgba(0,246,255,1) 49%);
+    background: rgb(190,33,33);
+    background: linear-gradient(0deg, rgba(190,33,33,1) 0%, rgba(211,84,37,1) 33%, rgba(253,187,45,1) 100%);
     width: 100%;
     height: auto;
 }
