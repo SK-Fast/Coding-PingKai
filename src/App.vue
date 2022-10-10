@@ -13,6 +13,8 @@
       <router-link to="/World1">World1</router-link>
       |
       <router-link to="/settings">settings</router-link>
+      |
+      <router-link to="/exit">exit</router-link>
     </nav><br>
     <router-view></router-view>
   </div>
