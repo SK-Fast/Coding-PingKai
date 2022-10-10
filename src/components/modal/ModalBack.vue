@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade show d-block">
+    <div class="modal">
         <slot />
     </div>
 </template>

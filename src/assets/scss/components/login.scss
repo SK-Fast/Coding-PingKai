@@ -1,0 +1,11 @@
+.login-header {
+    background-image: url('@/assets/login_chick.png');
+    width: calc(100% - 32px);
+    height: 140px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    position: absolute;
+    bottom: 100%;
+}

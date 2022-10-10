@@ -8,6 +8,7 @@ export default defineConfig({
     alias: {
       '@': '/src',
       'node_modules': '/node_modules',
+      'libs': '/src/libs',
     }
   }
 })
