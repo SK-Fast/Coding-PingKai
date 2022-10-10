@@ -1,6 +1,22 @@
+<script setup>
+    import LoginModal from "@/components/LoginModal.vue"
+    import { ref } from "vue";
+
+    const loginModal = ref(null)
+
+    const openLogin = () => {
+        console.log("login entry")
+
+        LoginModal.openL()
+    }
+</script>
+
 <template>
     <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm">
         <div class="container-fluid">
+
+            <LoginModal ref="loginModal" />
+
             <a class="navbar-brand me-1"><img src="@/assets/logo/Logo_Text.png" height="40"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -11,6 +27,9 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <router-link to="/" class="nav-link active">หน้าหลัก</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <a @click="openLogin" class="nav-link active">ลงชื่อเข้าใช้</a>
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">

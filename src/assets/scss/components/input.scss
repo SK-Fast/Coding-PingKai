@@ -1,0 +1,10 @@
+@import "../mixins.scss";
+
+.form-control {
+
+    background-color: map-get($map: $white-colors, $key: "light-400");
+
+    @include CardBaseInner;
+
+    border-radius: $btn-border-radius;
+}

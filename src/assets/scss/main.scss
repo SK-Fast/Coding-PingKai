@@ -6,13 +6,21 @@
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 @import "./components/navbar.scss";
+@import "./components/modal.scss";
+@import "./components/login.scss";
+@import "./components/input.scss";
+@import "./mixins.scss";
 
 html, body {
     font-family: 'Bai Jamjuree', sans-serif;
+    font-weight: 500;
 }
 
+$btn-border-radius: 10px;
+
 .btn {
-    box-shadow: inset 0px -1px 0px rgba(21, 21, 21, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.25);
+    @include CardBaseShadow;
+    border: none;
 }
 
 .avatar {
@@ -20,4 +28,87 @@ html, body {
     background-repeat: no-repeat;
     background-position: center;
     border-radius:50%;
+}
+
+.text-subtext {
+    color: rgba($color: #000000, $alpha: 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 14.8px;
+}
+
+.btn-with-left {
+    @include CardBaseShadow;
+
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    transition-property: transform, box-shadow;
+    transition-duration: 0.6s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-with-left img {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.button-left {
+    @include CardBase;
+
+    background-color: map-get($map: $white-colors, $key: "light-400");
+    border-top-left-radius: $btn-border-radius;
+    border-bottom-left-radius: $btn-border-radius;
+    padding: 10px;
+    margin-right: 15px;
+
+    padding-right: 0px;
+}
+
+.button-left::after {
+    content: "a";
+    position: relative;
+    width: 7px;
+    height: 12px;
+    left: 8px;
+    color: transparent;
+    background-image: url(@/assets/ButtonArrow.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+}
+
+.btn-with-left:hover {
+    transform: translateY(-2px);
+    @include CardBaseShadow_Hover;
+}
+
+.btn-with-left:hover img {
+    transform: rotate(-15deg);
+}
+
+.btn-with-left:active img {
+    transform: rotate(-20deg);
+}
+
+.btn-with-left:active {
+    transform: translateY(1px);
+    filter: brightness(90%);
+}
+
+.text-subtext {
+    font-weight: 500;
+}
+
+hr {
+    border-top: 2px solid map-get($map: $white-colors, $key: "light-500");
+}
+
+.btn-primary {
+    color: white;
 }
