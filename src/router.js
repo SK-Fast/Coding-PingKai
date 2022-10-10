@@ -4,6 +4,8 @@ import World1    from '@/pages/lesson-select/world1.vue'
 import HomePage from '@/pages/Landing/HomePage.vue'
 import settings from '@/pages/settings/index.vue'
 import rick_roll from '@/pages/settings/rick_roll.vue'
+import profile from '@/pages/settings/profile.vue'
+import password from '@/pages/settings/password.vue'
 
 export default [
     {
@@ -29,5 +31,13 @@ export default [
     {
         path: '/rick_roll',
         component: rick_roll
+    },
+    {
+        path: '/profile',
+        component: profile
+    },
+    {
+        path: '/password',
+        component: password
     },
 ]

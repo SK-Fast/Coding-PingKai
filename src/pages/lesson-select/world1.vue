@@ -25,6 +25,7 @@ row-gap: 50px;
 display: flex;
 justify-content: center;
 width: 140px;
+height: 130px;
 align-items: center;
 background-image: url("@/assets/Blue.png");
 background-repeat: no-repeat;

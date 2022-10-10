@@ -15,6 +15,10 @@
       <router-link to="/settings">settings</router-link>
       |
       <router-link to="/HomePage">HomePage</router-link>
+      |
+      <routerLink to="/profile">profile</routerLink>
+      |
+      <routerLink to="/password">password</routerLink>
     </nav><br>
     <router-view></router-view>
   </div>
