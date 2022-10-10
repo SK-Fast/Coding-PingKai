@@ -19,6 +19,8 @@
       <routerLink to="/profile">profile</routerLink>
       |
       <routerLink to="/password">password</routerLink>
+      |
+      <routerLink to="/exit">exit</routerLink>
     </nav><br>
     <router-view></router-view>
   </div>

@@ -7,6 +7,7 @@ import rick_roll from '@/pages/settings/rick_roll.vue'
 import exit from '@/pages/exit/exit.vue'
 import profile from '@/pages/settings/profile.vue'
 import password from '@/pages/settings/password.vue'
+import exits from '@/pages/exit/exit.vue'
 
 export default [
     {
@@ -46,5 +47,8 @@ export default [
         path: '/password',
         component: password
     },
-
+    {
+        path: '/exit',
+        component: exit
+    },
 ]
