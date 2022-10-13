@@ -21,6 +21,7 @@ export default {
         </div>
         <h3 class="text-subtext">Social Media Login</h3>
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" image="google.png" />
+        <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" image="Face.png" />
         <hr />
         <h3 class="text-subtext">Email Login</h3>
         <input class="w-100 form-control" placeholder="Email Address" />
