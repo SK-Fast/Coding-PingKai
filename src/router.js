@@ -8,6 +8,7 @@ import exit from '@/pages/exit/exit.vue'
 import profile from '@/pages/settings/profile.vue'
 import password from '@/pages/settings/password.vue'
 import exits from '@/pages/exit/exit.vue'
+import Pog from '@/pages/settings/Pog.vue'
 
 export default [
     {
@@ -50,5 +51,9 @@ export default [
     {
         path: '/exit',
         component: exit
+    },
+    {
+        path: '/Pog',
+        component: Pog
     },
 ]

@@ -7,7 +7,9 @@
     <button class="con" @click="() =>this.$router.push('/password')">
        รหัสผ่าน
     </button>
-    <button class="con" @click="">การตั้งค่าแอป</button>
+    <button class="con" @click="() =>this.$router.push('/Pog')">
+        การตั้งค่า
+    </button>
     <button class="com" @click="">ลงชื่อออก</button>
 </div> 
 </template>

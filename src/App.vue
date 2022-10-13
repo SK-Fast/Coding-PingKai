@@ -21,6 +21,8 @@
       <routerLink to="/password">password</routerLink>
       |
       <routerLink to="/exit">exit</routerLink>
+      |
+      <RouterLink to="Pog">Pog</RouterLink>
     </nav><br>
     <router-view></router-view>
   </div>
