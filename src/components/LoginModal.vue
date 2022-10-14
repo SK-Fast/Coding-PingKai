@@ -7,8 +7,13 @@ import { ref } from "vue";
 </script>  
 
 <script>
+const emailAddress = ref(null)
+
 export default {
-    openL: () => { Modal.methods.openModal() }
+    openL: () => {
+        Modal.methods.openModal()
+        emailAddress.value.focus()
+    }
 }
 </script>
 
@@ -24,7 +29,7 @@ export default {
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" image="Face.png" />
         <hr />
         <h3 class="text-subtext">Email Login</h3>
-        <input class="w-100 form-control" placeholder="Email Address" />
+        <input class="w-100 form-control" ref="emailAddress" placeholder="Email Address" />
         <button class="btn btn-primary w-100 mt-2">Continue</button>
     </Modal>
 </template>

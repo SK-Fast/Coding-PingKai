@@ -29,7 +29,7 @@
                         <router-link to="/" class="nav-link active">หน้าหลัก</router-link>
                     </li>
                     <li class="nav-item">
-                        <a @click="openLogin" class="nav-link active">ลงชื่อเข้าใช้</a>
+                        <a href="#" @click="openLogin" class="nav-link">ลงชื่อเข้าใช้</a>
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
