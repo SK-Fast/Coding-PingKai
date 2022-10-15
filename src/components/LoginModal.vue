@@ -7,8 +7,13 @@ import { ref } from "vue";
 </script>  
 
 <script>
+const emailAddress = ref(null)
+
 export default {
-    openL: () => { Modal.methods.openModal() }
+    openL: () => {
+        Modal.methods.openModal()
+        emailAddress.value.focus()
+    }
 }
 </script>
 
@@ -25,8 +30,6 @@ export default {
         <hr />
         <h3 class="text-subtext">Email Login</h3>
         <input class="w-100 form-control" placeholder="Email Address" />
-        <h3 class="text-subtext">Phone Login</h3>
-        <input class="w-100 form-control" placeholder="Phone Numner" />
         <button class="btn btn-primary w-100 mt-2">Continue</button>
     </Modal>
 </template>
