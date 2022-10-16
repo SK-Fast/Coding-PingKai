@@ -7,10 +7,12 @@
     "dev": "vite",
     "emu": "firebase emulators:start",
     "build": "vite build",
+    "both": "node ./development/both.js",
     "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap": "^5.2.1",
+    "chalk": "^5.1.2",
     "feather-icons": "^4.29.0",
     "firebase": "^9.12.1",
     "path": "^0.12.7",
