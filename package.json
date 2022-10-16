@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "emu": "firebase emulators:start",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap": "^5.2.1",
     "feather-icons": "^4.29.0",
+    "firebase": "^9.12.1",
     "path": "^0.12.7",
     "vue": "^3.2.37",
     "vue-feather": "^2.0.0",
