@@ -1,13 +1,27 @@
 <script setup>
     import LoginModal from "@/components/LoginModal.vue"
     import { ref } from "vue";
+    import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
     const loginModal = ref(null)
+    const user = ref(null)
 
     const openLogin = () => {
         console.log("login entry")
 
         LoginModal.openL()
+    }
+
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (newUser) => {
+        console.log(newUser)
+        user.value = newUser
+    });
+
+    const requestLogout = () => {
+        // To be implumented: confirm logout modal
+        signOut(auth)
     }
 </script>
 
@@ -28,17 +42,29 @@
                     <li class="nav-item">
                         <router-link to="/" class="nav-link active">หน้าหลัก</router-link>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" @click="openLogin" class="nav-link">ลงชื่อเข้าใช้</a>
-                    </li>
                 </ul>
-                <form class="d-flex align-items-center">
-                    <vue-feather type="save" stroke="#26BF59" />
+                <form>
+                    <div class="d-flex align-items-center" v-if="user !== null">
+                        <vue-feather type="save" stroke="#26BF59" />
 
-                    <div class="avatar-container img-rounded ms-1">
-                        <div class="avatar img-rounded" style="background-image: url(placeholder-avatar.jpeg)">
-                            <div class="avatar-status" />
+                        <div class="dropdown">
+                            <button class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="avatar-container img-rounded ms-1">
+                                    <div class="avatar img-rounded" style="background-image: url(placeholder-avatar.jpeg)">
+                                    <div class="avatar-status" />
+                                </div>
+                            </div>
+                        </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
+                                <li><a class="dropdown-item" href="#">การตั้งค่า</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" @click="requestLogout" href="#">ลงชื่อออก</a></li>
+                            </ul>
                         </div>
+                    </div>
+                    <div class="d-flex align-items-center" v-else>
+                        <a href="#" @click="openLogin" class="btn btn-primary">ลงชื่อเข้าใช้</a>
                     </div>
                 </form>
             </div>

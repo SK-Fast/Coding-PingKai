@@ -18,7 +18,7 @@ html, body {
 
 $btn-border-radius: 10px;
 
-.btn {
+.btn:not(.btn-transparent) {
     @include CardBaseShadow;
     border: none;
 }
@@ -111,4 +111,8 @@ hr {
 
 .btn-primary {
     color: white;
+}
+
+.dropdown-menu {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
 }

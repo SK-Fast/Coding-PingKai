@@ -1,9 +1,25 @@
 <script setup>
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
-import { ref } from "vue";
+    import { ref } from "vue";
 
     const modalBase = ref(null)
+
+    const googleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+        const auth = getAuth()
+
+        const result = await signInWithPopup(auth, provider).catch((error) => {console.log(error)})
+
+        console.log(result)
+
+        if (result['user']) {
+            Modal.methods.closeModal()
+        }
+    }
 </script>  
 
 <script>
@@ -13,7 +29,10 @@ export default {
     openL: () => {
         Modal.methods.openModal()
         emailAddress.value.focus()
-    }
+    },
+    closeL: () => {
+        Modal.methods.closeModal()
+    },
 }
 </script>
 
@@ -25,11 +44,11 @@ export default {
             <p class="text-muted">กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่</p>
         </div>
         <h3 class="text-subtext">Social Media Login</h3>
-        <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" image="google.png" />
+        <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="googleLogin" image="google.png" />
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" image="Face.png" />
         <hr />
         <h3 class="text-subtext">Email Login</h3>
-        <input class="w-100 form-control" placeholder="Email Address" />
+        <input class="w-100 form-control" placeholder="Email Address" ref="emailAddress" />
         <h3 class="text-subtext">Phone Login</h3>
         <input class="w-100 form-control" placeholder="Phone number" />
         <button class="btn btn-primary w-100 mt-2">Continue</button>
