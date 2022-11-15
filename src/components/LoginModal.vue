@@ -49,7 +49,7 @@ export default {
         <hr />
         <h3 class="text-subtext">Email Login</h3>
         <input class="w-100 form-control" placeholder="Email Address" ref="emailAddress" />
-        <h3 class="text-subtext">Phone Login</h3>
+        <h3 class="text-subtext mt-2">Phone Login</h3>
         <input class="w-100 form-control" placeholder="Phone number" />
         <button class="btn btn-primary w-100 mt-2">Continue</button>
     </Modal>
