@@ -6,6 +6,7 @@ $theme-colors: (
     "link": #ED6012,
     "danger": #F23051,
     "transparent": #ffffff00,
+    "mid-transparent": rgba(0, 0, 0, 10%),
 );
 
 $white-colors: (
@@ -35,3 +36,7 @@ $font-sizes: (
 $btn-link-color: map.get($text-colors, "text");
 
 $theme-colors: map-merge($theme-colors, $white-colors);
+
+.btn-mid-transparent {
+    color: map.get($text-colors, "text");
+}
