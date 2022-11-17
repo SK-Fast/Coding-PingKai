@@ -18,6 +18,7 @@
 
     pointer-events: none;
     animation: modalBackClose 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-fill-mode: forwards;
 }
 
 .modal-opened .modal-content {
@@ -25,7 +26,10 @@
 }
 
 .modal-closed .modal-content {
+    pointer-events: none;
+
     animation: modalClose 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-fill-mode: forwards;
 }
 
 @keyframes modalOpen {
@@ -40,13 +44,16 @@
 }
 
 @keyframes modalClose {
-    from { 
+    0% { 
         transform: scale(100%);
         opacity: 1;
     }
-    to { 
+    99% { 
         transform: scale(80%);
         opacity: 0;
+    }
+    100% {
+        display: none;
     }
 }
 
