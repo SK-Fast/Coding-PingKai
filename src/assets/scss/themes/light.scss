@@ -36,7 +36,3 @@ $font-sizes: (
 $btn-link-color: map.get($text-colors, "text");
 
 $theme-colors: map-merge($theme-colors, $white-colors);
-
-.btn-mid-transparent {
-    color: map.get($text-colors, "text");
-}

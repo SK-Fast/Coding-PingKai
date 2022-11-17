@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center" v-else>
-                        <a href="#" @click="openLogin" class="btn btn-primary">ลงชื่อเข้าใช้</a>
+                        <a href="#" @click="openLogin" class="btn btn-primary mb-md-0 mb-2">ลงชื่อเข้าใช้</a>
                     </div>
                 </form>
             </div>
