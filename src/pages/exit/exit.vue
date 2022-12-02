@@ -1,10 +1,18 @@
+<script>
+ const I = () => {
+ console.log(`Yes`)
+ }
+ const N = () => {
+ console.log(`No`)
+ }
+</script>
 <template>
         <div class="class">
                 <img src="@/assets/exit.png" alt="exit" />
         </div>
         <div class="reflextion">
-        <img src="@/assets/yes.png" alt="yes" />
-        <img src="@/assets/no.png" alt="no" />
+        <img @click="I" src="@/assets/yes.png" alt="yes" />
+        <img @click="N" src="@/assets/no.png" alt="no" />
         </div>
 </template>
 <style scoped>
