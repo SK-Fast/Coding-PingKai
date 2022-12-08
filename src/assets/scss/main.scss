@@ -18,9 +18,20 @@ html, body {
 
 $btn-border-radius: 10px;
 
-.btn:not(.btn-transparent) {
-    @include CardBaseShadow;
+.btn:not(.btn-transparent):not(.btn-mid-transparent) {
+    @include CardBase;
     border: none;
+}
+
+.btn-mid-transparent {
+    @include CardBase;
+    border: none;
+
+    color: black;
+}
+
+.btn-primary:focus, .btn-primary:hover {
+    color: white;
 }
 
 .avatar {

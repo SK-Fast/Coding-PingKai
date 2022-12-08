@@ -7,7 +7,7 @@ box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15), inset 0px -1px 0px rgba(21, 21, 21,
 }
 
 @mixin CardBase {
-    box-shadow: inset 0px -1px 0px rgba(21, 21, 21, 0.25);
+    box-shadow: inset 0px -2px 0px rgba(21, 21, 21, 0.25);
 }
 
 @mixin CardBaseShadow_Hover {
