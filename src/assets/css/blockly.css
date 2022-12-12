@@ -1,0 +1,25 @@
+.blocklyBlockDragSurface {
+    animation: dragSurfaceStart 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation-fill-mode: forwards;
+}
+
+.geras-renderer.classic-theme .blocklySelected>.blocklyPath {
+    stroke: var(--bs-warning);
+}
+
+.blocklyFlyoutBackground {
+    fill: var(--bs-light-200);
+}
+
+.blocklyText {
+    font-family: 'Bai Jamjuree', sans-serif !important;
+}
+
+@keyframes dragSurfaceStart {
+    from {
+        filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.25));
+    }
+    to {
+        filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.25));
+    }
+}

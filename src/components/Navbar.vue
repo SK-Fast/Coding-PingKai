@@ -1,4 +1,5 @@
 <script setup>
+/*
     import LoginModal from "@/components/LoginModal.vue"
     import { ref } from "vue";
     import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -23,6 +24,7 @@
         // To be implumented: confirm logout modal
         signOut(auth)
     }
+    */
 </script>
 
 <template>
