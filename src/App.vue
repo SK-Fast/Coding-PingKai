@@ -23,6 +23,8 @@
       <routerLink to="/exit">exit</routerLink>
       |
       <RouterLink to="Pog">Pog</RouterLink>
+      |
+      <RouterLink to="/workspace">workspace</RouterLink>
     </nav><br>
 
     <router-view v-slot="{ Component }">

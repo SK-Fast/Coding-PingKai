@@ -9,6 +9,7 @@ import profile from '@/pages/settings/profile.vue'
 import password from '@/pages/settings/password.vue'
 import exits from '@/pages/exit/exit.vue'
 import Pog from '@/pages/settings/Pog.vue'
+import IDE from '@/pages/ide/index.vue'
 
 export default [
     {
@@ -51,6 +52,10 @@ export default [
     {
         path: '/exit',
         component: exit
+    },
+    {
+        path: '/workspace',
+        component: IDE
     },
     {
         path: '/Pog',
