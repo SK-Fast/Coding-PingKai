@@ -15,6 +15,10 @@
 .injectionDiv {
     height: 100%;
 }
+
+.blocklyFlyout {
+    border: 1px var(--bs-light-400);
+}
 </style>
 
 <script setup>
@@ -37,6 +41,16 @@ onMounted(() => {
     console.log(options)
 
     console.log(props.options)
+
+    Blockly.defineBlocksWithJsonArray([{
+  "type": "test_block",
+  "message0": 'test block',
+  "nextStatement": "Action",
+  "previousStatement": "Action",
+  "colour": 160,
+  "tooltip": "Test Tooltip.",
+  "helpUrl": "devpixels.xyz?d=the_reward"
+}]);
 
     Blockly.inject(blocklyDiv.value, props.options)
 
