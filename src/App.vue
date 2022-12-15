@@ -25,6 +25,8 @@
       <RouterLink to="Pog">Pog</RouterLink>
       |
       <RouterLink to="/workspace">workspace</RouterLink>
+      |
+      <RouterLink to="/DASHBOARD">dashboard</RouterLink>
     </nav><br>
 
     <router-view v-slot="{ Component }">
