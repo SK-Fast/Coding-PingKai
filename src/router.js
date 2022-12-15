@@ -10,6 +10,7 @@ import password from '@/pages/settings/password.vue'
 import exits from '@/pages/exit/exit.vue'
 import Pog from '@/pages/settings/Pog.vue'
 import IDE from '@/pages/ide/index.vue'
+import DASHBOARD from '@/pages/dashboard/index.vue'
 
 export default [
     {
@@ -60,5 +61,9 @@ export default [
     {
         path: '/Pog',
         component: Pog
+    },
+    {
+       path: '/DASHBOARD',
+       component: DASHBOARD
     },
 ]
