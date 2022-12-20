@@ -28,6 +28,10 @@
     stroke-width: 2px;
 }
 
+.blocklyToolboxCategory .blocklyTreeRow {
+    cursor: pointer;
+}
+
 @keyframes dragSurfaceStart {
   
     to {

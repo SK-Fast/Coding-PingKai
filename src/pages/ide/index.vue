@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-row editor-container">
-            <BlockEditor :options="blocklyConfig">
+            <BlockEditor ref="bEditor" :options="blocklyConfig">
             </BlockEditor>
         </div>
     </div>
@@ -29,16 +29,12 @@
 import BlockEditor from './editors/block.vue'
 import { onMounted, ref } from 'vue'
 
-/*
-const blocksetStr = "test.js"
-
-const blockset = await import(blocksetStr)
-*/
-
 const toolbox = {
-    kind: "flyoutToolbox",
+    kind: "categoryToolbox",
     contents: []
 }
+
+const bEditor = ref(null)
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -56,8 +52,13 @@ const blocklyConfig = ref({
     trashcan: true
 })
 
-onMounted(() => {
-    console.log("moutin")
+onMounted(async () => {
+  const blockset = await import("@/blocksets/test.js")
+
+  blockset.init()
+  toolbox.contents = blockset.blocks
+
+  console.log("moutin")
 })
 
 </script>

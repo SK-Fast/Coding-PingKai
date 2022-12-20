@@ -33,9 +33,12 @@ const props = defineProps({
     }
 })
 
-const { options } = toRefs(props)
-
 onMounted(() => {
+   setTimeout(() => {
+    const { options } = toRefs(props)
+
+    console.log(options)
+
     console.log("block moutin")
 
     console.log(options)
@@ -43,16 +46,16 @@ onMounted(() => {
     console.log(props.options)
 
     Blockly.defineBlocksWithJsonArray([{
-  "type": "test_block",
-  "message0": 'test block',
-  "nextStatement": "Action",
-  "previousStatement": "Action",
-  "colour": 160,
-  "tooltip": "Test Tooltip.",
-  "helpUrl": "devpixels.xyz?d=the_reward"
-}]);
+    "type": "test_block",
+    "message0": 'test block',
+    "nextStatement": "Action",
+    "previousStatement": "Action",
+    "colour": 160,
+    "tooltip": "Test Tooltip.",
+    "helpUrl": "devpixels.xyz?d=the_reward"
+    }]);
 
     Blockly.inject(blocklyDiv.value, props.options)
-
+   }, 50);
 })
 </script>

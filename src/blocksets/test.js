@@ -1,15 +1,33 @@
+import Blockly from 'blockly';
+
 export const blocks = [
     {
-        "kind": "block",
-        "type": "controls_if"
+        "kind": "category",
+        "name": "Control",
+        "contents": [
+            {
+                "kind": "block",
+                "type": "controls_if"
+            },
+        ]
     },
     {
-        "kind": "block",
-        "type": "controls_whileUntil"
-    },
-    {
-        "kind": "block",
-        "type": "test_block"
+        "kind": "category",
+        "name": "Logic",
+        "contents": [
+            {
+                "kind": "block",
+                "type": "logic_compare"
+            },
+            {
+                "kind": "block",
+                "type": "logic_operation"
+            },
+            {
+                "kind": "block",
+                "type": "logic_boolean"
+            }
+        ]
     }
 ]
 
@@ -22,5 +40,5 @@ export const init = () => {
         "colour": 160,
         "tooltip": "Test Tooltip.",
         "helpUrl": "devpixels.xyz?d=the_reward"
-      }]);      
+    }]);
 }
