@@ -17,8 +17,9 @@
 </template>
 <style scoped>
 .class {
-       display: flex;
+       display: grid;
        justify-content: center;
+       column-gap: 30px;
 }
 .reflextion {
        display: flex;
