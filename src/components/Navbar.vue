@@ -52,7 +52,7 @@
                         <div class="dropdown">
                             <button class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded" style="background-image: url(placeholder-avatar.jpeg)">
+                                    <div class="avatar img-rounded" style="background-image: url(@/assets/placeholder-avatar.jpeg)">
                                     <div class="avatar-status" />
                                 </div>
                             </div>

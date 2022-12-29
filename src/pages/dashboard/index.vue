@@ -4,7 +4,7 @@
 <template>
     <div class="bg">
     <center>
-   <img class="cen"  src="Lq_mav.jpg" alt="WOlf">
+   <img class="cen"  src="@/assets/Lq_mav.jpg" alt="WOlf">
    <h2>USERNAME</h2>
     </center>
 </div>
