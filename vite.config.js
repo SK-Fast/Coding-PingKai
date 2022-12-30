@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue(), VitePWA({
     registerType: 'autoUpdate',
-    includeAssets: ['favicon.ico', 'logos/apple-touch-icon.png', 'logos/masked-icon.svg'],
+    includeAssets: ['favicon.ico', 'logos/apple-touch-icon.png', 'logos/masked-icon.svg', './rive/logout.riv'],
       manifest: {
         name: 'Coding Pingkai',
         short_name: 'codingpingkai',
