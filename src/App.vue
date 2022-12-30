@@ -26,7 +26,7 @@
       |
       <RouterLink to="/workspace">workspace</RouterLink>
       |
-      <RouterLink to="/DASHBOARD">dashboard</RouterLink>
+      <RouterLink to="/dashboard">dashboard</RouterLink>
     </nav><br>
 
     <router-view v-slot="{ Component }">

@@ -18,6 +18,10 @@ html, body {
     background-color: map-get($map: $white-colors, $key: "background");
 }
 
+.text-monospace {
+    font-family: 'Ubuntu Mono', monospace;
+}
+
 $btn-border-radius: 5px;
 
 .btn:not(.btn-transparent):not(.btn-mid-transparent) {
@@ -40,7 +44,7 @@ $btn-border-radius: 5px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius:50%;
+    border-radius: 50%;
 }
 
 .text-subtext {
@@ -135,4 +139,25 @@ hr {
 
 .dropdown-menu-end {
     right: 25%;
+}
+
+.card {
+    background-color: map-get($map: $white-colors, $key: "light-100");
+    border-radius: 10px;
+}
+
+.card:not(.btn-transparent) {
+    @include CardBaseShadow;
+}
+
+.btn-transparent {
+    border: none;
+}
+
+.progress {
+    height: 10px;
+}
+
+.progress-bar {
+    background-color: map-get($map: $theme-colors, $key: "primary");
 }
