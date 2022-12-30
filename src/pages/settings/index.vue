@@ -1,18 +1,21 @@
 <template>
-    <div class="container">
-        <div class="row col-2 col-md-3">
+    <div class="container d-flex">
+        <div class="d-flex flex-column col-md-3 me-2">
             <h2 class="ms-0 mb-2">การตั้งค่า</h2>   
-            <button class="btn btn-primary settings-btn" @click="() =>this.$router.push('/profile')">
+            <router-link class="btn btn-primary settings-btn" to="/settings">
                 ข้อมูลผู้ใช้
-            </button>
-            <button class="btn btn-mid-transparent settings-btn" @click="() =>this.$router.push('/password')">
+            </router-link>
+            <router-link class="btn btn-mid-transparent settings-btn" to="/settings/password">
                รหัสผ่าน
-            </button>
-            <button class="btn btn-mid-transparent settings-btn" @click="() =>this.$router.push('/Pog')">
+            </router-link>
+            <button class="btn btn-mid-transparent settings-btn">
                 การตั้งค่า
             </button>
 
-            <button class="btn btn-outline-danger settings-btn" @click="">ลงชื่อออก</button>
+            <button class="btn btn-outline-danger settings-btn">ลงชื่อออก</button>
+        </div>
+        <div class="flex-grow-1">
+            <router-view></router-view>
         </div>
     </div> 
 </template>

@@ -3,12 +3,13 @@ import World2 from '@/pages/lesson-select/world2.vue'
 import World1    from '@/pages/lesson-select/world1.vue'
 import HomePage from '@/pages/Landing/HomePage.vue'
 import settings from '@/pages/settings/index.vue'
+import settings_password from '@/pages/settings/password.vue'
+import settings_profile from '@/pages/settings/profile.vue'
+
 import rick_roll from '@/pages/settings/rick_roll.vue'
 import exit from '@/pages/exit/exit.vue'
 import profile from '@/pages/settings/profile.vue'
-import password from '@/pages/settings/password.vue'
 import exits from '@/pages/exit/exit.vue'
-import Pog from '@/pages/settings/Pog.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
 
@@ -31,7 +32,17 @@ export default [
     },
     {
         path: '/settings',
-        component: settings
+        component: settings,
+        children: [
+            {
+                path: '',
+              component: settings_profile,
+            },
+            {
+                path: 'password',
+              component: settings_password,
+            },
+          ],  
     },
     {
         path: '/rick_roll',
@@ -47,10 +58,6 @@ export default [
         component: profile
     },
     {
-        path: '/password',
-        component: password
-    },
-    {
         path: '/exit',
         component: exit
     },
@@ -59,11 +66,7 @@ export default [
         component: IDE
     },
     {
-        path: '/Pog',
-        component: Pog
-    },
-    {
        path: '/dashboard',
-       component: dashboard
+       component: dashboard,
     },
 ]
