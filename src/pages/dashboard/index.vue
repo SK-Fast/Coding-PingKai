@@ -68,7 +68,7 @@
 
                     <div class="d-flex">
                         <div class="card col-3 btn-transparent">
-                            <img src="@/assets/badges/the beginnings.png" class="img-fluid badge-img">
+                            <img src="@/assets/badges/the_beginnings.png" class="img-fluid badge-img">
                             
                             <div class="p-2 mt-1 text-center">
                                 <h5>จุดเริ่มต้น</h5>

@@ -17,5 +17,6 @@ const app = createApp(App)
 
 app.component(VueFeather.name, VueFeather);
 app.use(router)
+app.provide('router', router)
 
 app.mount('#app')
