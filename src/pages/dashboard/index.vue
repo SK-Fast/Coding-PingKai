@@ -20,7 +20,7 @@
             <div class="card col-md-6">
                 <div class="card-body">
                     <div class="d-flex">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 bg">
                             <p class="text-muted">ต่อจากครั้งที่แล้ว</p>
                             <h3>พื้นฐาน</h3>
                             <p class="m-0">พื้นฐานในการใช้ Coding PingKai</p>
@@ -100,5 +100,8 @@
 
 .badge-img {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.bg {
+    background: linear-gradient(90deg, rgba(255,255,255,1) 37%, rgba(0,0,0,1) 100%);
 }
 </style>
