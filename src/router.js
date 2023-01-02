@@ -5,8 +5,8 @@ import HomePage from '@/pages/Landing/HomePage.vue'
 import settings from '@/pages/settings/index.vue'
 import settings_password from '@/pages/settings/password.vue'
 import settings_profile from '@/pages/settings/profile.vue'
+import settings_dev from '@/pages/settings/dev.vue'
 
-import rick_roll from '@/pages/settings/rick_roll.vue'
 import exit from '@/pages/exit/exit.vue'
 import profile from '@/pages/settings/profile.vue'
 import exits from '@/pages/exit/exit.vue'
@@ -35,18 +35,18 @@ export default [
         component: settings,
         children: [
             {
-                path: '',
+                path: 'general',
               component: settings_profile,
             },
             {
                 path: 'password',
               component: settings_password,
             },
+            {
+                path: 'dev',
+              component: settings_dev,
+            },
           ],  
-    },
-    {
-        path: '/rick_roll',
-        component: rick_roll
     },
     {
 
