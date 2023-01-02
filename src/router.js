@@ -12,6 +12,8 @@ import profile from '@/pages/settings/profile.vue'
 import exits from '@/pages/exit/exit.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
+import Moreinfo1 from '@/pages/dashboard/Moreinfo1.vue'
+import Moreinfo2 from '@/pages/dashboard/Moreinfo2.vue'
 
 export default [
     {
@@ -68,5 +70,13 @@ export default [
     {
        path: '/dashboard',
        component: dashboard,
+    },
+    { 
+        path: '/Moreinfo1',
+        component: Moreinfo1,
+    },
+    { 
+        path: '/Moreinfo2',
+        component: Moreinfo2,
     },
 ]
