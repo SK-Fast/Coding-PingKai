@@ -9,7 +9,7 @@
                รหัสผ่าน
             </router-link>
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/dev">
-               สำหรับผู้ฟัฒนา
+               สำหรับผู้พัฒนา
             </router-link>
 
             <button class="btn btn-outline-danger settings-btn">ลงชื่อออก</button>
