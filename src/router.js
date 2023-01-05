@@ -14,6 +14,7 @@ import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
 import Moreinfo1 from '@/pages/dashboard/Moreinfo1.vue'
 import Moreinfo2 from '@/pages/dashboard/Moreinfo2.vue'
+import Lookprofile from '@/pages/settings/Lookprofile.vue'
 
 export default [
     {
@@ -78,5 +79,9 @@ export default [
     { 
         path: '/Moreinfo2',
         component: Moreinfo2,
+    },
+    {
+        path: '/Lookprofile',
+        component: Lookprofile,
     },
 ]
