@@ -1,8 +1,8 @@
 <template>
     <h2 class="mb-2">ข้อมูลผู้ใช้</h2>
     <div class="card">
-        <div class="card-body p-4 d-flex">
-            <div class="avatar-container img-rounded ms-1">
+        <div class="card-body p-4 d-flex flex-md-column">
+            <div class="avatar-container img-rounded me-md-2">
                 <div class="avatar img-rounded" :style="'background-image: url(\'' + (userImg) + '\')'">
                     <div class="avatar-status" />
                 </div>
@@ -43,7 +43,7 @@ onMounted(async () => {
 
     if (store.state.user) {
         console.log(store.state.user)
-        userImg.value = store.state.user.photoURL || "placeholder-avatar.jpeg"
+        userImg.value = store.state.user.photoURL || "/placeholder-avatar.jpeg"
     }
 
 })
@@ -53,5 +53,11 @@ onMounted(async () => {
 .avatar {
     width: 115px;
     height: 115px;
+}
+
+.avatar-status {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
 }
 </style>
