@@ -7,11 +7,13 @@
 }
 
 .avatar {
-    width: 35px;
-    height: 35px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+}
+
+.avatar.avatar-navbar {
+    width: 35px;
 }
 
 .avatar-status {

@@ -6,11 +6,7 @@ const modalBack = ref(null)
 
 onMounted(() => {
   console.log(modalBack.value)
-  modalBack.value.addEventListener("keydown", (event) => {
-    if (event.keyCode === 27) {
-      methods.closeModal()
-    }
-  });
+
 })
 
 </script>  

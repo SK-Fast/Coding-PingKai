@@ -7,7 +7,7 @@
                     <input class="form-control mb-2" placeholder="รหัสผ่านเก่า" />
                     <input class="form-control mb-2" placeholder="รหัสผ่านใหม่" />
                     <input class="form-control mb-1" placeholder="ยืนยันรหัสผ่านใหม่" />
-                    <button class="btn btn-primary col-md-4" type="submit">เปลี่ยนรหัสผ่าน</button>
+                    <button class="btn btn-primary col-md-3" type="submit">เปลี่ยนรหัสผ่าน</button>
                 </form>
             </div>
 
@@ -26,11 +26,20 @@
     </div>
 
 </template>  
-<style scoped>
-.con {
-    color: red;
-}
-.gg {
-    background-color: aqua;
-}
-</style>
+
+<script setup>
+import { inject, onMounted } from 'vue';
+
+const store = inject('store')
+
+onMounted(async () => {
+    const { getAuth, onAuthStateChanged, signOut } = await import("firebase/auth");
+
+    const auth = getAuth()
+
+    if (store.state.user) {
+        console.log(store.state.user)
+    }
+
+})
+</script>

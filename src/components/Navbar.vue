@@ -1,11 +1,12 @@
 <script setup>
-/*
     import LoginModal from "@/components/LoginModal.vue"
-    import { ref } from "vue";
+    import { inject, ref } from "vue";
     import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
     const loginModal = ref(null)
     const user = ref(null)
+
+    const store = inject('store')
 
     const openLogin = () => {
         console.log("login entry")
@@ -18,76 +19,13 @@
     onAuthStateChanged(auth, (newUser) => {
         console.log(newUser)
         user.value = newUser
+
+        store.state.user = newUser
     });
 
     const requestLogout = () => {
         // To be implumented: confirm logout modal
         signOut(auth)
-    }
-    */
-
-    import * as rive from "@rive-app/canvas";
-    import { onMounted, ref } from "vue";
-
-    const logout_icon = ref(null)
-    const usermenu_dropdown = ref(null)
-    const usermenu_list = ref(null)
-    let logoutRive;
-
-    onMounted(() => {
-        logoutRive = new rive.Rive({
-            src: "rive/logout.riv",
-            // Or the path to a local Rive asset
-            // src: './example.riv',
-            canvas: logout_icon.value,
-            autoplay: true
-        });
-
-        logoutRive.play("Timeline 1")
-    })
-    
-    let loggingout = false
-
-    const logoutHover = () => {
-        if (loggingout) { return }
-        logoutRive.stop("Timeline 1")
-        logoutRive.play("Hovered")
-    }
-
-    const userMenuClicked = () => {
-        if (loggingout) { return }
-        logoutRive.play("Timeline 1")
-
-        if (usermenu_list.value.classList.contains("show")) {
-            usermenu_list.value.classList.remove("show")
-            usermenu_dropdown.value.classList.remove("show")
-            usermenu_dropdown.value.setAttribute("aria-expanded", "false")
-            usermenu_list.value.setAttribute("data-bs-popper", "static")
-        } else {
-            usermenu_list.value.classList.add("show")
-            usermenu_dropdown.value.classList.add("show")
-            usermenu_dropdown.value.setAttribute("aria-expanded", "true")
-            usermenu_list.value.removeAttribute("data-bs-popper")
-        }
-    }
-
-    const logoutUnHover = () => {
-        if (loggingout) { return }
-        logoutRive.stop("Timeline 1")
-        logoutRive.play("UnHovered")
-    }
-
-    const logoutMDown = () => {
-        if (loggingout) { return }
-        logoutRive.stop("Timeline 1")
-        logoutRive.play("MouseHold")
-    }
-
-    const requestLogout = () => {
-        loggingout = true
-        usermenu_dropdown.value.click()
-        logoutRive.stop("Timeline 1")
-        logoutRive.play("MouseRelease")
     }
 </script>
 
@@ -114,18 +52,18 @@
                         <vue-feather type="save" stroke="#26BF59" />
 
                         <div class="dropdown">
-                            <button ref="usermenu_dropdown" @click="userMenuClicked" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
+                            <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded" style="background-image: url(@/assets/placeholder-avatar.jpeg)">
+                                    <div class="avatar img-rounded avatar-navbar" style="background-image: url(@/assets/placeholder-avatar.jpeg)">
                                     <div class="avatar-status" />
                                 </div>
                             </div>
                         </button>
-                            <ul ref="usermenu_list" class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
-                                <li><a class="dropdown-item" href="#">การตั้งค่า</a></li>
+                                <li><router-link class="dropdown-item" to="/settings/general">การตั้งค่า</router-link></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger d-flex align-items-center" @mouseenter="logoutHover" @mousedown="logoutMDown" @mouseleave="logoutUnHover" @click="requestLogout" href="#"><canvas ref="logout_icon" class="me-2" width="23" height="23"></canvas> ลงชื่อออก</a></li>
+                                <li><a class="dropdown-item text-danger d-flex align-items-center" @click="requestLogout" href="#">ลงชื่อออก</a></li>
                             </ul>
                         </div>
                     </div>

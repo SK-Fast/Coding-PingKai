@@ -35,7 +35,7 @@ $font-sizes: (
 );
 
 $btn-link-color: map.get($text-colors, "text");
-$dropdown-link-active-color: map.get($theme-colors, "primary");
-$dropdown-link-active-bg: #fff;
+$dropdown-link-active-bg: map.get($theme-colors, "primary");
+$dropdown-link-active-color: #fff;
 
 $theme-colors: map-merge($theme-colors, $white-colors);

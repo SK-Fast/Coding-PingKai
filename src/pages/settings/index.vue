@@ -1,5 +1,5 @@
 <template>
-    <div class="container d-flex flex-column flex-md-row">
+    <div class="container d-flex flex-column flex-md-row mt-5">
         <div class="d-flex flex-column col-md-3 me-2">
             <h2 class="ms-0 mb-2">การตั้งค่า</h2>   
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/general">
