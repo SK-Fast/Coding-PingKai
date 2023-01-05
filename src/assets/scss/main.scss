@@ -166,3 +166,15 @@ hr {
     @include InputShadowFocus;
     background-color: map-get($map: $white-colors, $key: "light-300");
 }
+
+.dev-links {
+    overflow-x: auto;
+}
+
+.btn {
+    transition: transform 0.25s;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
