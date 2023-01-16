@@ -41,7 +41,7 @@
                     <div class="d-flex">
                         <p class="text-muted">ด่านต่างๆ</p>
                         <div class="flex-grow-1"></div>
-                        <a class="float-end text-primary">ดูทั้งหมด</a>
+                        <a @click="() => this.$router.push("/Moreinfo1")" class="float-end text-primary">ดูทั้งหมด</a>
                     </div>
 
                     <div class="d-flex">
