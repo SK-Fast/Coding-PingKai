@@ -63,7 +63,7 @@
                     <div class="d-flex">
                         <p class="text-muted">รางวัลต่างๆ</p>
                         <div class="flex-grow-1"></div>
-                        <a class="float-end text-primary">ดูทั้งหมด</a>
+                        <router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>
                     </div>
 
                     <div class="d-flex">

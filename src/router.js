@@ -19,7 +19,7 @@ import Lookprofile from '@/pages/settings/Lookprofile.vue'
 export default [
     {
         path: '/',
-        component: LandingPage
+        component: HomePage
     },
     {
         path: '/World2',
@@ -30,12 +30,11 @@ export default [
         component: World1
     },
     {
-        path: '/HomePage',
-        component: HomePage
-    },
-    {
         path: '/settings',
         component: settings,
+        meta: {
+            needAuth: true
+        },
         children: [
             {
                 path: 'general',
@@ -69,7 +68,10 @@ export default [
         component: IDE
     },
     {
-       path: '/dashboard',
+        path: '/dashboard',
+        meta: {
+            needAuth: true
+        },
        component: dashboard,
     },
     { 

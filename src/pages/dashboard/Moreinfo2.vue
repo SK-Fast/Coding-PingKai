@@ -2,7 +2,7 @@
 
 </script>
 <template>
-<h1>About You</h1>
+<h1>You inventory</h1>
 </template>
 <style scoped>
 h1{

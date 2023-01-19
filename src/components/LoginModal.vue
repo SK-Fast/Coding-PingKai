@@ -28,7 +28,6 @@ const emailAddress = ref(null)
 export default {
     openL: () => {
         Modal.methods.openModal()
-        emailAddress.value.focus()
     },
     closeL: () => {
         Modal.methods.closeModal()
@@ -45,6 +44,7 @@ export default {
         </div>
         <h3 class="text-subtext">Social Media Login</h3>
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="googleLogin" image="google.png" />
+        <!--
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" image="Face.png" />
         <hr />
         <h3 class="text-subtext">Email Login</h3>
@@ -52,5 +52,6 @@ export default {
         <h3 class="text-subtext mt-2">Phone Login</h3>
         <input class="w-100 form-control" placeholder="Phone number" />
         <button class="btn btn-primary w-100 mt-2">Continue</button>
+        -->
     </Modal>
 </template>

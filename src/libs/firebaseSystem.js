@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, connectAuthEmulator } from 'firebase/auth'
+import { getAuth, connectAuthEmulator, signOut, onAuthStateChanged } from 'firebase/auth'
+import Swal from 'sweetalert2';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBCGQwkZ_enOsBbkbKjEExAPt9kcllfGLs",
@@ -20,4 +21,25 @@ export function initApp() {
     }
 
     return app
+}
+
+export async function promptLogout() {
+    const auth = getAuth()
+
+    const res = await Swal.fire({
+        title: 'ยืนยันการออกจากระบบ',
+        text: "คุณต้องการที่จะออกจากระบบหรือไม่?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#F23051',
+        cancelButtonColor: '#CC8866',
+        confirmButtonText: 'ออกจากระบบ',
+        cancelButtonText: 'ยกเลิก',
+    })
+
+    if (res.isConfirmed) {
+        signOut(auth)
+
+        window.location.reload()
+    }
 }

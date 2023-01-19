@@ -2,6 +2,7 @@
     import LoginModal from "@/components/LoginModal.vue"
     import { inject, ref } from "vue";
     import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+    import { promptLogout } from 'libs/firebaseSystem.js'
 
     const loginModal = ref(null)
     const user = ref(null)
@@ -63,7 +64,7 @@
                                 <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
                                 <li><router-link class="dropdown-item" to="/settings/general">การตั้งค่า</router-link></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger d-flex align-items-center" @click="requestLogout" href="#">ลงชื่อออก</a></li>
+                                <li><a class="dropdown-item text-danger d-flex align-items-center" @click="promptLogout()" href="#">ลงชื่อออก</a></li>
                             </ul>
                         </div>
                     </div>

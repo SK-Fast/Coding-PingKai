@@ -16,6 +16,11 @@ html, body {
     font-family: 'Bai Jamjuree', sans-serif;
     font-weight: 500;
     background-color: map-get($map: $white-colors, $key: "background");
+    overflow-x: hidden;
+}
+
+html {
+    overflow-y: scroll;
 }
 
 .text-monospace {
@@ -146,8 +151,13 @@ hr {
     border-radius: 10px;
 }
 
-.card:not(.btn-transparent) {
+.card:not(.btn-transparent):not(.btn-link) {
     @include CardBaseShadow;
+}
+
+a, .btn-link {
+    cursor: pointer;
+    color: map-get($map: $theme-colors, $key: "primary");
 }
 
 .btn-transparent {

@@ -1,7 +1,7 @@
 <template>
     <h2 class="mb-2">ข้อมูลผู้ใช้</h2>
     <div class="card">
-        <div class="card-body p-4 d-flex flex-column flex-md-row align-items-center align-items-md-start">
+        <div class="card-body p-4 d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-center">
             <div class="avatar-container img-rounded me-md-2">
                 <div class="avatar img-rounded" :style="'background-image: url(\'' + (userImg) + '\')'">
                     <div class="avatar-status" />
@@ -12,8 +12,11 @@
                 <h3>{{ store.state.user ? store.state.user.displayName : "not logged in" }}</h3>
                 <p>อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText" class="d-none">{{ store.state.user ? store.state.user.email : "email not found" }}</span> <span class="text-primary"><a ref="emailRevealText" @click="emailReveal">ดูอีเมล</a></span></p>
                 <div class="d-flex justify-content-md-start justify-content-center">
+                    <button class="btn btn-primary">เปลี่ยนชื่อ</button>
+                    <!--
                     <button class="btn btn-primary">ดู Profile</button>
                     <button class="btn btn-primary ms-2">เปลี่ยนรหัสผ่าน</button>
+                    -->
                 </div>
             </div>
 
