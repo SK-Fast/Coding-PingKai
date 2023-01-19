@@ -8,7 +8,8 @@
     "emu": "firebase emulators:start",
     "build": "vite build",
     "both": "node ./development/both.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@rive-app/canvas": "^1.0.97",
