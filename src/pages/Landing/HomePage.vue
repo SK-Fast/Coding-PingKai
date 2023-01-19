@@ -19,8 +19,8 @@ const openLogin = () => {
       <div class="container text-white">
         <img src="@/assets/logo/logo-white.svg" height="100">
         <div class="ms-2">
-          <h4>เรียนอัลกอริทึมฟรี สำหรับทุกคน!</h4>
-          <div class="col col-2 mt-4">
+          <h4>เรียนอัลกอริทึม สำหรับทุกคน!</h4>
+          <div class="col col-md-2 mt-4">
             <button @click="openLogin" class="btn btn-light-200">มาเริ่มกันเลย!<vue-feather type="arrow-right" stroke="#000" size="16px" /></button>
           </div>
         </div>
@@ -43,6 +43,7 @@ const openLogin = () => {
   bottom: 2px;
   background-image: url(@/assets/landing/landing-wave.svg);
   background-size: contain;
+  background-repeat: repeat-x;
 
   animation: waveMovin 50s linear 0s infinite;
 } 

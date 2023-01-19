@@ -188,3 +188,27 @@ a, .btn-link {
 .btn:active {
     transform: scale(0.95);
 }
+
+.dropdown-menu.show {
+    animation: dropdownPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media only screen and (max-width: 600px) {
+    .dropdown-menu-end[data-bs-popper] { 
+        left: 0 !important;
+    }
+}
+
+@keyframes dropdownPop {
+    from {
+        transform: translateY(15px);
+    }
+}
+
+.swal2-confirm {
+    background-color: map-get($map: $theme-colors, $key: "primary") !important;
+}
+
+.swal2-cancel {
+    background-color: map-get($map: $theme-colors, $key: "secondary") !important;
+}

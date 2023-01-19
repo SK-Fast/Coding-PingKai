@@ -6,6 +6,7 @@
 
     const loginModal = ref(null)
     const user = ref(null)
+    const router = inject("router")
 
     const store = inject('store')
 
@@ -20,6 +21,7 @@
     onAuthStateChanged(auth, (newUser) => {
         console.log(newUser)
         user.value = newUser
+        console.log(router)
 
         store.state.user = newUser
     });
@@ -31,12 +33,12 @@
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm">
+    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="{ 'landing-navbar' : router.meta}">
         <div class="container-fluid">
 
             <LoginModal ref="loginModal" />
 
-            <a class="navbar-brand me-1"><img src="@/assets/logo/Logo_Text.png" height="40"></a>
+            <a class="navbar-brand me-1"><img src="@/assets/logo/logobeta.png" height="40"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -50,18 +52,18 @@
                 </ul>
                 <form>
                     <div class="d-flex align-items-center" v-if="user !== null">
-                        <vue-feather type="save" stroke="#26BF59" />
+                        <!--<vue-feather type="save" stroke="#26BF59" />-->
 
                         <div class="dropdown">
                             <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded avatar-navbar" style="background-image: url(@/assets/placeholder-avatar.jpeg)">
+                                    <div class="avatar img-rounded avatar-navbar" :style="'background-image: url(' + (store.state.user.photoURL || 'placeholder-avatar.jpg') + ')'">
                                     <div class="avatar-status" />
                                 </div>
                             </div>
                         </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
+                                <!--<li><a class="dropdown-item" href="#">โปรไฟล์</a></li>-->
                                 <li><router-link class="dropdown-item" to="/settings/general">การตั้งค่า</router-link></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger d-flex align-items-center" @click="promptLogout()" href="#">ลงชื่อออก</a></li>
@@ -76,3 +78,9 @@
         </div>
     </nav>
 </template>
+
+<style scoped>
+.avatar {
+    height: 35px;
+}
+</style>

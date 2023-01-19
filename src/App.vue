@@ -19,17 +19,14 @@
     oldPage = route.fullPath
   })
   
-  watch(
-    () => route.fullPath,
-    async () => {
-      if (route.meta.needAuth && store.state.user == null) {
-        LoginModal.openL()
-        return
+  router.beforeEach((to, from) => {
+    if (to.meta.needAuth && store.state.user == null) {
+        LoginModal.openL(to)
+        return false
       }
 
       oldPage = route.fullPath
-    }
-  );
+  })
 </script>
 
 <template>

@@ -19,6 +19,9 @@ import Lookprofile from '@/pages/settings/Lookprofile.vue'
 export default [
     {
         path: '/',
+        meta: {
+            navbarStyle: "landing"
+        },
         component: HomePage
     },
     {
@@ -65,6 +68,9 @@ export default [
     },
     {
         path: '/workspace',
+        meta: {
+            hideNavbar: true
+        },
         component: IDE
     },
     {
