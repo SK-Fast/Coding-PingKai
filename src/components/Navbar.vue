@@ -25,11 +25,6 @@
 
         store.state.user = newUser
     });
-
-    const requestLogout = () => {
-        // To be implumented: confirm logout modal
-        signOut(auth)
-    }
 </script>
 
 <template>
@@ -47,7 +42,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link active">หน้าหลัก</router-link>
+                        <router-link to="/" class="nav-link">หน้าหลัก</router-link>
+                    </li>
+
+                    <li class="nav-item nav-pop" v-if="store.state.user">
+                        <router-link to="/learn" class="nav-link">บทเรียน</router-link>
                     </li>
                 </ul>
                 <form>
@@ -83,4 +82,18 @@
 .avatar {
     height: 35px;
 }
+
+.nav-pop {
+    overflow: hidden;
+}
+
+.nav-pop .nav-link {
+    animation: popDown 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+ @keyframes popDown {
+    from {
+        transform: translateY(-100%);
+    }
+ }
 </style>
