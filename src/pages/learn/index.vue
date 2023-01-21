@@ -1,11 +1,11 @@
 <template>
     <div class="mt-5">
-        <div class="container">
+        <div class="container text-md-start text-center">
             <h3>เลือกด่าน</h3>
         </div>
         
         <div class="lvl-scroll" ref="lvlScroll">
-        <div class="d-flex p-5 lvl-all">
+        <div class="d-flex flex-md-row flex-column p-5 lvl-all">
             <!--
             <div class="lvl-container">
                 <div class="lvl-btn done">
@@ -19,7 +19,7 @@
             </div>
             -->
             <div class="lvl-container" v-for="level in levels">
-                <div class="lvl-btn locked" :style="'transform: translateY(' + level.y + '%)'">
+                <div class="lvl-btn locked" :style="'--pos: ' + level.y + '%'">
                     <img src="@/assets/level/lock.png" width="50" height="50">
                 </div>
             </div>
@@ -78,6 +78,23 @@ onMounted(async() => {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transform: translateY(var(--pos));
+}
+
+@media only screen and (max-width: 600px) {
+    .lvl-btn {
+        transform: translateX(calc(var(--pos) / 2));
+    }
+
+    .lvl-container {
+        width: 100%;
+        height: 150px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .lvl-btn.locked {
