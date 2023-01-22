@@ -5,11 +5,14 @@
   import links from "./router.js"
   import { useRoute } from "vue-router";
   import LoginModal from "@/components/LoginModal.vue"
+  import AcceptCookies from "@/components/AcceptCookies.vue"
 
   const router = inject("router")
   const route = useRoute()
   const store = inject("store")
   const loginModal = ref(null)
+
+  const cookieAccepted = ref(false)
 
   const devMode = ref(import.meta.env.MODE == 'development')
 
@@ -17,6 +20,8 @@
 
   onMounted(() => {
     oldPage = route.fullPath
+
+    cookieAccepted.value = window.localStorage.getItem("cookie_accepted") || false
   })
   
   router.beforeEach((to, from) => {
@@ -48,5 +53,7 @@
     </router-view>
 
     <Footer />
+
+    <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
   </div>
 </template>

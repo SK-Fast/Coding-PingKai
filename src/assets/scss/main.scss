@@ -212,3 +212,13 @@ a, .btn-link {
 .swal2-cancel {
     background-color: map-get($map: $theme-colors, $key: "secondary") !important;
 }
+
+.acceptcookies-card {
+    position: fixed;
+    bottom: 25px;
+    right: 15px;
+}
+
+.btn-secondary {
+    color: white;
+}
