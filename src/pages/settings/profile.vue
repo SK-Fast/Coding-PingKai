@@ -9,7 +9,7 @@
             </div>
 
             <div class="flex-grow-1 d-flex flex-column ms-md-2 text-md-start text-center">
-                <h3>{{ store.state.user ? store.state.user.displayName : "not logged in" }}</h3>
+                <h3>{{ store.state.user.displayName }}</h3>
                 <p>อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText" class="d-none">{{ store.state.user ? store.state.user.email : "email not found" }}</span> <span class="text-primary"><a ref="emailRevealText" @click="emailReveal">ดูอีเมล</a></span></p>
                 <div class="d-flex justify-content-md-start justify-content-center">
                     <button @click="changeUsername" class="btn btn-primary">เปลี่ยนชื่อ</button>
@@ -66,6 +66,8 @@ const changeUsername = async() => {
             await updateProfile(auth.currentUser, {
                 displayName: req.value
             })
+
+            store.state.user.displayName = req.value 
             window.toastMixin.fire(
                 {
                     title: "เปลี่ยนชื่อเสร็จสิ้น!"
