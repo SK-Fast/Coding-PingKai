@@ -7,9 +7,9 @@
             <div class="col-md-9 p-3">
                 <h4>ยอมรับคุกกี้และนโยบายความเป็นส่วนตัว</h4>
                 <blockquote class="text-muted">เว็บไซต์นี้มีการใช้งานคุกกี้เพื่อให้ท่านสามารถใช้บริการได้อย่างต่อเนื่องและอำนวยความสะดวกในการใช้งานเว็บไซต์ รวมถึงช่วยให้เราปรับปรุงการนำเสนอเนื้อหาตรงตามความต้องการของท่าน</blockquote>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-secondary col-md-4 me-1">เรียนรู้เพิ่มเติม</button>
-                    <button class="btn btn-primary col-md-2" @click="acceptCookies()">ยินยอม</button>
+                <div class="d-flex justify-content-end col-sm-6 col-md-8">
+                    <button class="btn btn-secondary me-1">เรียนรู้เพิ่มเติม</button>
+                    <button class="btn btn-primary" @click="acceptCookies()">ยินยอม</button>
                 </div>
             </div>
         </div>

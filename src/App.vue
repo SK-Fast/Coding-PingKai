@@ -1,6 +1,7 @@
 <script setup>
   import Navbar from "@/components/Navbar.vue"
   import Footer from "@/components/Footer.vue"
+  import MobileNavbar from "@/components/MobileNavbar.vue"
   import { ref, onMounted, watch, inject } from "vue";
   import links from "./router.js"
   import { useRoute } from "vue-router";
@@ -55,4 +56,6 @@
 
     <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
   </div>
+
+  <MobileNavbar />
 </template>

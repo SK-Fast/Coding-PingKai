@@ -19,7 +19,7 @@ html, body {
     overflow: hidden;
 }
 
-body {
+html {
     overflow-y: scroll;
 }
 
@@ -36,7 +36,10 @@ body {
 .main-pageview {
     position: relative;
     top: 50px;
+    height: auto;
     overflow: hidden;
+
+    min-height: 100vh;
 }
 
 $btn-border-radius: 5px;
