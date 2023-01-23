@@ -33,8 +33,9 @@
 </script>
 
 <template>
-  <div>
-    <Navbar />
+  <Navbar />
+
+  <div class="main-pageview">
     <div v-if="store.state.devMode" class="d-flex align-items-center p-2 bg-light-300 mb-2">
       <nav class="d-flex flex-grow-1 dev-links">
         <p v-for="(item, index) in links" class="m-0 me-1">

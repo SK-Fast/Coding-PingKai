@@ -95,6 +95,10 @@ onMounted(async() => {
         align-items: center;
         justify-content: center;
     }
+
+    .lvl-all {
+        height: auto;
+    }
 }
 
 .lvl-btn.locked {

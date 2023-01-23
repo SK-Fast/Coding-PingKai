@@ -16,15 +16,27 @@ html, body {
     font-family: 'Bai Jamjuree', sans-serif;
     font-weight: 500;
     background-color: map-get($map: $white-colors, $key: "background");
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-html {
+body {
     overflow-y: scroll;
 }
 
 .text-monospace {
     font-family: 'Ubuntu Mono', monospace;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+}
+
+.main-pageview {
+    position: relative;
+    top: 50px;
+    overflow: hidden;
 }
 
 $btn-border-radius: 5px;
