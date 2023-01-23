@@ -23,6 +23,7 @@
         </div>
     </div>
 
+    <!--
     <div class="card mt-2">
         <div class="card-body p-4">
             <p>เกี่ยวกับคุณ...</p>
@@ -30,6 +31,7 @@
             <button class="float-end mt-2 btn btn-primary">บันทึก</button>
         </div>
     </div>
+    -->
 </template>
 
 <script setup>

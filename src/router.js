@@ -5,7 +5,6 @@ import settings_profile from '@/pages/settings/profile.vue'
 import settings_dev from '@/pages/settings/dev.vue'
 
 import exit from '@/pages/exit/exit.vue'
-import profile from '@/pages/settings/profile.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
 import Moreinfo1 from '@/pages/dashboard/Moreinfo1.vue'
@@ -46,15 +45,6 @@ export default [
               component: settings_dev,
             },
           ],  
-    },
-    {
-
-        path: '/exit',
-        component: exit
-    },
-    {
-        path: '/profile',
-        component: profile
     },
     {
         path: '/exit',
