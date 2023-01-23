@@ -18,7 +18,8 @@ const router = createRouter({
 
 const store = createStore({
     state: {
-        user: null
+        user: null,
+        devMode: import.meta.env.MODE == 'development'
     },
     computed: {
         count () {
