@@ -3,6 +3,7 @@
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
     import { ref } from "vue";
+    import { newUserData } from "libs/firebaseSystem"
 
     const modalBase = ref(null)
 
@@ -17,6 +18,7 @@
         console.log(result)
 
         if (result['user']) {
+            await newUserData(result.user)
             Modal.methods.closeModal()
         }
     }

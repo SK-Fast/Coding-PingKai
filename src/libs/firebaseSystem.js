@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
 import * as logger from 'libs/logger.js'
 
@@ -29,8 +29,33 @@ export function initApp() {
     return app
 }
 
-export function addUserData() {
+/**
+ * 
+ * @param {import('firebase/auth').User} user 
+ */
+export async function newUserData(user) {
 
+    const firestore = getFirestore()
+    const userDoc = doc(firestore, "users", user.uid)
+
+    const docCheck = await getDoc(userDoc)
+
+    if (docCheck.exists()) {
+        return
+    }
+
+    logger.info("New user detected, creating user data...")
+
+    await setDoc(userDoc, {
+        creation_date: new Date(),
+        exp: 0,
+        last_level_date: new Date(),
+        level: 0,
+        level_passed: 0,
+        streak: 0,
+    })
+
+    logger.success("Created new data for the user!")
 }
 
 export async function promptLogout() {

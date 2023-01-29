@@ -4,5 +4,15 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+
+    match /users/{document=**} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+      && request.resource.data.exp == 0
+      && request.resource.data.level == 0
+      && request.resource.data.level_passed == 0
+      && request.resource.data.streak == 0;
+
+    }
   }
 }
