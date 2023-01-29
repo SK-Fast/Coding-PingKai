@@ -55,7 +55,7 @@ export async function newUserData(user) {
         streak: 0,
     })
 
-    logger.success("Created new data for the user!")
+    logger.success("Created new data for the user")
 }
 
 export async function promptLogout() {
