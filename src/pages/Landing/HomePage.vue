@@ -17,7 +17,7 @@ const openLogin = () => {
   <div class="landing-banner-container w-100">
     <div class="bg-primary w-100 h-100 landing-banner">
       <div class="container text-white">
-        <div class="row">
+        <div class="d-flex flex-md-row flex-column">
           <div class="col-md-8">
             <img src="@/assets/logo/logo-white.svg" height="100">
             <div class="ms-2">
@@ -41,7 +41,7 @@ const openLogin = () => {
 
 <style scoped>
 .landing-banner-container {
-  height: 350px;
+  min-height: 350px;
   margin-bottom: 110px;
 }
 

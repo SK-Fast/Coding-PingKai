@@ -34,28 +34,30 @@
 </script>
 
 <template>
-  <Navbar />
+  <div class="d-flex flex-column">
+    <Navbar />
 
-  <div class="main-pageview">
-    <div v-if="store.state.devMode" class="d-flex align-items-center p-2 bg-light-300 mb-2">
-      <nav class="d-flex flex-grow-1 dev-links">
-        <p v-for="(item, index) in links" class="m-0 me-1">
-          <router-link :to="item.path">{{ item.path }}</router-link>
-        </p>
-      </nav>
-      <code class="text-end me-2">Developer Menu</code>
+    <div class="main-pageview flex-grow-1">
+      <div v-if="store.state.devMode" class="d-flex align-items-center p-2 bg-light-300 mb-2">
+        <nav class="d-flex flex-grow-1 dev-links">
+          <p v-for="(item, index) in links" class="m-0 me-1">
+            <router-link :to="item.path">{{ item.path }}</router-link>
+          </p>
+        </nav>
+        <code class="text-end me-2">Developer Menu</code>
+      </div>
+
+      <router-view v-slot="{ Component }" class="pageView">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+
+      <Footer />
+
+      <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
     </div>
 
-    <router-view v-slot="{ Component }" class="pageView">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-
-    <Footer />
-
-    <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
+    <MobileNavbar />
   </div>
-
-  <MobileNavbar />
 </template>
