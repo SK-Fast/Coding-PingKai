@@ -82,7 +82,7 @@ onMounted(async() => {
     transform: translateY(var(--pos));
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 600px) {
     .lvl-btn {
         transform: translateX(calc(var(--pos) / 2));
     }

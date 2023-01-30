@@ -28,7 +28,7 @@
     transform: translateY(120%);
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 600px) {
     html, body {
         overflow: scroll;
     }
