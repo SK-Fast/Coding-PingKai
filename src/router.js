@@ -15,6 +15,7 @@ import dashboard from '@/pages/dashboard/index.vue'
 import Moreinfo1 from '@/pages/dashboard/Moreinfo1.vue'
 import Moreinfo2 from '@/pages/dashboard/Moreinfo2.vue'
 import Lookprofile from '@/pages/settings/Lookprofile.vue'
+import congrat from '@/pages/congrat/congrat.vue'
 
 export default [
     {
@@ -85,5 +86,9 @@ export default [
     {
         path: '/Lookprofile',
         component: Lookprofile,
+    },
+    {
+       path: '/congrat',
+       component: congrat,
     },
 ]

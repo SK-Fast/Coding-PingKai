@@ -72,7 +72,7 @@
                             
                             <div class="p-2 mt-1 text-center">
                                 <h5>จุดเริ่มต้น</h5>
-                                <p class="text-muted m-0">สำหรับคนที่ผ่านด้านแรก</p>
+                                <p class="text-muted m-0">สำหรับคนที่ผ่านด้านแรก</p> 
                             </div>
                         </div>
                     </div>
