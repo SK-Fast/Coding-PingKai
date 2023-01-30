@@ -1,13 +1,17 @@
-<script>
+<script setup>
+import { inject } from 'vue';
+
+const store = inject('store')
 
 </script>
+
 <template>
     <div class="container">
         <div class="d-flex flex-column align-items-center p-2">
             <div class="d-flex flex-column align-items-center">
-                <div class="avatar col-5 img-rounded" style="background-image: url('placeholder-avatar.jpeg');"></div>
+                <div class="avatar col-5 img-rounded" :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
                 <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
-                    <h2 class="mt-3">ธรรมจิตร กล่ำจันทร์</h2>
+                    <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
                     <p class="m-0 mt-1 text-monospace">
                         <span class="text-primary me-2">STREAK 0</span>
                         <span class="text-warning">EXP 0</span>

@@ -6,6 +6,7 @@
 
     const loginModal = ref(null)
     const user = ref(null)
+    const router = inject("router")
 
     const store = inject('store')
 
@@ -20,23 +21,19 @@
     onAuthStateChanged(auth, (newUser) => {
         console.log(newUser)
         user.value = newUser
+        console.log(router)
 
         store.state.user = newUser
     });
-
-    const requestLogout = () => {
-        // To be implumented: confirm logout modal
-        signOut(auth)
-    }
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm">
+    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="{ 'landing-navbar' : router.meta}">
         <div class="container-fluid">
 
             <LoginModal ref="loginModal" />
 
-            <a class="navbar-brand me-1"><img src="@/assets/logo/Logo_Text.png" height="40"></a>
+            <a class="navbar-brand me-1"><img src="@/assets/logo/logobeta.png" height="40"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -45,23 +42,27 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link active">หน้าหลัก</router-link>
+                        <router-link to="/" class="nav-link">หน้าหลัก</router-link>
+                    </li>
+
+                    <li class="nav-item nav-pop" v-if="store.state.user">
+                        <router-link to="/learn" class="nav-link">บทเรียน</router-link>
                     </li>
                 </ul>
                 <form>
                     <div class="d-flex align-items-center" v-if="user !== null">
-                        <vue-feather type="save" stroke="#26BF59" />
+                        <!--<vue-feather type="save" stroke="#26BF59" />-->
 
                         <div class="dropdown">
                             <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded avatar-navbar" style="background-image: url(@/assets/placeholder-avatar.jpeg)">
+                                    <div class="avatar img-rounded avatar-navbar" :style="'background-image: url(' + (store.state.user.photoURL || 'placeholder-avatar.jpg') + ')'">
                                     <div class="avatar-status" />
                                 </div>
                             </div>
                         </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
+                                <!--<li><a class="dropdown-item" href="#">โปรไฟล์</a></li>-->
                                 <li><router-link class="dropdown-item" to="/settings/general">การตั้งค่า</router-link></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger d-flex align-items-center" @click="promptLogout()" href="#">ลงชื่อออก</a></li>
@@ -76,3 +77,23 @@
         </div>
     </nav>
 </template>
+
+<style scoped>
+.avatar {
+    height: 35px;
+}
+
+.nav-pop {
+    overflow: hidden;
+}
+
+.nav-pop .nav-link {
+    animation: popDown 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+ @keyframes popDown {
+    from {
+        transform: translateY(-100%);
+    }
+ }
+</style>

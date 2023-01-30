@@ -1,14 +1,16 @@
 {
   "name": "coding-pingkai",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "emu": "firebase emulators:start",
     "build": "vite build",
+    "build-dev": "vite build --mode development",
     "both": "node ./development/both.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@rive-app/canvas": "^1.0.97",

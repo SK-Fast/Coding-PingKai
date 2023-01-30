@@ -9,7 +9,7 @@ export default defineConfig({
     includeAssets: ['favicon.ico', 'logos/apple-touch-icon.png', 'logos/masked-icon.svg', './rive/logout.riv'],
       manifest: {
         name: 'Coding Pingkai',
-        short_name: 'codingpingkai',
+        short_name: 'Coding PingKai',
         description: 'Learn algorithm for everyone!',
         theme_color: '#FFF4CE',
         icons: [

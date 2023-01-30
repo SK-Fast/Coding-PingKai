@@ -1,5 +1,10 @@
 <template>
     <h2 class="mb-2">สำหรับผู้พัฒนา</h2>
+
+    <ConfigCard title="โหมดผู้พัฒนา" desc="เปิดโหมดผู้พัฒนา">
+        <input class="form-check-input" type="checkbox" v-model="store.state.devMode" :checked="store.state.devMode">
+    </ConfigCard>
+
     <h4 class="mb-2">env</h4>
 
     <div class="card">
@@ -15,7 +20,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
+import ConfigCard from '@/components/ConfigCard.vue'
+
+const store = inject("store")
 
 const devData = ref({
     env: import.meta.env

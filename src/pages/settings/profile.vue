@@ -9,10 +9,10 @@
             </div>
 
             <div class="flex-grow-1 d-flex flex-column ms-md-2 text-md-start text-center">
-                <h3>{{ store.state.user ? store.state.user.displayName : "not logged in" }}</h3>
+                <h3>{{ store.state.user.displayName }}</h3>
                 <p>อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText" class="d-none">{{ store.state.user ? store.state.user.email : "email not found" }}</span> <span class="text-primary"><a ref="emailRevealText" @click="emailReveal">ดูอีเมล</a></span></p>
                 <div class="d-flex justify-content-md-start justify-content-center">
-                    <button class="btn btn-primary">เปลี่ยนชื่อ</button>
+                    <button @click="changeUsername" class="btn btn-primary">เปลี่ยนชื่อ</button>
                     <!--
                     <button class="btn btn-primary">ดู Profile</button>
                     <button class="btn btn-primary ms-2">เปลี่ยนรหัสผ่าน</button>
@@ -23,6 +23,7 @@
         </div>
     </div>
 
+    <!--
     <div class="card mt-2">
         <div class="card-body p-4">
             <p>เกี่ยวกับคุณ...</p>
@@ -30,10 +31,11 @@
             <button class="float-end mt-2 btn btn-primary">บันทึก</button>
         </div>
     </div>
+    -->
 </template>
 
 <script setup>
-import { getAuth } from "firebase/auth";
+import { getAuth, updateProfile } from '@firebase/auth';
 import { inject, onMounted, ref } from 'vue';
 
 const store = inject('store')
@@ -49,9 +51,35 @@ let emailRevealed = false
 onMounted(async () => {
     if (store.state.user) {
         console.log(store.state.user)
-        userImg.value = store.state.user.photoURL || "/placeholder-avatar.jpeg"
+        userImg.value = store.state.user.photoURL || "/placeholder-avatar.jpg"
     }
 })
+
+const changeUsername = async() => {
+    const req = await window.Swal.fire({
+      title: "เปลี่ยนชื่อ",
+      input: 'text',
+      showCancelButton: true,
+      inputPlaceholder: "ชื่อใหม่..."
+    })
+
+    if (req.isConfirmed) {
+        if (req.value !== "") {
+            await updateProfile(auth.currentUser, {
+                displayName: req.value
+            })
+
+            store.state.user.displayName = req.value 
+            window.toastMixin.fire(
+                {
+                    title: "เปลี่ยนชื่อเสร็จสิ้น!"
+                }
+            )
+        }
+    }
+
+    console.log(req)
+}
 
 const emailReveal = async() => {
     if (store.state.user) {
