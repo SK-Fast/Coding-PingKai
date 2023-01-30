@@ -15,7 +15,7 @@ const openLogin = () => {
 <template>
 
   <div class="landing-banner-container w-100">
-    <div class="bg-primary w-100 h-100 landing-banner">
+    <div class="bg-primary w-100 h-100 landing-banner pt-5">
       <div class="container text-white">
         <div class="d-flex flex-md-row flex-column">
           <div class="col-md-8">
