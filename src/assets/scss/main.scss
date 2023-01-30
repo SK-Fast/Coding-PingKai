@@ -212,6 +212,14 @@ a, .btn-link {
     .dropdown-menu-end[data-bs-popper] { 
         left: 0 !important;
     }
+
+    .ac-card {
+        position: fixed;
+        bottom: 60px;
+        right: 0px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 }
 
 @keyframes dropdownPop {
