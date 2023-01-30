@@ -22,11 +22,16 @@
                 </div>
             </div>
             -->
-            <div class="lvl-container" v-for="level in levels">
-                <div class="lvl-btn" :class="level.lvlState" :style="'--pos: ' + level.y + '%'">
+            <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
+                <div class="lvl-btn" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
                     <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                     <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
                     <img src="@/assets/level/check.png" width="50" height="50" v-if="level.lvlState == 'done'">
+
+                    <div class="start-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
+                        เริ่ม
+                        <img src="@/assets/start_arrow.svg" class="arrow-tooltip" height="20">
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +54,7 @@ onMounted(async() => {
     const userData = await getUserData(store)
 
     let i = 0
+    let delayT = 0
 
     for (const section of sections) {
         for (const level of section.levels) {
@@ -62,10 +68,13 @@ onMounted(async() => {
 
             levels.value.push({
                 y: Math.cos(i * 100) * 100,
-                lvlState: lvlState
+                lvlState: lvlState,
+                title: level.title,
+                animDelay: delayT
             })
 
             i += 1
+            delayT += 50
         }
     }
 
@@ -84,12 +93,62 @@ onMounted(async() => {
     overflow-y: hidden;
 }
 
+.start-tooltip {
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
+    border: 3px solid #DFDFDF;
+    position: absolute;
+    bottom: calc(100% + 45px);
+    border-radius: 10px;
+
+    animation: tooltipFloatin 5s linear;
+    animation-iteration-count: infinite;
+}
+
+.start-tooltip .arrow-tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@keyframes tooltipFloatin {
+    0% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    75% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
 .lvl-container {
     width: 150px;
     height: 100%;
     display: flex;
     align-items: center;
     margin-right: 1rem;
+    transform: translateY(100%);
+
+    animation: 0.5s lvlBtnPop cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation-delay: var(--animDelay);
+    animation-fill-mode: forwards;
+}
+
+@keyframes lvlBtnPop {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }
 
 .lvl-btn {
@@ -119,8 +178,13 @@ onMounted(async() => {
         justify-content: center;
     }
 
+    .lvl-scroll {
+        overflow: visible;
+    }
+
     .lvl-all {
         height: auto;
+        overflow-y: visible;
     }
 }
 
@@ -146,15 +210,6 @@ onMounted(async() => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
-}
-
-@keyframes lvlBtnPop {
-    0% {
-        transform: translateY(50%);
-    }
-    100% {
-        transform: translateY(0%);
-    }
 }
 
 </style>

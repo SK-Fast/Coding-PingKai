@@ -24,6 +24,9 @@ export default [
     },
     {
         path: '/learn',
+        meta: {
+            needAuth: true
+        },
         component: LearnPage
     },
     {

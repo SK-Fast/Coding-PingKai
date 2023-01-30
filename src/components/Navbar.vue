@@ -49,7 +49,9 @@
                         <router-link to="/learn" class="nav-link">บทเรียน</router-link>
                     </li>
                 </ul>
-                <form>
+                <form class="d-flex align-items-center">
+                    <router-link class="nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" stroke="#B3B3B3" size="25"></vue-feather></router-link>
+                    
                     <div class="d-flex align-items-center" v-if="user !== null">
                         <!--<vue-feather type="save" stroke="#26BF59" />-->
 
