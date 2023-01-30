@@ -3,8 +3,12 @@
         <div class="container text-md-start text-center">
             <h3>เลือกด่าน</h3>
         </div>
+
+        <div class="d-flex justify-content-center" v-if="dataLoading">
+            <div class="chick-spinner"></div>
+        </div>
         
-        <div class="lvl-scroll" ref="lvlScroll">
+        <div class="lvl-scroll" ref="lvlScroll" v-if="dataLoading == false">
         <div class="d-flex flex-md-row flex-column p-5 lvl-all">
             <!--
             <div class="lvl-container">
@@ -19,8 +23,10 @@
             </div>
             -->
             <div class="lvl-container" v-for="level in levels">
-                <div class="lvl-btn locked" :style="'--pos: ' + level.y + '%'">
-                    <img src="@/assets/level/lock.png" width="50" height="50">
+                <div class="lvl-btn" :class="level.lvlState" :style="'--pos: ' + level.y + '%'">
+                    <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
+                    <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
+                    <img src="@/assets/level/check.png" width="50" height="50" v-if="level.lvlState == 'done'">
                 </div>
             </div>
         </div>
@@ -29,36 +35,53 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 
 const levels = ref([])
+const store = inject("store")
 const lvlScroll = ref(null)
+const dataLoading = ref(true)
 
 onMounted(async() => {
     const { sections } = await import("@/lessons/lessons.js")
+    const { getUserData } = await import("libs/firebaseSystem.js")
+
+    const userData = await getUserData(store)
 
     let i = 0
 
     for (const section of sections) {
         for (const level of section.levels) {
+            let lvlState = "locked"
+
+            if (userData.level_passed == i) {
+                lvlState = "continue"
+            } else if (userData.level_passed > i) {
+                lvlState = "done"
+            }
+
             levels.value.push({
-                y: Math.cos(i * 100) * 100
+                y: Math.cos(i * 100) * 100,
+                lvlState: lvlState
             })
 
             i += 1
         }
     }
+
+    dataLoading.value = false
 })
 
 </script>
 
 <style scoped>
 .lvl-scroll {
-    overflow-x: scroll;
+    overflow: hidden;
 }
 
 .lvl-all {
     height: calc(100vh - 262px);
+    overflow-y: hidden;
 }
 
 .lvl-container {
@@ -123,6 +146,15 @@ onMounted(async() => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
+}
+
+@keyframes lvlBtnPop {
+    0% {
+        transform: translateY(50%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }
 
 </style>

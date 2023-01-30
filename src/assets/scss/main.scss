@@ -243,3 +243,25 @@ a, .btn-link {
 .btn-secondary {
     color: white;
 }
+
+.chick-spinner {
+    width: 200px;
+    height: 200px;
+    background-image: url("../spinner.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: inline-block;
+
+    animation: chickSpin 5s linear infinite;
+}
+
+@keyframes chickSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
