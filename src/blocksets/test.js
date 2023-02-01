@@ -9,6 +9,10 @@ export const blocks = [
                 "kind": "block",
                 "type": "controls_if"
             },
+            {
+                "kind": "block",
+                "type": "test_block"
+            }
         ]
     },
     {
@@ -28,6 +32,16 @@ export const blocks = [
                 "type": "logic_boolean"
             }
         ]
+    },
+    {
+        "kind": "category",
+        "name": "Variables",
+        "custom": "VARIABLE"
+    },
+    {
+        "kind": "category",
+        "name": "Functions",
+        "custom": "PROCEDURE"
     }
 ]
 

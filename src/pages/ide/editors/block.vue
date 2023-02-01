@@ -45,15 +45,8 @@ onMounted(() => {
 
     console.log(props.options)
 
-    Blockly.defineBlocksWithJsonArray([{
-    "type": "test_block",
-    "message0": 'test block',
-    "nextStatement": "Action",
-    "previousStatement": "Action",
-    "colour": 160,
-    "tooltip": "Test Tooltip.",
-    "helpUrl": "devpixels.xyz?d=the_reward"
-    }]);
+    Blockly.HSV_SATURATION = 0.705
+    Blockly.HSV_VALUE = 0.658
 
     Blockly.inject(blocklyDiv.value, props.options)
    }, 50);

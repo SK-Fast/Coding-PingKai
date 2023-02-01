@@ -99,6 +99,10 @@
     color: white;
 }
 
+.navbar.hide {
+    display: none;
+}
+
 .nav-pop {
     overflow: hidden;
 }

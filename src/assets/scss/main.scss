@@ -39,7 +39,7 @@ html {
 
     min-height: 100vh;
 
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 $btn-border-radius: 5px;
@@ -274,4 +274,12 @@ a, .btn-link {
     to {
         transform: rotate(-360deg);
     }
+}
+
+.top-pv.hide .main-pageview {
+    margin-top: 0;
+}
+
+.top-pv.hide .footer-nav {
+    display: none;
 }

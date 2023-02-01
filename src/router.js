@@ -55,9 +55,9 @@ export default [
         component: exit
     },
     {
-        path: '/workspace',
+        path: '/workspace/:id',
         meta: {
-            hideNavbar: true
+            navbarStyle: "hide"
         },
         component: IDE
     },

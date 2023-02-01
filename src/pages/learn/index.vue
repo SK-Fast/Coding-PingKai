@@ -23,7 +23,7 @@
             </div>
             -->
             <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                <div class="lvl-btn" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
+                <div class="lvl-btn" @click="goToLesson(level.levelI)" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
                     <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                     <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
                     <img src="@/assets/level/check.png" width="50" height="50" v-if="level.lvlState == 'done'">
@@ -52,6 +52,7 @@ import { onMounted, ref, inject } from "vue";
 
 const levels = ref([])
 const store = inject("store")
+const router = inject("router")
 const lvlScroll = ref(null)
 const dataLoading = ref(true)
 
@@ -78,7 +79,8 @@ onMounted(async() => {
                 y: Math.cos(i * 100) * 100,
                 lvlState: lvlState,
                 title: level.title,
-                animDelay: delayT
+                animDelay: delayT,
+                levelI: i
             })
 
             i += 1
@@ -89,6 +91,9 @@ onMounted(async() => {
     dataLoading.value = false
 })
 
+const goToLesson = (i) => {
+    router.push(`/workspace/${i}`)
+}
 </script>
 
 <style scoped>

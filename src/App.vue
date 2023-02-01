@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column top-pv" :class="route.meta['navbarStyle'] || ''">
     <Navbar />
 
     <div class="main-pageview flex-grow-1">
@@ -49,7 +49,7 @@
 
       <router-view class="pageView"></router-view>
 
-      <Footer />
+      <Footer class="footer-nav" />
 
       <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
     </div>
