@@ -32,6 +32,14 @@
                         เริ่ม
                         <img src="@/assets/start_arrow.svg" class="arrow-tooltip" height="20">
                     </div>
+
+                    <!--
+                    <div class="level-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
+                        <img src="@/assets/arrow_up.svg" class="arrow-tooltip" height="20">
+                        <h3>{{ level.title }}</h3>
+                        <button class="btn btn-primary w-100">เริ่ม</button>
+                    </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -85,12 +93,12 @@ onMounted(async() => {
 
 <style scoped>
 .lvl-scroll {
-    overflow: hidden;
+    overflow: visible;
 }
 
 .lvl-all {
     height: calc(100vh - 262px);
-    overflow-y: hidden;
+    overflow-y: visible;
 }
 
 .start-tooltip {
@@ -102,6 +110,25 @@ onMounted(async() => {
 
     animation: tooltipFloatin 5s linear;
     animation-iteration-count: infinite;
+    z-index: 55;
+
+}
+
+.level-tooltip {
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
+    border: 3px solid #DFDFDF;
+    position: absolute;
+    top: calc(100% + 55px);
+    min-width: 250px;
+    border-radius: 10px;
+
+    left: 25%;
+    z-index: 55;
+}
+
+.level-tooltip .arrow-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
 }
 
 .start-tooltip .arrow-tooltip {
