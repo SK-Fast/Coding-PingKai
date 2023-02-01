@@ -98,7 +98,7 @@ onMounted(async() => {
 
 .lvl-all {
     height: calc(100vh - 262px);
-    overflow-y: visible;
+    overflow-y: scroll;
 }
 
 .start-tooltip {
@@ -162,7 +162,7 @@ onMounted(async() => {
     display: flex;
     align-items: center;
     margin-right: 1rem;
-    transform: translateY(100%);
+    transform: translateY(150%);
 
     animation: 0.5s lvlBtnPop cubic-bezier(0.34, 1.56, 0.64, 1);
     animation-delay: var(--animDelay);
