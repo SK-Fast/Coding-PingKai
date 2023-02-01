@@ -1,12 +1,14 @@
 <script setup>
     import LoginModal from "@/components/LoginModal.vue"
     import { inject, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+    import { getAuth, onAuthStateChanged } from "firebase/auth";
     import { promptLogout } from 'libs/firebaseSystem.js'
+    import { useRoute } from "vue-router";
 
     const loginModal = ref(null)
     const user = ref(null)
     const router = inject("router")
+    const route = useRoute()
 
     const store = inject('store')
 
@@ -28,12 +30,15 @@
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="{ 'landing-navbar' : router.meta}">
+    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="route.meta['navbarStyle'] || ''">
         <div class="container-fluid">
 
             <LoginModal ref="loginModal" />
 
-            <a class="navbar-brand me-1"><img src="@/assets/logo/logobeta.png" height="40"></a>
+            <a class="navbar-brand me-1">
+                <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">
+                <img v-else src="@/assets/logo/logobeta.png" height="40">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -50,7 +55,7 @@
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
-                    <router-link class="nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" stroke="#B3B3B3" size="25"></vue-feather></router-link>
+                    <router-link class="nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'" size="25"></vue-feather></router-link>
                     
                     <div class="d-flex align-items-center" v-if="user !== null">
                         <!--<vue-feather type="save" stroke="#26BF59" />-->
@@ -72,7 +77,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center" v-else>
-                        <a href="#" @click="openLogin" class="btn btn-primary mb-md-0 mb-2">ลงชื่อเข้าใช้</a>
+                        <a href="#" @click="openLogin" class="btn mb-md-0 mb-2" :class="`${route.meta['navbarStyle'] == 'landing' ? 'btn-light-100' : 'btn-primary'}`">ลงชื่อเข้าใช้</a>
                     </div>
                 </form>
             </div>
@@ -83,6 +88,15 @@
 <style scoped>
 .avatar {
     height: 35px;
+}
+
+.navbar.landing {
+    background-color: var(--bs-primary) !important;
+    box-shadow: none !important;
+}
+
+.navbar.landing .nav-link {
+    color: white;
 }
 
 .nav-pop {

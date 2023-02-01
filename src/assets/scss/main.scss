@@ -38,6 +38,8 @@ html {
     overflow: hidden;
 
     min-height: 100vh;
+
+    margin-top: 40px;
 }
 
 $btn-border-radius: 5px;
@@ -211,12 +213,20 @@ a, .btn-link {
         left: 0 !important;
     }
 
+    .main-pageview {
+        margin-top: 0px;
+    }
+
     .ac-card {
         position: fixed;
         bottom: 60px;
         right: 0px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+    }
+
+    .navbar {
+        display: none;
     }
 }
 

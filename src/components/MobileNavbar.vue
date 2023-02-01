@@ -1,10 +1,11 @@
 <template>
     <div class="bg-light-300 border-light-700 border-top mobile-nav">
-        <vue-feather class="m-nav-icon" type="home" stroke="#606060" size="30"></vue-feather>
-        <vue-feather class="m-nav-icon" type="award" stroke="#606060" size="30"></vue-feather>
-        <vue-feather class="m-nav-icon" type="code" stroke="#606060" size="30"></vue-feather>
-        <vue-feather class="m-nav-icon" type="user" stroke="#606060" size="30"></vue-feather>
-        <vue-feather class="m-nav-icon" type="more-horizontal" stroke="#606060" size="30"></vue-feather>
+        <router-link to="/"><vue-feather class="m-nav-icon" type="home" stroke="#606060" size="30"></vue-feather></router-link>
+        <!--<vue-feather class="m-nav-icon" type="award" stroke="#606060" size="30"></vue-feather>-->        
+        <router-link to="/learn"><vue-feather class="m-nav-icon" type="code" stroke="#606060" size="30"></vue-feather></router-link>
+        <!--<vue-feather class="m-nav-icon" type="user" stroke="#606060" size="30"></vue-feather>-->
+        <!--<vue-feather class="m-nav-icon" type="more-horizontal" stroke="#606060" size="30"></vue-feather>-->
+        <router-link to="/settings/general"><vue-feather class="m-nav-icon" type="settings" stroke="#606060" size="30"></vue-feather></router-link>
     </div>
 </template>
 
