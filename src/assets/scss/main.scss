@@ -245,8 +245,8 @@ a, .btn-link {
 }
 
 .chick-spinner {
-    width: 200px;
-    height: 200px;
+    width: 50px;
+    height: 50px;
     background-image: url("../spinner.png");
     background-size: contain;
     background-position: center;
@@ -254,7 +254,7 @@ a, .btn-link {
 
     display: inline-block;
 
-    animation: chickSpin 5s linear infinite;
+    animation: chickSpin 2s linear infinite;
 }
 
 @keyframes chickSpin {

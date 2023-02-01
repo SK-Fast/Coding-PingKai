@@ -7,9 +7,17 @@
 
     const modalBase = ref(null)
     const loggingIn = ref(false)
+    const errorMsg = ref("")
+
+    const knownErrors = {
+        "auth/popup-closed-by-user": "การลงชื่อเข้าใช้ถูกยกเลิก",
+        "auth/account-exists-with-different-credential": "มีบัญชีนี้อยู่แล้ว",
+        "auth/popup-blocked": "การลงชื่อเข้าใช้ถูกยกเลิกโดยเบราว์เซอร์",
+    }
 
     const googleLogin = async () => {
         loggingIn.value = true
+        errorMsg.value = ""
 
         const provider = new GoogleAuthProvider();
         provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -18,9 +26,8 @@
 
         const result = await signInWithPopup(auth, provider).catch((error) => {
             loggingIn.value = false
+            errorMsg.value = error
         })
-
-        console.log(result)
 
         if (result['user']) {
             await newUserData(result.user)
@@ -49,6 +56,10 @@ export default {
         <div class="text-center">
             <h3>ลงชื่อเข้าใช้</h3>
             <p class="text-muted">กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่</p>
+        </div>
+
+        <div class="alert alert-danger" v-if="errorMsg != ''">
+            {{ errorMsg }}
         </div>
 
         <div class="d-flex justify-content-center" v-if="loggingIn">
