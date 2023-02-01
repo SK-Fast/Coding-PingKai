@@ -47,11 +47,7 @@
         <code class="text-end me-2">Developer Menu</code>
       </div>
 
-      <router-view v-slot="{ Component }" class="pageView">
-        <transition name="fade">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <router-view class="pageView"></router-view>
 
       <Footer />
 
