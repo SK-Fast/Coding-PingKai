@@ -1,6 +1,8 @@
 <template>
-    <div class="editor-top">
-        <div class="col-md-2 d-flex p-2 ms-3">
+    <div class="editor-top flex-column flex-md-row">
+        <div class="d-flex align-items-center p-2 ms-3">
+            <img src="@/assets/logo/logobeta.png" class="me-2" height="35">
+
             <vue-feather type="play" class="me-1" stroke="#26BF59" />
             <vue-feather type="octagon" stroke="#F23051" />
         </div>
@@ -110,7 +112,8 @@ onMounted(async () => {
 
 .editor-top {
     display: flex;
-    height: 50px;
+    height: 60px;
+    align-items: center;
 }
 
 .editor-middle {
