@@ -12,7 +12,7 @@
 }
 
 .blocklyText {
-    font-family: 'Ubuntu Mono', monospace !important;
+    font-family: "Bai Jamjuree", 'Ubuntu Mono', monospace !important;
 }
 
 .blocklyIconShape {
@@ -30,6 +30,30 @@
 
 .blocklyToolboxCategory .blocklyTreeRow {
     cursor: pointer;
+}
+
+.geras-renderer.classic-theme .blocklyInsertionMarker>.blocklyPath {
+    animation: insertionPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.geras-renderer.classic-theme .blocklyHighlightedConnectionPath {
+    animation: connectedPathReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes connectedPathReveal {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
+
+@keyframes insertionPop {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
 }
 
 @keyframes dragSurfaceStart {
