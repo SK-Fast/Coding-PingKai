@@ -37,6 +37,8 @@
   <div class="d-flex flex-column top-pv" :class="route.meta['navbarStyle'] || ''">
     <Navbar />
 
+    <LoginModal ref="loginModal" />
+
     <div class="main-pageview flex-grow-1">
       <div v-if="store.state.devMode" class="d-flex align-items-center p-2 bg-light-300 mb-2">
         <nav class="d-flex flex-grow-1 dev-links">
