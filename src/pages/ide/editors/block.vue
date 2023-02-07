@@ -6,6 +6,8 @@
 </template>
 
 <style>
+@import url(@/assets/css/blockly.css);
+
 .blocklyDiv {
   height: 100%;
   width: 100%;
@@ -45,8 +47,8 @@ onMounted(() => {
 
     console.log(props.options)
 
-    Blockly.HSV_SATURATION = 0.705
-    Blockly.HSV_VALUE = 0.658
+    Blockly.HSV_SATURATION = 0.8
+    Blockly.HSV_VALUE = 1
 
     Blockly.inject(blocklyDiv.value, props.options)
    }, 50);

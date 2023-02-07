@@ -5,7 +5,6 @@
     import { promptLogout } from 'libs/firebaseSystem.js'
     import { useRoute } from "vue-router";
 
-    const loginModal = ref(null)
     const user = ref(null)
     const router = inject("router")
     const route = useRoute()
@@ -32,8 +31,6 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="route.meta['navbarStyle'] || ''">
         <div class="container-fluid">
-
-            <LoginModal ref="loginModal" />
 
             <a class="navbar-brand me-1">
                 <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">

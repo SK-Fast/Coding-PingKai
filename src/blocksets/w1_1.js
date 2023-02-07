@@ -26,7 +26,7 @@ export const init = () => {
             "message0": '%1 หมุนซ้าย',
             "nextStatement": "Action",
             "previousStatement": "Action",
-            "colour": 140,
+            "colour": 20,
             "args0": [
                 {
                   "type": "field_image",
@@ -41,7 +41,7 @@ export const init = () => {
             "message0": '%1 หมุนขวา',
             "nextStatement": "Action",
             "previousStatement": "Action",
-            "colour": 150,
+            "colour": 25,
             "args0": [
                 {
                   "type": "field_image",
@@ -56,7 +56,7 @@ export const init = () => {
             "message0": '%1 ไปข้างหน้า',
             "nextStatement": "Action",
             "previousStatement": "Action",
-            "colour": 160,
+            "colour": 30,
             "args0": [
                 {
                   "type": "field_image",
@@ -71,7 +71,7 @@ export const init = () => {
             "message0": '%1 ไปข้างหลัง',
             "nextStatement": "Action",
             "previousStatement": "Action",
-            "colour": 170,
+            "colour": 35,
             "args0": [
                 {
                   "type": "field_image",
