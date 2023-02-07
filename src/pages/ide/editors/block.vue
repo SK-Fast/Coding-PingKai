@@ -32,11 +32,10 @@ const blocklyDiv = ref(null)
 const props = defineProps({
     options: {
         type: Object
-    }
+    },
 })
 
-onMounted(() => {
-   setTimeout(() => {
+const initBlockly = () => {
     const { options } = toRefs(props)
 
     console.log(options)
@@ -51,6 +50,13 @@ onMounted(() => {
     Blockly.HSV_VALUE = 1
 
     Blockly.inject(blocklyDiv.value, props.options)
-   }, 50);
+}
+
+defineExpose({
+    initBlockly
+})
+
+onMounted(() => {
+  
 })
 </script>

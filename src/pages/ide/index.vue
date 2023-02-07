@@ -1,5 +1,5 @@
 <template>
-     <div class="page-trans bg-light-400 loaded">
+     <div class="page-trans bg-light-400 loaded" :class="{'loading': pageLoading}">
         <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
@@ -52,6 +52,14 @@
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
             <div class="flex-grow-1">
+                <div class="no-blockwrite d-none">
+                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
+                        <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
+                        <h4 class="mt-2 text-white">รอโค้ดรัน</h4>
+                        <p class="text-white">คุณจะไม่สามารถแก้ไขโค้ดได้ระหว่างที่โค้ดยังรันอยู่</p>
+                    </div>
+                </div>
+
                 <BlockEditor ref="bEditor" :options="blocklyConfig">
                 </BlockEditor>
             </div>
@@ -90,6 +98,7 @@
 <script setup>
 import BlockEditor from './editors/block.vue'
 import { onMounted, ref, inject } from 'vue'
+import { findLevel } from '@/lessons/lessons.js'
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -99,6 +108,7 @@ const toolbox = {
 const router = inject("router")
 
 const bEditor = ref(null)
+const pageLoading = ref(true)
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -116,12 +126,34 @@ const blocklyConfig = ref({
 })
 
 onMounted(async () => {
-    const blockset = await import("@/blocksets/w1_1.js")
+    const routerID = router.currentRoute.value.params['id']
 
-    blockset.init()
-    toolbox.contents = blockset.blocks
+    if (typeof(routerID) == 'string') {
+        const b = findLevel(routerID)
 
-    console.log("moutin")
+        if (b) {
+            const lessonData = await b.levelData()
+            const lessonKind = await lessonData.levelKind()
+            const blockset = await lessonKind.blockset()
+
+            blockset.init()
+            toolbox.contents = lessonData.blocks
+
+            bEditor.value.initBlockly()
+
+            pageLoading.value = false
+
+        } else {
+            await Swal.fire({
+                title: 'ไม่เจอบทเรียน',
+                text: "ไม่พบบทเรียนในระบบ",
+                icon: 'error',
+                confirmButtonText: 'ออก',
+            })
+
+            router.push('/learn')
+        }
+    }
 })
 
 const requestEnd = async () => {
@@ -156,6 +188,15 @@ const requestEnd = async () => {
 
 .editor-container {
     background-color: white;
+}
+
+.no-blockwrite {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
 }
 
 .editor-top {

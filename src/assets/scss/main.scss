@@ -306,8 +306,8 @@ a, .btn-link {
 }
 
 .page-trans.loading {
-    --x: 100%;
-    --y: 100%;
+    --x: 50%;
+    --y: 50%;
     display: block;
     animation: pageTransAnim 2s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: forwards;
@@ -336,5 +336,25 @@ a, .btn-link {
     }
     100% {
         clip-path: circle(0% at 50% 50%);
+    }
+}
+
+.block-focus {
+    animation: blockFocusPop 0.25s linear;
+    animation-iteration-count: infinite;
+
+    outline: solid orange;
+    border-radius: 10px;
+}
+
+@keyframes blockFocusPop {
+    0% {
+        outline-offset: 0px;
+    }
+    50% {
+        outline-offset: 5px;
+    }
+    100% {
+        outline-offset: 0px;
     }
 }

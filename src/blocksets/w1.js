@@ -1,24 +1,5 @@
 import Blockly from 'blockly';
 
-export const blocks = [
-    {
-        "kind": "block",
-        "type": "turn_left"
-    },
-    {
-        "kind": "block",
-        "type": "turn_right"
-    },
-    {
-        "kind": "block",
-        "type": "go_forward"
-    },
-    {
-        "kind": "block",
-        "type": "go_back"
-    }
-]
-
 export const init = () => {
     Blockly.defineBlocksWithJsonArray([
         {
