@@ -1,4 +1,11 @@
 <template>
+     <div class="page-trans bg-light-400 loaded">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
+            <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
+            <h4 class="mt-2">กำลังโหลด...</h4>
+            <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
+        </div>
+     </div>
     <div class="editor-top flex-column flex-md-row">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
@@ -168,6 +175,16 @@ const requestEnd = async () => {
 @keyframes editorTopPop {
     from {
         transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.pg-fadein {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
         opacity: 0;
     }
 }

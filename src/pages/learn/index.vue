@@ -1,4 +1,6 @@
 <template>
+    <div class="page-trans bg-light-400" :class="{'loading': lvlLoading}" :style="`--x: ${lvlLoadX}%;--y: ${lvlLoadY}%`">
+    </div>
     <div class="mt-5">
         <div class="container text-md-start text-center">
             <h3>เลือกด่าน</h3>
@@ -23,7 +25,7 @@
             </div>
             -->
             <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                <div class="lvl-btn" @click="goToLesson(level.levelI)" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
+                <div class="lvl-btn" @click="(event) => goToLesson(level.levelI, event)" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
                     <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                     <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
                     <img src="@/assets/level/check.png" width="50" height="50" v-if="level.lvlState == 'done'">
@@ -55,6 +57,10 @@ const store = inject("store")
 const router = inject("router")
 const lvlScroll = ref(null)
 const dataLoading = ref(true)
+
+const lvlLoading = ref(false)
+const lvlLoadX = ref(0)
+const lvlLoadY = ref(0)
 
 onMounted(async() => {
     const { sections } = await import("@/lessons/lessons.js")
@@ -91,8 +97,15 @@ onMounted(async() => {
     dataLoading.value = false
 })
 
-const goToLesson = (i) => {
-    router.push(`/workspace/${i}`)
+const goToLesson = (i, e) => {
+    lvlLoading.value = true
+
+    lvlLoadX.value = (e.clientX / window.innerWidth) * 100
+    lvlLoadY.value = (e.clientY / window.innerHeight) * 100
+
+    setTimeout(() => {
+        router.push(`/workspace/${i}`)
+    }, 500)
 }
 </script>
 

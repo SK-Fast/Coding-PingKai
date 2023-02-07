@@ -293,3 +293,48 @@ a, .btn-link {
 .main-pageview.hide {
     margin-bottom: 0;
 }
+
+.page-trans {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    display: none;
+    pointer-events: none;
+}
+
+.page-trans.loading {
+    --x: 100%;
+    --y: 100%;
+    display: block;
+    animation: pageTransAnim 2s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
+    cursor: progress;
+    pointer-events: all;
+}
+
+.page-trans.loaded {
+    display: block;
+    animation: pageHideAnim 2s cubic-bezier(0.7, 0, 0.84, 0);
+    animation-fill-mode: forwards;
+}
+
+@keyframes pageTransAnim {
+    0% {
+        clip-path: circle(0% at var(--x) var(--y));
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
+
+@keyframes pageHideAnim {
+    0% {
+        clip-path: circle(100% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(0% at 50% 50%);
+    }
+}

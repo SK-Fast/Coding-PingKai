@@ -62,3 +62,43 @@
         filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.25));
     }
 }
+
+.blocklyWidgetDiv .blocklyMenu {
+    animation: dropdownScale 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 10px;
+}
+
+.blocklyMenuItem  {
+    padding: 3px 5px;
+}
+
+.blocklyMenuItemContent {
+    padding: 5px 9px;
+    border-radius: 8px;
+}
+
+.blocklyMenuItem:hover {
+    background-color: transparent;
+}
+
+.blocklyMenuItem:not(.goog-menuitem-disabled):hover .blocklyMenuItemContent {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+.blocklyMenuItem:not(.goog-menuitem-disabled):active .blocklyMenuItemContent {
+    filter: brightness(90%);
+}
+
+@keyframes dropdownScale {
+    0% {
+        max-height: 0%;
+    }
+    100% {
+        max-height: 100%;
+    }
+}
+
+.blocklyMenuItemContent.goog-menuitem-content {
+    font-family: "Bai Jamjuree", 'Ubuntu Mono', monospace !important;
+}
