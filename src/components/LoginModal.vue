@@ -10,9 +10,9 @@
     const errorMsg = ref("")
 
     const knownErrors = {
-        "auth/popup-closed-by-user": "การลงชื่อเข้าใช้ถูกยกเลิก",
-        "auth/account-exists-with-different-credential": "มีบัญชีนี้อยู่แล้ว",
-        "auth/popup-blocked": "การลงชื่อเข้าใช้ถูกยกเลิกโดยเบราว์เซอร์",
+        "(auth/popup-closed-by-user)": "การลงชื่อเข้าใช้ถูกยกเลิก",
+        "(auth/account-exists-with-different-credential)": "มีบัญชีนี้อยู่แล้ว",
+        "(auth/popup-blocked)": "การลงชื่อเข้าใช้ถูกยกเลิกโดยเบราว์เซอร์",
     }
 
     const googleLogin = async () => {
@@ -26,7 +26,15 @@
 
         const result = await signInWithPopup(auth, provider).catch((error) => {
             loggingIn.value = false
-            errorMsg.value = error
+
+            let errS = error.toString()
+            let errRegex = errS.match(/\([^{}]*\)/)
+
+            if (knownErrors[errRegex[0]]) {
+                errorMsg.value = knownErrors[errRegex[0]]
+            } else {
+                errorMsg.value = error
+            }
         })
 
         if (result['user']) {
