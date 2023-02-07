@@ -1,5 +1,5 @@
 <script setup>
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth'
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
     import { ref } from "vue";
@@ -23,7 +23,7 @@
 
         const auth = getAuth()
 
-        const result = await signInWithRedirect(auth, provider).catch((error) => {
+        const result = await signInWithPopup(auth, provider).catch((error) => {
             loggingIn.value = false
 
             let errS = error.toString()
