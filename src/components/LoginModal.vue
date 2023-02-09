@@ -2,12 +2,13 @@
     import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
-    import { ref } from "vue";
+    import { ref, inject } from "vue";
     import { newUserData } from "libs/firebaseSystem"
 
     const modalBase = ref(null)
     const loggingIn = ref(false)
     const errorMsg = ref("")
+    const router = inject("router")
 
     const knownErrors = {
         "(auth/popup-closed-by-user)": "การลงชื่อเข้าใช้ถูกยกเลิก",
@@ -40,6 +41,8 @@
             await newUserData(result.user)
             Modal.methods.closeModal()
             loggingIn.value = false
+
+            router.push("/dashboard")
         }
     }
 </script>  

@@ -1,13 +1,22 @@
 <script setup>
-import { ref } from "vue";
+import { ref, inject, onMounted } from "vue";
 import LoginModal from "@/components/LoginModal.vue"
 
+const store = inject("store")
+const router = inject("router")
 const loginModal = ref(null)
+
+onMounted(() => {
+  if (store.state.user) {
+    router.push("/dashboard")
+  }
+})
 
 const openLogin = () => {
   console.log("login entry landing")
 
   LoginModal.openL()
+  
 }
 
 </script>

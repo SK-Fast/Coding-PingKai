@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
+import { getAuth, connectAuthEmulator, signOut, onAuthStateChanged } from 'firebase/auth'
 import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
 import * as logger from 'libs/logger.js'
@@ -14,19 +14,23 @@ const firebaseConfig = {
 };
 
 export function initApp() {
-    const app = initializeApp(firebaseConfig)
+    return new Promise((resolve) => {
+        const app = initializeApp(firebaseConfig)
 
-    if (import.meta.env.MODE == "development") {
-        connectAuthEmulator(getAuth(), `http://localhost:${import.meta.env.VITE_AUTH_PORT}`, {
-            disableWarnings: true
-        });
-
-        connectFirestoreEmulator(getFirestore(), "localhost", import.meta.env.VITE_FIRESTORE_PORT)
+        if (import.meta.env.MODE == "development") {
+            connectAuthEmulator(getAuth(), `http://localhost:${import.meta.env.VITE_AUTH_PORT}`, {
+                disableWarnings: true
+            });
     
-        logger.success("Emulators Connected")
-    }
+            connectFirestoreEmulator(getFirestore(), "localhost", import.meta.env.VITE_FIRESTORE_PORT)
+        
+            logger.success("Emulators Connected")
+        }
 
-    return app
+        getAuth().onAuthStateChanged((user) => {
+            return resolve([app, user])
+        });
+    })
 }
 
 /**

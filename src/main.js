@@ -22,37 +22,44 @@ const store = createStore({
         devMode: import.meta.env.MODE == 'development'
     },
     computed: {
-        count () {
+        count() {
             return this.$store.state.user
         }
     }
 })
 
-initApp()
+const initVueApp = async () => {
+    const [fapp, fuser] = await initApp()
 
-const app = createApp(App)
+    console.log(fuser)
 
-app.component(VueFeather.name, VueFeather);
-app.use(router)
-app.use(store)
+    const app = createApp(App)
 
-app.use(VueSweetalert2);
-window.Swal = app.config.globalProperties.$swal;
-window.toastMixin = window.Swal.mixin({
-    toast: true,
-    icon: 'success',
-    title: 'General Title',
-    animation: false,
-    position: 'top-right',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: false,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  });
+    app.component(VueFeather.name, VueFeather);
+    app.use(router)
+    app.use(store)
 
-app.provide('router', router)
+    app.use(VueSweetalert2);
+    window.Swal = app.config.globalProperties.$swal;
+    window.toastMixin = window.Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
-app.mount('#app')
+    app.provide('router', router)
+
+    app.mount('#app')
+
+}
+
+initVueApp()
