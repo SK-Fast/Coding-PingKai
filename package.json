@@ -20,6 +20,7 @@
     "feather-icons": "^4.29.0",
     "firebase": "^9.12.1",
     "path": "^0.12.7",
+    "pixi.js": "^7.1.2",
     "sweetalert2": "^11.4.8",
     "vue": "^3.2.37",
     "vue-feather": "^2.0.0",

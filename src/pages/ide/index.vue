@@ -31,7 +31,7 @@
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle">
         <div class="col-md-3 p-4 pt-0">
-            <div class="runResult">
+            <div class="runResult" ref="runResult">
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <div class="btn-group tool-btns">
@@ -109,6 +109,7 @@ const router = inject("router")
 
 const bEditor = ref(null)
 const pageLoading = ref(true)
+const runResult = ref(null)
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -135,6 +136,8 @@ onMounted(async () => {
             const lessonData = await b.levelData()
             const lessonKind = await lessonData.levelKind()
             const blockset = await lessonKind.blockset()
+
+            lessonKind.init(runResult.value, lessonData.levelData)
 
             blockset.init()
             toolbox.contents = lessonData.blocks
@@ -179,6 +182,7 @@ const requestEnd = async () => {
     height: 274px;
     background-color: black;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .tool-btns {
