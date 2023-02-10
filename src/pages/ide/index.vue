@@ -31,7 +31,7 @@
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle">
         <div class="col-md-3 p-4 pt-0">
-            <div class="runResult" ref="runResult">
+            <div class="runResult" ref="runResult" :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <div class="btn-group tool-btns">
@@ -110,6 +110,9 @@ const router = inject("router")
 const bEditor = ref(null)
 const pageLoading = ref(true)
 const runResult = ref(null)
+const lessonKindData = ref({
+    ratio: [1,1]
+})
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -136,6 +139,8 @@ onMounted(async () => {
             const lessonData = await b.levelData()
             const lessonKind = await lessonData.levelKind()
             const blockset = await lessonKind.blockset()
+
+            lessonKindData.value = lessonKind.kindData
 
             lessonKind.init(runResult.value, lessonData.levelData)
 
@@ -178,8 +183,6 @@ const requestEnd = async () => {
 
 <style scoped>
 .runResult {
-    width: 100%;
-    height: 274px;
     background-color: black;
     border-radius: 10px;
     overflow: hidden;

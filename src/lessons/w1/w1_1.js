@@ -12,6 +12,7 @@ export const blocks = [
 export const levelKind = () => {return import("@/lesson_kind/chickwalk.js")}
 export const levelData = {
     width: 5,
+    height: 4,
     data: [
         "#", "#", "F", "#", "#", 
         "#", "#", " ", "#", "#", 
