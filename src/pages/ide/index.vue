@@ -6,7 +6,7 @@
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
         </div>
      </div>
-    <div class="editor-top flex-column flex-md-row">
+    <div class="editor-top flex-column flex-md-row" :class="{'loading': codeRunning}">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
 
@@ -35,24 +35,22 @@
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <div class="btn-group tool-btns">
-                    <div class="btn btn-light-400">
-                        <vue-feather type="skip-back" stroke="#606060" />
-                    </div>
-                    <div class="btn btn-success">
+                    <div class="btn btn-success run-code-btn" @click="runCode" v-if="!codeRunning">
                         <vue-feather type="play" class="me-1" stroke="#FFF" />
                     </div>
-                    <div class="btn btn-danger">
+                    <div class="btn btn-danger stop-code-btn" @click="stopCode" v-if="codeRunning">
                         <vue-feather type="octagon" stroke="#FFF" />
                     </div>
-                    <div class="btn btn-light-400">
-                        <vue-feather type="skip-forward" stroke="#606060" />
+                    <div class="progressBar" v-if="codeRunning" @click="stopCode">
+                        <div class="prog" :style="`width: ${runningPercent}%`">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
-            <div class="flex-grow-1">
-                <div class="no-blockwrite d-none">
+            <div class="flex-grow-1 editor-zone">
+                <div class="no-blockwrite" v-if="codeRunning">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
                         <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
                         <h4 class="mt-2 text-white">รอโค้ดรัน</h4>
@@ -107,12 +105,22 @@ const toolbox = {
 
 const router = inject("router")
 
+let lessonData;
+let lessonKind;
+let blockset;
+
 const bEditor = ref(null)
 const pageLoading = ref(true)
+const codeRunning = ref(false)
 const runResult = ref(null)
+
+const runningPercent = ref(0)
+
 const lessonKindData = ref({
     ratio: [1,1]
 })
+
+let blocklyWorkspace;
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -136,9 +144,9 @@ onMounted(async () => {
         const b = findLevel(routerID)
 
         if (b) {
-            const lessonData = await b.levelData()
-            const lessonKind = await lessonData.levelKind()
-            const blockset = await lessonKind.blockset()
+            lessonData = await b.levelData()
+            lessonKind = await lessonData.levelKind()
+            blockset = await lessonKind.blockset()
 
             lessonKindData.value = lessonKind.kindData
 
@@ -147,7 +155,9 @@ onMounted(async () => {
             blockset.init()
             toolbox.contents = lessonData.blocks
 
-            bEditor.value.initBlockly()
+            blocklyWorkspace = bEditor.value.initBlockly()
+
+            console.log(blocklyWorkspace)
 
             pageLoading.value = false
 
@@ -179,6 +189,21 @@ const requestEnd = async () => {
     }
 }
 
+const runCode = async() => {
+    let code = blockset.generate(blocklyWorkspace)
+
+    codeRunning.value = true
+
+    console.log(code)
+
+    runningPercent.value = 50
+}
+
+
+const stopCode = async() => {
+    codeRunning.value = false
+}
+
 </script>
 
 <style scoped>
@@ -193,14 +218,75 @@ const requestEnd = async () => {
     border-radius: 10px;
 }
 
+.progressBar .prog {
+    height: 100%;
+    background-color: #f23051;
+
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    box-shadow: inset 0px -2px 0px rgb(21 21 21 / 25%);
+}
+
+.progressBar {
+    width: 150px;
+    background-color: #ca233f;
+
+    animation: progressBarShow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
+
+    cursor: pointer;
+}
+
+.run-code-btn {
+    animation: runCodeHide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stop-code-btn {
+    animation: stopCodeBtn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
+}
+
+@keyframes stopCodeBtn {
+    from {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    to {
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+}
+
+
+@keyframes progressBarShow {
+    from {
+        width: 0px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    to {
+        width: 150px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+    }
+}
+
+@keyframes runCodeHide {
+    from {
+        width: 198px;
+        background-color: #f23051;
+    }
+    to {
+        width: 52px;
+        background-color: #26BF5B;
+    }
+}
+
 .editor-container {
     background-color: white;
 }
 
 .no-blockwrite {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.6);
@@ -210,8 +296,6 @@ const requestEnd = async () => {
     display: flex;
     height: 60px;
     align-items: center;
-
-    animation: editorTopPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media only screen and (max-width: 600px) {
@@ -254,6 +338,10 @@ const requestEnd = async () => {
     width: 100px;
     height: 100px;
     background: #DFDFDF;
+}
+
+.editor-zone {
+    overflow: hidden;
 }
 
 .editor-top.loading {

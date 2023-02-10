@@ -9,7 +9,8 @@ export const sections = [
                 levelData: () => {return import("./w1/w1_1.js")}
             },
             {
-                title: "หมุนซ้าย... หมุนขวา..."
+                title: "หมุนซ้าย... หมุนขวา...",
+                levelData: () => {return import("./w1/w1_2.js")}
             }
         ]
     }

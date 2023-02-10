@@ -24,6 +24,12 @@
   })
   
   router.beforeEach((to, from) => {
+    if (to.meta['noScroll']) {
+      document.documentElement.style.overflowY = 'hidden'
+    } else {
+      document.documentElement.style.overflowY = 'auto'
+    }
+
     if (to.meta.needAuth && store.state.user == null) {
         LoginModal.openL(to)
         return false
@@ -34,8 +40,9 @@
 </script>
 
 <template>
+  <Navbar />
+
   <div class="d-flex flex-column top-pv" :class="route.meta['navbarStyle'] || ''">
-    <Navbar />
 
     <LoginModal ref="loginModal" />
 

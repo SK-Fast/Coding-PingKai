@@ -57,7 +57,8 @@ export default [
     {
         path: '/workspace/:id',
         meta: {
-            navbarStyle: "hide"
+            navbarStyle: "hide",
+            noScroll: true
         },
         component: IDE
     },

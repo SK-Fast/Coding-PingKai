@@ -1,10 +1,15 @@
 import Blockly from 'blockly';
+import langGenerator from "blockly/javascript"
+
+export const generate = (w) => {
+    return langGenerator.workspaceToCode(w)
+}
 
 export const init = () => {
     Blockly.defineBlocksWithJsonArray([
         {
             "type": "turn_left",
-            "message0": '%1 หมุนซ้าย',
+            "message0": '%1 ไปทางซ้าย',
             "nextStatement": "Action",
             "previousStatement": "Action",
             "colour": 20,
@@ -19,7 +24,7 @@ export const init = () => {
         },
         {
             "type": "turn_right",
-            "message0": '%1 หมุนขวา',
+            "message0": '%1 ไปทางขวา',
             "nextStatement": "Action",
             "previousStatement": "Action",
             "colour": 25,
@@ -34,7 +39,7 @@ export const init = () => {
         },
         {
             "type": "go_forward",
-            "message0": '%1 ไปข้างหน้า',
+            "message0": '%1 ขึ้นไปข้างบน',
             "nextStatement": "Action",
             "previousStatement": "Action",
             "colour": 30,
@@ -49,7 +54,7 @@ export const init = () => {
         },
         {
             "type": "go_back",
-            "message0": '%1 ไปข้างหลัง',
+            "message0": '%1 ลงไปด้านล่าง',
             "nextStatement": "Action",
             "previousStatement": "Action",
             "colour": 35,
@@ -63,4 +68,20 @@ export const init = () => {
             ]
         },
     ]);
+
+    langGenerator["turn_left"] = (block) => {
+        return "goLeft()\n"
+    }
+
+    langGenerator["turn_right"] = (block) => {
+        return "goRight()\n"
+    }
+    
+    langGenerator["go_forward"] = (block) => {
+        return "goForward()\n"
+    }
+    
+    langGenerator["go_back"] = (block) => {
+        return "goBack()\n"
+    }
 }

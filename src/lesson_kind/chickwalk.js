@@ -30,6 +30,8 @@ export const init = async (e, data) => {
 
     let tileSwap = false
 
+    let chick;
+
     const makeBlock = (img, px, py) => {
         const ground = PIXI.Sprite.from(img)
         ground.width = cellSize
@@ -62,6 +64,14 @@ export const init = async (e, data) => {
         makeBlock(groundImg, cw, ch)
         tileSwap = !tileSwap
 
+        if (d == "F") {
+            makeBlock('/chickwalk_tiles/flag.png', cw, ch)
+        }
+
+        if (d == "C") {
+            chick = makeBlock('/chickwalk_tiles/chick_L.png', cw, ch)
+        }
+
         w++
         cw = cw + cellSize
 
@@ -88,5 +98,9 @@ export const init = async (e, data) => {
 
             cw = cw + cellSize
         }
+    }
+
+    return {
+        chick: chick
     }
 }
