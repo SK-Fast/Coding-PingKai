@@ -102,3 +102,20 @@
 .blocklyMenuItemContent.goog-menuitem-content {
     font-family: "Bai Jamjuree", 'Ubuntu Mono', monospace !important;
 }
+
+.blocklyTooltipDiv {
+    font-family: "Bai Jamjuree", 'Ubuntu Mono', monospace !important;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    animation: tooltipAppears 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 15px;
+    border: none;
+}
+
+@keyframes tooltipAppears {
+    0% {
+        transform: scale(0) translateX(-50%) translateY(-50%);
+    }
+}

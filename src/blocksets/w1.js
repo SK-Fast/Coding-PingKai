@@ -42,6 +42,7 @@ export const init = () => {
             "message0": '%1 ขึ้นไปข้างบน',
             "nextStatement": "Action",
             "previousStatement": "Action",
+            "tooltip": "ให้ไก่เดินขึ้นไปข้างบน",
             "colour": 30,
             "args0": [
                 {
@@ -54,9 +55,10 @@ export const init = () => {
         },
         {
             "type": "go_back",
-            "message0": '%1 ลงไปด้านล่าง',
+            "message0": '%1 ลงไปข้างล่าง',
             "nextStatement": "Action",
             "previousStatement": "Action",
+            "tooltip": "ให้ไก่เดินลงไปข้างล่าง",
             "colour": 35,
             "args0": [
                 {
