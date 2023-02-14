@@ -8,7 +8,7 @@ export const generate = (w) => {
 export const init = () => {
     Blockly.defineBlocksWithJsonArray([
         {
-            "type": "turn_left",
+            "type": "go_left",
             "message0": '%1 ไปทางซ้าย',
             "nextStatement": "Action",
             "previousStatement": "Action",
@@ -16,14 +16,14 @@ export const init = () => {
             "args0": [
                 {
                   "type": "field_image",
-                  "src": "/blockly_editor/rotate-ccw.png",
+                  "src": "/blockly_editor/arrow-left-circle.png",
                   "width": 15,
                   "height": 15
                 },
             ]
         },
         {
-            "type": "turn_right",
+            "type": "go_right",
             "message0": '%1 ไปทางขวา',
             "nextStatement": "Action",
             "previousStatement": "Action",
@@ -31,14 +31,14 @@ export const init = () => {
             "args0": [
                 {
                   "type": "field_image",
-                  "src": "/blockly_editor/rotate-cw.png",
+                  "src": "/blockly_editor/arrow-right-circle.png",
                   "width": 15,
                   "height": 15
                 },
             ]
         },
         {
-            "type": "go_forward",
+            "type": "go_up",
             "message0": '%1 ขึ้นไปข้างบน',
             "nextStatement": "Action",
             "previousStatement": "Action",
@@ -54,7 +54,7 @@ export const init = () => {
             ]
         },
         {
-            "type": "go_back",
+            "type": "go_down",
             "message0": '%1 ลงไปข้างล่าง',
             "nextStatement": "Action",
             "previousStatement": "Action",
@@ -71,19 +71,19 @@ export const init = () => {
         },
     ]);
 
-    langGenerator["turn_left"] = (block) => {
-        return "goLeft()\n"
+    langGenerator["go_left"] = (block) => {
+        return "go_left,"
     }
 
-    langGenerator["turn_right"] = (block) => {
-        return "goRight()\n"
+    langGenerator["go_right"] = (block) => {
+        return "go_right,"
     }
     
-    langGenerator["go_forward"] = (block) => {
-        return "goForward()\n"
+    langGenerator["go_up"] = (block) => {
+        return "go_up,"
     }
     
-    langGenerator["go_back"] = (block) => {
-        return "goBack()\n"
+    langGenerator["go_down"] = (block) => {
+        return "go_down,"
     }
 }

@@ -47,9 +47,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card shadow-sm mt-2" v-if="hasBlockLimit">
+                <div class="card-body d-flex">
+                    <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
+                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น</p>
+                    <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน</p>
+                </div>
+            </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
-            <div class="flex-grow-1 editor-zone">
+            <div class="flex-grow-1 editor-zone" @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
                 <div class="no-blockwrite" v-if="codeRunning">
                     <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
                         <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
@@ -114,6 +122,9 @@ const pageLoading = ref(true)
 const codeRunning = ref(false)
 const runResult = ref(null)
 
+const hasBlockLimit = ref(false)
+const blockLeft = ref(4)
+
 const runningPercent = ref(0)
 
 const lessonKindData = ref({
@@ -137,6 +148,10 @@ const blocklyConfig = ref({
     trashcan: true
 })
 
+const updateBlockLimit = () => {
+    blockLeft.value = blocklyWorkspace.remainingCapacity()
+}
+
 onMounted(async () => {
     const routerID = router.currentRoute.value.params['id']
 
@@ -154,6 +169,11 @@ onMounted(async () => {
 
             blockset.init()
             toolbox.contents = lessonData.blocks
+
+            if (lessonData.levelData["blockLimit"]) {
+                blocklyConfig.value['maxBlocks'] = lessonData.levelData.blockLimit
+                hasBlockLimit.value = true
+            }
 
             blocklyWorkspace = bEditor.value.initBlockly()
 
@@ -225,6 +245,9 @@ const stopCode = async() => {
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
     box-shadow: inset 0px -2px 0px rgb(21 21 21 / 25%);
+
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .progressBar {

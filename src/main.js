@@ -28,6 +28,8 @@ const store = createStore({
     }
 })
 
+window.codeGens = {}
+
 const initVueApp = async () => {
     const [fapp, fuser] = await initApp()
 

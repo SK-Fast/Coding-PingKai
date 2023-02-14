@@ -1,11 +1,11 @@
 export const blocks = [
     {
         "kind": "block",
-        "type": "go_forward"
+        "type": "go_up"
     },
     {
         "kind": "block",
-        "type": "go_back"
+        "type": "go_down"
     }
 ]
 

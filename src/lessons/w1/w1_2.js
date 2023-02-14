@@ -1,23 +1,32 @@
 export const blocks = [
     {
         "kind": "block",
-        "type": "go_forward"
+        "type": "go_up"
     },
     {
         "kind": "block",
-        "type": "go_back"
-    }
+        "type": "go_down"
+    },
+    {
+        "kind": "block",
+        "type": "go_left"
+    },
+    {
+        "kind": "block",
+        "type": "go_right"
+    },
 ]
 
 export const levelKind = () => {return import("@/lesson_kind/chickwalk.js")}
 export const levelData = {
     width: 5,
     height: 4,
+    blockLimit: 4,
     data: [
-        " ", "#", "#", "#", " ", 
-        "F", "F", "#", "#", "#", 
-        " ", "#", "#", "#", "#", 
-        " ", "#", " ", "#", " "
+        "#", "#", "#", "#", "#", 
+        "#", " ", " ", "F", "#", 
+        "#", " ", "#", "#", "#", 
+        "#", "C", "#", "#", "#"
     ]
 }
 

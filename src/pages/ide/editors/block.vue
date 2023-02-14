@@ -49,7 +49,9 @@ const initBlockly = () => {
     Blockly.HSV_SATURATION = 0.8
     Blockly.HSV_VALUE = 1
 
-    return Blockly.inject(blocklyDiv.value, props.options)
+    const workspace = Blockly.inject(blocklyDiv.value, props.options)
+
+    return workspace
 }
 
 defineExpose({
