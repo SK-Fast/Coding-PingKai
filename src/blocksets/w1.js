@@ -1,5 +1,5 @@
 import Blockly from 'blockly';
-import langGenerator from "blockly/javascript"
+import langGenerator from "blockly/python"
 
 export const generate = (w) => {
     return langGenerator.workspaceToCode(w)
@@ -72,18 +72,18 @@ export const init = () => {
     ]);
 
     langGenerator["go_left"] = (block) => {
-        return "go_left,"
+        return "go_left()\n"
     }
 
     langGenerator["go_right"] = (block) => {
-        return "go_right,"
+        return "go_right()\n"
     }
     
     langGenerator["go_up"] = (block) => {
-        return "go_up,"
+        return "go_up()\n"
     }
     
     langGenerator["go_down"] = (block) => {
-        return "go_down,"
+        return "go_down()\n"
     }
 }

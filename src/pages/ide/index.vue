@@ -1,12 +1,12 @@
 <template>
-     <div class="page-trans bg-light-400 loaded" :class="{'loading': pageLoading}">
+    <div class="page-trans bg-light-400 loaded" :class="{ 'loading': pageLoading }">
         <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
         </div>
-     </div>
-    <div class="editor-top flex-column flex-md-row" :class="{'loading': codeRunning}">
+    </div>
+    <div class="editor-top flex-column flex-md-row" :class="{ 'loading': codeRunning }">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
 
@@ -31,7 +31,8 @@
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle">
         <div class="col-md-3 p-4 pt-0">
-            <div class="runResult" ref="runResult" :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
+            <div class="runResult" ref="runResult"
+                :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <div class="btn-group tool-btns">
@@ -51,8 +52,10 @@
             <div class="card shadow-sm mt-2" v-if="hasBlockLimit">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
-                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น</p>
-                    <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน</p>
+                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
+                    </p>
+                    <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน
+                    </p>
                 </div>
             </div>
         </div>
@@ -125,13 +128,16 @@ const runResult = ref(null)
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
 
+const delayInms = ref(500)
+
 const runningPercent = ref(0)
 
 const lessonKindData = ref({
-    ratio: [1,1]
+    ratio: [1, 1]
 })
 
 let blocklyWorkspace;
+let interpreterData;
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -155,7 +161,7 @@ const updateBlockLimit = () => {
 onMounted(async () => {
     const routerID = router.currentRoute.value.params['id']
 
-    if (typeof(routerID) == 'string') {
+    if (typeof (routerID) == 'string') {
         const b = findLevel(routerID)
 
         if (b) {
@@ -165,7 +171,7 @@ onMounted(async () => {
 
             lessonKindData.value = lessonKind.kindData
 
-            lessonKind.init(runResult.value, lessonData.levelData)
+            interpreterData = await lessonKind.init(runResult.value, lessonData.levelData)
 
             blockset.init()
             toolbox.contents = lessonData.blocks
@@ -209,19 +215,28 @@ const requestEnd = async () => {
     }
 }
 
-const runCode = async() => {
+const delay = () => {
+    return new Promise(resolve => setTimeout(resolve, delayInms.value));
+}
+
+const runCode = async () => {
     let code = blockset.generate(blocklyWorkspace)
 
     codeRunning.value = true
 
     console.log(code)
 
-    runningPercent.value = 50
+    await lessonKind.run(code, interpreterData, delay)
+
+    runningPercent.value = 100
 }
 
 
-const stopCode = async() => {
+const stopCode = async () => {
     codeRunning.value = false
+    runningPercent.value = 0
+
+    lessonKind.reset(interpreterData)
 }
 
 </script>
@@ -274,6 +289,7 @@ const stopCode = async() => {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
     }
+
     to {
         border-top-left-radius: 25px;
         border-bottom-left-radius: 25px;
@@ -287,6 +303,7 @@ const stopCode = async() => {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+
     to {
         width: 150px;
         border-top-right-radius: 25px;
@@ -299,6 +316,7 @@ const stopCode = async() => {
         width: 198px;
         background-color: #f23051;
     }
+
     to {
         width: 52px;
         background-color: #26BF5B;
@@ -312,7 +330,7 @@ const stopCode = async() => {
 .no-blockwrite {
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .editor-top {
@@ -378,12 +396,12 @@ const stopCode = async() => {
 
 
 @keyframes loadingGradient {
-	0% {
-		background-position: -100% 0%;
-	}
-    100% {
-		background-position: 100% 0%;
-	}
-}
+    0% {
+        background-position: -100% 0%;
+    }
 
+    100% {
+        background-position: 100% 0%;
+    }
+}
 </style>
