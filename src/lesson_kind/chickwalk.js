@@ -1,34 +1,84 @@
 export const blockset = () => {return import("@/blocksets/w1.js")}
 import { jsPython } from 'jspython-interpreter';
+import anime from 'animejs';
+
+/**
+ * 
+ * @param {Array} lvlPos 
+ * @param {*} x 
+ * @param {*} y 
+ * @returns 
+ */
+function blockExist(lvlPos, x, y) {
+    return lvlPos.find((d) => d.x == x + 1 && d.y == y + 1)
+}
 
 export const run = async (script, data, delay) => {
-    console.log(data)
     const interpreter = jsPython();
 
+    let currentPosX = data.chickMapPos[0]
+    let currentPosY = data.chickMapPos[1]
+
+    let flags = data.flags
+
+    const flagCheck = () => {
+        return flags.find((d) => d.x == currentPosX && d.y == currentPosY)
+    }
+
     const updateMove = async() => {
-        data.chick.rotation = Math.floor(Math.random() * (5 - -5) ) + -5
+        const flagDetect = flagCheck()
+
+        if (flagDetect) {
+            flagDetect.obj.visible = false
+        }
 
         await delay()
     }
 
+    const moveChick = async(x, y) => {
+        anime({
+            targets: data.chick,
+            x: x,
+            y: y,
+            easing: 'easeOutElastic(1, .6)'
+        })
+        await updateMove(x, y)
+    }
+
     interpreter.addFunction('go_left', async () => {
-        console.log('goes left')
-        await updateMove()
+        let c = blockExist(data.lvlPos, currentPosX - 1, currentPosY)
+
+        if (c) {
+            currentPosX--
+            await moveChick(data.chick.x - data.cellSize, data.chick.y)
+        }
     });
 
     interpreter.addFunction('go_right', async () => {
-        console.log('goes right')
-        await updateMove()
+        let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
+
+        if (c) {
+            currentPosX++
+            await moveChick(data.chick.x + data.cellSize, data.chick.y)
+        }
     });
 
     interpreter.addFunction('go_up', async () => {
-        data.chick.y -= data.cellSize
-        await updateMove()
+        let c = blockExist(data.lvlPos, currentPosX, currentPosY - 1)
+
+        if (c) {
+            currentPosY--
+            await moveChick(data.chick.x, data.chick.y - data.cellSize)
+        }
     });
 
     interpreter.addFunction('go_down', async () => {
-        console.log('goes down')
-        await updateMove()
+        let c = blockExist(data.lvlPos, currentPosX, currentPosY + 1)
+
+        if (c) {
+            currentPosY++
+            await moveChick(data.chick.x, data.chick.y + data.cellSize)
+        }
     });
 
     await interpreter.evaluate(script)
@@ -38,6 +88,10 @@ export const reset = (data) => {
     data.chick.x = data.originPos[0]
     data.chick.y = data.originPos[1]
     data.chick.rotation = 0
+
+    for (const flag of data.flags) {
+        flag.obj.visible = true
+    }
 }
 
 export const kindData = {
@@ -84,6 +138,10 @@ export const init = async (e, data) => {
 
         return ground
     }
+
+    let blockPos = []
+    let chickMapPos = []
+    let flags = []
     
     for (const d of data.data) {
 
@@ -105,15 +163,29 @@ export const init = async (e, data) => {
         tileSwap = !tileSwap
 
         if (d == "F") {
-            makeBlock('/chickwalk_tiles/flag.png', cw, ch)
+            let f = makeBlock('/chickwalk_tiles/flag.png', cw, ch)
+
+            flags.push({
+                x: w,
+                y: h,
+                obj: f
+            })
         }
 
         if (d == "C") {
             chick = makeBlock('/chickwalk_tiles/chick_L.png', cw, ch)
+            chickMapPos[0] = w
+            chickMapPos[1] = h
         }
 
         w++
         cw = cw + cellSize
+
+        blockPos.push({
+            d: d,
+            x: w,
+            y: h
+        })
 
         if (w > data.width - 1) {
 
@@ -140,10 +212,17 @@ export const init = async (e, data) => {
         }
     }
 
+    console.log("blockPos", blockPos)
+    console.log("chickMapPos", chickMapPos)
+
     return {
         chick: chick,
         originPos: [chick.x, chick.y],
+        chickMapPos: chickMapPos,
+        flags: flags,
         lvlData: data,
-        cellSize: cellSize
+        cellSize: cellSize,
+        lvlPos: blockPos,
+        interpreter: null
     }
 }

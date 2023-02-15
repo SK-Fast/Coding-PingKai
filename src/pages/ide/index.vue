@@ -39,12 +39,8 @@
                     <div class="btn btn-success run-code-btn" @click="runCode" v-if="!codeRunning">
                         <vue-feather type="play" class="me-1" stroke="#FFF" />
                     </div>
-                    <div class="btn btn-danger stop-code-btn" @click="stopCode" v-if="codeRunning">
-                        <vue-feather type="octagon" stroke="#FFF" />
-                    </div>
-                    <div class="progressBar" v-if="codeRunning" @click="stopCode">
-                        <div class="prog" :style="`width: ${runningPercent}%`">
-                        </div>
+                    <div class="btn btn-warning" @click="stopCode" v-if="codeRunning" :disabled="!codeDone">
+                        <vue-feather type="refresh-cw" stroke="#FFF" />
                     </div>
                 </div>
             </div>
@@ -124,13 +120,12 @@ const bEditor = ref(null)
 const pageLoading = ref(true)
 const codeRunning = ref(false)
 const runResult = ref(null)
+const codeDone = ref(true)
 
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
 
 const delayInms = ref(500)
-
-const runningPercent = ref(0)
 
 const lessonKindData = ref({
     ratio: [1, 1]
@@ -226,15 +221,18 @@ const runCode = async () => {
 
     console.log(code)
 
+    codeDone.value = false
+
     await lessonKind.run(code, interpreterData, delay)
 
-    runningPercent.value = 100
+    await delay()
+
+    codeDone.value = true
 }
 
 
 const stopCode = async () => {
     codeRunning.value = false
-    runningPercent.value = 0
 
     lessonKind.reset(interpreterData)
 }
@@ -273,15 +271,6 @@ const stopCode = async () => {
     animation-fill-mode: forwards;
 
     cursor: pointer;
-}
-
-.run-code-btn {
-    animation: runCodeHide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.stop-code-btn {
-    animation: stopCodeBtn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    animation-fill-mode: forwards;
 }
 
 @keyframes stopCodeBtn {

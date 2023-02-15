@@ -358,3 +358,7 @@ a, .btn-link {
         outline-offset: 0px;
     }
 }
+
+.btn[disabled="true"] {
+    opacity: 0.5;
+}

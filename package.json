@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@rive-app/canvas": "^1.0.97",
+    "animejs": "^3.2.1",
     "blockly": "^5.20210325.0",
     "bootstrap": "^5.2.1",
     "chalk": "^5.1.2",
