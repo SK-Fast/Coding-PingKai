@@ -25,8 +25,8 @@
             <div class="rounded bg-light-400 p-1 editor-mode float-end me-2">
                 <button class="btn btn-primary">Block</button>
                 <!--
-                <button class="btn btn-transparent">Python</button>
-                -->
+                    <button class="btn btn-transparent">Python</button>
+                    -->
             </div>
         </div>
     </div>
@@ -57,7 +57,8 @@
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
-            <div class="flex-grow-1 editor-zone" :class="{'editor-running': codeRunning}" @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
+            <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
+                @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
 
                 <BlockEditor ref="bEditor" :options="blocklyConfig">
                 </BlockEditor>
@@ -91,14 +92,14 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </template>
 
 <script setup>
 import BlockEditor from './editors/block.vue'
 import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
-import { writeUserData } from '../../libs/firebaseSystem.js'
+import { writeUserData, getUserData } from '../../libs/firebaseSystem.js'
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -231,9 +232,13 @@ const runCode = async () => {
     codeDone.value = true
 
     if (levelPassed) {
-        await writeUserData(store.state.user, {
-            level_passed: parseInt(levelID) + 1
-        })
+        const userData = await getUserData(store)
+
+        if (userData.level_passed == parseInt(levelID)) {
+            await writeUserData(store.state.user, {
+                level_passed: parseInt(levelID) + 1
+            })
+        }
 
         const confetti = await import('canvas-confetti');
 

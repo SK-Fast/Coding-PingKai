@@ -1,6 +1,6 @@
 export const blockset = () => {return import("@/blocksets/w1.js")}
 import anime from 'animejs';
-import { activeBlock, inactiveAllBlocks, createInterpretBase } from '../libs/blockGlobal.js';
+import { activeBlock, inactiveAllBlocks, createInterpretBase, warnBlock, resetAllBlocks } from '../libs/blockGlobal.js';
 
 /**
  * 
@@ -10,7 +10,17 @@ import { activeBlock, inactiveAllBlocks, createInterpretBase } from '../libs/blo
  * @returns 
  */
 function blockExist(lvlPos, x, y) {
-    return lvlPos.find((d) => d.x == x + 1 && d.y == y + 1)
+    let f = lvlPos.find((d) => d.x == x && d.y == y)
+
+    if (f) {
+        if (f.d == "#") {
+            return f
+        } else {
+            return
+        }
+    } else {
+        return
+    }
 }
 
 /**
@@ -31,6 +41,14 @@ export const run = async (script, data, delay, w) => {
 
     const flagCheck = () => {
         return flags.find((d) => d.x == currentPosX && d.y == currentPosY)
+    }
+
+    const staticFlagCheck = () => {
+        return data.flags.find((d) => d.x == currentPosX && d.y == currentPosY)
+    }
+
+    const cantMoveWarn = (c, bID) => {
+        warnBlock(c, bID)
     }
 
     const updateMove = async() => {
@@ -56,7 +74,6 @@ export const run = async (script, data, delay, w) => {
             y: y,
             easing: 'easeOutElastic(1, .6)'
         })
-        await updateMove(x, y)
     }
 
     interpreter.addFunction('go_left', async (bID) => {
@@ -64,21 +81,32 @@ export const run = async (script, data, delay, w) => {
 
         activeBlock(w, bID)
 
-        if (c) {
+        if (!c) {
             currentPosX--
             await moveChick(data.chick.x - data.cellSize, data.chick.y)
+        } else {
+            cantMoveWarn(w, bID)
         }
+
+        await updateMove()
     });
 
     interpreter.addFunction('go_right', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
-
+        
         activeBlock(w, bID)
 
-        if (c) {
+        console.log(c)
+        console.log(!c)
+
+        if (!c) {
             currentPosX++
             await moveChick(data.chick.x + data.cellSize, data.chick.y)
+        } else {
+            cantMoveWarn(w, bID)
         }
+
+        await updateMove()
     });
 
     interpreter.addFunction('go_up', async (bID) => {
@@ -88,12 +116,16 @@ export const run = async (script, data, delay, w) => {
 
         activeBlock(w, bID)
 
-        block.svgGroup_.classList.add("worked")
+        console.log(c)
 
-        if (c) {
+        if (!c) {
             currentPosY--
             await moveChick(data.chick.x, data.chick.y - data.cellSize)
+        } else {
+            cantMoveWarn(w, bID)
         }
+
+        await updateMove()
     });
 
     interpreter.addFunction('go_down', async (bID) => {
@@ -101,10 +133,20 @@ export const run = async (script, data, delay, w) => {
 
         activeBlock(w, bID)
 
-        if (c) {
+        if (!c) {
             currentPosY++
             await moveChick(data.chick.x, data.chick.y + data.cellSize)
+        } else {
+            cantMoveWarn(w, bID)
         }
+
+        await updateMove()
+    });
+
+    interpreter.addFunction('is_over_flag', async () => {
+        const sFDetect = staticFlagCheck()
+
+        return sFDetect != undefined
     });
 
     await interpreter.evaluate(script)
@@ -119,7 +161,7 @@ export const reset = (w, data) => {
     data.chick.y = data.originPos[1]
     data.chick.rotation = 0
     
-    inactiveAllBlocks(w)
+    resetAllBlocks(w)
 
     for (const flag of data.flags) {
         flag.obj.width = data.cellSize
@@ -211,14 +253,14 @@ export const init = async (e, data) => {
             chickMapPos[1] = h
         }
 
-        w++
-        cw = cw + cellSize
-
         blockPos.push({
             d: d,
             x: w,
             y: h
         })
+
+        w++
+        cw = cw + cellSize
 
         if (w > data.width - 1) {
 

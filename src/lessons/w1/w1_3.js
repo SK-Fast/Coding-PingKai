@@ -13,6 +13,10 @@ export const blocks = [
     },
     {
         "kind": "block",
+        "type": "go_right"
+    },
+    {
+        "kind": "block",
         "type": "until_flag"
     },
 ]

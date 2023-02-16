@@ -69,6 +69,41 @@ export const init = () => {
                 },
             ]
         },
+        {
+            "type": "until_flag",
+            "message0": "%1 ทำซ่ำจนกว่าจะเจอธง",
+            "args0": [
+                {
+                    "type": "field_image",
+                    "src": "/blockly_editor/until-flag.png",
+                    "width": 15,
+                    "height": 15
+                },
+            ],
+            "message1": "ทำ %1",
+            "args1": [
+              {"type": "input_statement", "name": "DO"}
+            ],
+            "nextStatement": "Action",
+            "previousStatement": "Action",
+            "tooltip": "รันคำสั่งในบล็อกซ่ำจนกว่าไก่จะเจอธง",
+            "colour": 5,
+        },
+        {
+            "type": "is_over_flag",
+            "message0": "%1 อยู่ที่ธงหรือไม่",
+            "args0": [
+                {
+                    "type": "field_image",
+                    "src": "/blockly_editor/until-flag.png",
+                    "width": 15,
+                    "height": 15
+                },
+            ],
+            "output": "Boolean",
+            "tooltip": "เช็กว่าไก่ยืนอยู่บนที่ที่มีธงหรือไม่ผ",
+            "colour": 3,
+        }
     ]);
 
     langGenerator["go_left"] = (block) => {
@@ -85,5 +120,17 @@ export const init = () => {
     
     langGenerator["go_down"] = (block) => {
         return `go_down('${block.id}')\n`
+    }
+    
+    langGenerator["until_flag"] = (block) => {
+        //console.log("END: ", langGenerator.valueToCode(block, 'DO') || 'pass')
+        
+        return `while is_over_flag():\n\tprint("hi")\n`;
+    }
+
+    langGenerator["is_over_flag"] = (block) => {
+        //console.log("END: ", langGenerator.valueToCode(block, 'DO') || 'pass')
+        
+        return [`is_over_flag()`, langGenerator.ORDER_FUNCTION_CALL];
     }
 }

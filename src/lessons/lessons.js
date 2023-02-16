@@ -5,12 +5,16 @@ export const sections = [
 
         levels: [
             {
-                title: "สอนเดิน",
+                title: "W1-1",
                 levelData: () => {return import("./w1/w1_1.js")}
             },
             {
-                title: "หมุนซ้าย... หมุนขวา...",
+                title: "W1-2",
                 levelData: () => {return import("./w1/w1_2.js")}
+            },
+            {
+                title: "W1-3",
+                levelData: () => {return import("./w1/w1_3.js")}
             }
         ]
     }
