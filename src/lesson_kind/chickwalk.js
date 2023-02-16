@@ -19,7 +19,7 @@ function blockExist(lvlPos, x, y) {
             return
         }
     } else {
-        return
+        return "void"
     }
 }
 
