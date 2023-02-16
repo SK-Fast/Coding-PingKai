@@ -53,7 +53,7 @@
             <router-link :to="item.path">{{ item.path }}</router-link>
           </p>
         </nav>
-        <code class="text-end me-2">Developer Menu</code>
+        <code class="text-end me-2">Developer Menu         <input class="form-check-input" type="checkbox" v-model="store.state.devMode" :checked="store.state.devMode"></code>
       </div>
 
       <router-view class="pageView"></router-view>
