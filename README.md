@@ -16,6 +16,7 @@
 |--|--|--|
 | NodeJS | https://nodejs.org/en/ | `sudo apt install nodejs` |
 | npm | ลงพร้อมกับ NodeJS | `sudo apt install npm` |
+| firebase-tools | `npm i firebase-tools` | `sudo npm i firebase-tools -g` |
 | OpenJDK | https://learn.microsoft.com/en-us/java/openjdk/download | `sudo apt install default-jdk` |
 
 1. โคลนโปรเจ็คต์
