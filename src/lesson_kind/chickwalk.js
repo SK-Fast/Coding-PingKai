@@ -1,7 +1,6 @@
 export const blockset = () => {return import("@/blocksets/w1.js")}
-import { jsPython } from 'jspython-interpreter';
 import anime from 'animejs';
-import { activeBlock, inactiveAllBlocks } from 'libs/blockGlobal.js';
+import { activeBlock, inactiveAllBlocks, createInterpretBase } from '../libs/blockGlobal.js';
 
 /**
  * 
@@ -22,8 +21,8 @@ function blockExist(lvlPos, x, y) {
  * @param {WorkspaceSvg} w Blockly Workspace
  */
 export const run = async (script, data, delay, w) => {
-    const interpreter = jsPython();
-
+    const interpreter = createInterpretBase()
+    
     let currentPosX = data.chickMapPos[0]
     let currentPosY = data.chickMapPos[1]
 

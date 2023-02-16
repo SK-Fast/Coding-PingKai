@@ -1,4 +1,5 @@
 let oldbID = ""
+import { Interpreter, jsPython } from 'jspython-interpreter';
 
 /**
  * @summary Give an currently working block a class
@@ -31,3 +32,18 @@ export const inactiveAllBlocks = (w, bID) => {
     }
 }
 
+/**
+ * @returns {Interpreter}
+ */
+export const createInterpretBase = () => {
+    const interpreter = jsPython();
+
+    interpreter.assignGlobalContext({
+        "True": true,
+        "False": false,
+        "pass": true,
+    })    
+      
+    return interpreter
+
+}
