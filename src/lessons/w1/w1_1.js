@@ -7,18 +7,6 @@ export const blocks = [
         "kind": "block",
         "type": "go_down"
     },
-    {
-        "kind": "block",
-        "type": "until_flag"
-    },
-    {
-        "kind": "block",
-        "type": "controls_whileUntil"
-    },
-    {
-        "kind": "block",
-        "type": "is_over_flag"
-    },
 ]
 
 export const levelKind = () => {return import("@/lesson_kind/chickwalk.js")}
