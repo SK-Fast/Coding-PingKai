@@ -11,8 +11,9 @@ service cloud.firestore {
       && request.resource.data.exp == 0
       && request.resource.data.level == 0
       && request.resource.data.level_passed == 0
-      && request.resource.data.streak == 0;
-
+      && request.resource.data.streak == 0
+      && request.resource.data.userID == request.auth.uid;
+      allow update: if request.auth.uid == request.resource.data.userID;
     }
   }
 }

@@ -98,6 +98,7 @@
 import BlockEditor from './editors/block.vue'
 import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
+import { writeUserData } from '../../libs/firebaseSystem.js'
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -105,6 +106,7 @@ const toolbox = {
 }
 
 const router = inject("router")
+const store = inject("store")
 
 let lessonData;
 let lessonKind;
@@ -125,6 +127,8 @@ const delayInms = ref(500)
 const lessonKindData = ref({
     ratio: [1, 1]
 })
+
+let levelID = ""
 
 let blocklyWorkspace;
 let interpreterData;
@@ -149,10 +153,10 @@ const updateBlockLimit = () => {
 }
 
 onMounted(async () => {
-    const routerID = router.currentRoute.value.params['id']
+    levelID = router.currentRoute.value.params['id']
 
-    if (typeof (routerID) == 'string') {
-        const b = findLevel(routerID)
+    if (typeof (levelID) == 'string') {
+        const b = findLevel(levelID)
 
         if (b) {
             lessonData = await b.levelData()
@@ -227,6 +231,10 @@ const runCode = async () => {
     codeDone.value = true
 
     if (levelPassed) {
+        await writeUserData(store.state.user, {
+            level_passed: parseInt(levelID) + 1
+        })
+
         const confetti = await import('canvas-confetti');
 
         let confEmitter = confetti.create(confettiView.value, {

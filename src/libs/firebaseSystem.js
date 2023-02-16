@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator, signOut, onAuthStateChanged } from 'firebase/auth'
-import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc } from 'firebase/firestore'
+import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
 import * as logger from 'libs/logger.js'
 
@@ -57,9 +57,22 @@ export async function newUserData(user) {
         level: 0,
         level_passed: 0,
         streak: 0,
+        userID: user.uid
     })
 
     logger.success("Created new data for the user")
+}
+
+export async function writeUserData(user, data) {
+
+    const firestore = getFirestore()
+    const userDoc = doc(firestore, "users", user.uid)
+
+    logger.info("Writing to user data...")
+
+    await updateDoc(userDoc, data)
+
+    logger.success("Successfully written data into user!")
 }
 
 export function getUser(store) {
