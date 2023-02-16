@@ -1,6 +1,7 @@
 export const blockset = () => {return import("@/blocksets/w1.js")}
 import { jsPython } from 'jspython-interpreter';
 import anime from 'animejs';
+import { activeBlock, inactiveAllBlocks } from 'libs/blockGlobal.js';
 
 /**
  * 
@@ -13,13 +14,21 @@ function blockExist(lvlPos, x, y) {
     return lvlPos.find((d) => d.x == x + 1 && d.y == y + 1)
 }
 
-export const run = async (script, data, delay) => {
+/**
+ * 
+ * @param {string} script Python Source code
+ * @param {Array} data Interpreter Data
+ * @param {Function} delay Global Delay
+ * @param {WorkspaceSvg} w Blockly Workspace
+ */
+export const run = async (script, data, delay, w) => {
     const interpreter = jsPython();
 
     let currentPosX = data.chickMapPos[0]
     let currentPosY = data.chickMapPos[1]
 
     let flags = data.flags
+    let flagCollected = 0
 
     const flagCheck = () => {
         return flags.find((d) => d.x == currentPosX && d.y == currentPosY)
@@ -29,7 +38,13 @@ export const run = async (script, data, delay) => {
         const flagDetect = flagCheck()
 
         if (flagDetect) {
-            flagDetect.obj.visible = false
+            flagCollected++
+            anime({
+                targets: flagDetect.obj,
+                width: 0,
+                height: 0,
+                easing: 'easeInBack'
+            });
         }
 
         await delay()
@@ -45,8 +60,10 @@ export const run = async (script, data, delay) => {
         await updateMove(x, y)
     }
 
-    interpreter.addFunction('go_left', async () => {
+    interpreter.addFunction('go_left', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX - 1, currentPosY)
+
+        activeBlock(w, bID)
 
         if (c) {
             currentPosX--
@@ -54,8 +71,10 @@ export const run = async (script, data, delay) => {
         }
     });
 
-    interpreter.addFunction('go_right', async () => {
+    interpreter.addFunction('go_right', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
+
+        activeBlock(w, bID)
 
         if (c) {
             currentPosX++
@@ -63,8 +82,14 @@ export const run = async (script, data, delay) => {
         }
     });
 
-    interpreter.addFunction('go_up', async () => {
+    interpreter.addFunction('go_up', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY - 1)
+
+        let block = w.getBlockById(bID)
+
+        activeBlock(w, bID)
+
+        block.svgGroup_.classList.add("worked")
 
         if (c) {
             currentPosY--
@@ -72,8 +97,10 @@ export const run = async (script, data, delay) => {
         }
     });
 
-    interpreter.addFunction('go_down', async () => {
+    interpreter.addFunction('go_down', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY + 1)
+
+        activeBlock(w, bID)
 
         if (c) {
             currentPosY++
@@ -82,15 +109,22 @@ export const run = async (script, data, delay) => {
     });
 
     await interpreter.evaluate(script)
+
+    inactiveAllBlocks(w)
+
+    return (flagCollected == flags.length)
 }
 
-export const reset = (data) => {
+export const reset = (w, data) => {
     data.chick.x = data.originPos[0]
     data.chick.y = data.originPos[1]
     data.chick.rotation = 0
+    
+    inactiveAllBlocks(w)
 
     for (const flag of data.flags) {
-        flag.obj.visible = true
+        flag.obj.width = data.cellSize
+        flag.obj.height = data.cellSize
     }
 }
 

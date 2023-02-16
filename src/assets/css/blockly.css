@@ -3,10 +3,6 @@
     animation-fill-mode: forwards;
 }
 
-.geras-renderer.classic-theme .blocklySelected>.blocklyPath {
-    stroke: var(--bs-warning);
-}
-
 .blocklyFlyoutBackground {
     fill: var(--bs-light-200);
 }
@@ -117,5 +113,23 @@
 @keyframes tooltipAppears {
     0% {
         transform: scale(0) translateX(-50%) translateY(-50%);
+    }
+}
+
+.blocklyDraggable.worked > .blocklyPath {
+    stroke: #fc3;
+    stroke-width: 5px;
+
+    animation: blockRunPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes blockRunPop {
+    0% {
+        filter: brightness(120%);
+        stroke-width: 0px;
+    }
+    100% {
+        filter: brightness(100%);
+        stroke-width: 5px;
     }
 }

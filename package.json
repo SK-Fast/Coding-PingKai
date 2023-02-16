@@ -17,6 +17,7 @@
     "animejs": "^3.2.1",
     "blockly": "^5.20210325.0",
     "bootstrap": "^5.2.1",
+    "canvas-confetti": "^1.6.0",
     "chalk": "^5.1.2",
     "feather-icons": "^4.29.0",
     "firebase": "^9.12.1",

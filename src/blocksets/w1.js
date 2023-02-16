@@ -72,18 +72,18 @@ export const init = () => {
     ]);
 
     langGenerator["go_left"] = (block) => {
-        return "go_left()\n"
+        return `go_left('${block.id}')\n`
     }
 
     langGenerator["go_right"] = (block) => {
-        return "go_right()\n"
+        return `go_right('${block.id}')\n`
     }
     
     langGenerator["go_up"] = (block) => {
-        return "go_up()\n"
+        return `go_up('${block.id}')\n`
     }
     
     langGenerator["go_down"] = (block) => {
-        return "go_down()\n"
+        return `go_down('${block.id}')\n`
     }
 }

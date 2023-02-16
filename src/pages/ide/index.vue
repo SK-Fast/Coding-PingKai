@@ -1,4 +1,5 @@
 <template>
+    <canvas class="confetti-view" ref="confettiView"></canvas>
     <div class="page-trans bg-light-400 loaded" :class="{ 'loading': pageLoading }">
         <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
@@ -6,7 +7,7 @@
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
         </div>
     </div>
-    <div class="editor-top flex-column flex-md-row" :class="{ 'loading': codeRunning }">
+    <div class="editor-top flex-column flex-md-row" :class="{ 'loading': !codeDone }">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
 
@@ -56,14 +57,7 @@
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
-            <div class="flex-grow-1 editor-zone" @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
-                <div class="no-blockwrite" v-if="codeRunning">
-                    <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
-                        <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
-                        <h4 class="mt-2 text-white">รอโค้ดรัน</h4>
-                        <p class="text-white">คุณจะไม่สามารถแก้ไขโค้ดได้ระหว่างที่โค้ดยังรันอยู่</p>
-                    </div>
-                </div>
+            <div class="flex-grow-1 editor-zone" :class="{'editor-running': codeRunning}" @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
 
                 <BlockEditor ref="bEditor" :options="blocklyConfig">
                 </BlockEditor>
@@ -124,6 +118,7 @@ const codeDone = ref(true)
 
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
+const confettiView = ref()
 
 const delayInms = ref(500)
 
@@ -223,18 +218,38 @@ const runCode = async () => {
 
     codeDone.value = false
 
-    await lessonKind.run(code, interpreterData, delay)
+    let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace)
+
+    console.log(levelPassed)
 
     await delay()
 
     codeDone.value = true
+
+    if (levelPassed) {
+        const confetti = await import('canvas-confetti');
+
+        let confEmitter = confetti.create(confettiView.value, {
+            resize: true,
+            useWorker: true
+        })
+
+        confEmitter({
+            particleCount: 250,
+            spread: 360,
+        })
+
+    }
 }
 
 
 const stopCode = async () => {
+    if (!codeDone.value) {
+        return
+    }
     codeRunning.value = false
 
-    lessonKind.reset(interpreterData)
+    lessonKind.reset(blocklyWorkspace, interpreterData)
 }
 
 </script>
@@ -372,6 +387,21 @@ const stopCode = async () => {
 
 .editor-zone {
     overflow: hidden;
+}
+
+.confetti-view {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.editor-zone.editor-running {
+    opacity: 0.9;
+    pointer-events: none;
 }
 
 .editor-top.loading {
