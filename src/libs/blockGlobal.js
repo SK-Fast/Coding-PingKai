@@ -18,7 +18,9 @@ export const activeBlock = (w, bID, classname = "worked") => {
     
     let block = w.getBlockById(bID)
 
-    block.svgGroup_.classList.add(classname)
+    if (block) {
+        block.svgGroup_.classList.add(classname)
+    }
 }
 
 /**
@@ -29,8 +31,10 @@ export const activeBlock = (w, bID, classname = "worked") => {
 export const warnBlock = (w, bID) => {
     let block = w.getBlockById(bID)
 
-    block.setWarningText("ไม่สามารถเดินได้เนื่องจากติดผนัง")
-    activeBlock(w, bID, "error")
+    if (block) {
+        block.setWarningText("ไม่สามารถเดินได้เนื่องจากติดผนัง")
+        activeBlock(w, bID, "error")
+    }
 }
 
 /**
@@ -70,7 +74,11 @@ export const createInterpretBase = () => {
         "True": true,
         "False": false,
         "pass": true,
-    })    
+    })
+
+    interpreter.addFunction('delay_ms', async (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    });
       
     return interpreter
 

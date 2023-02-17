@@ -125,7 +125,7 @@ export const init = () => {
     langGenerator["until_flag"] = (block) => {
         //console.log("END: ", langGenerator.valueToCode(block, 'DO') || 'pass')
         
-        return `while is_over_flag():\n\tprint("hi")\n`;
+        return `while is_over_flag() == false:\n\tgo_right('')\n`;
     }
 
     langGenerator["is_over_flag"] = (block) => {

@@ -185,6 +185,8 @@ export const init = async (e, data) => {
 
     const container = new PIXI.Container();
 
+    container.sortableChildren = true
+
     app.stage.addChild(container);
 
     let w = 0
@@ -208,6 +210,8 @@ export const init = async (e, data) => {
 
         ground.x = px
         ground.y = py
+
+        ground.zIndex = -1
 
         container.addChild(ground)
 
@@ -250,7 +254,7 @@ export const init = async (e, data) => {
 
         if (d == "C") {
             chick = makeBlock('/chickwalk_tiles/chick_L.png', cw, ch)
-            chick.zIndex = 99
+            chick.zIndex = 102
             chickMapPos[0] = w
             chickMapPos[1] = h
         }
