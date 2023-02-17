@@ -75,7 +75,7 @@
         
         <div v-if="loggingIn == false">
             <h3 class="text-subtext">Social Media Login</h3>
-            <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="googleLogin" image="google.png" />
+            <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="googleLogin" image="/google.png" />
         </div>
         <!--
         <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" image="Face.png" />

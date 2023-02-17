@@ -17,6 +17,8 @@ html, body {
     font-weight: 500;
     background-color: map-get($map: $white-colors, $key: "background");
     overflow: hidden;
+    overscroll-behavior-y: contain;
+
 }
 
 html {
@@ -300,7 +302,7 @@ a, .btn-link {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99;
+    z-index: 200;
     display: none;
     pointer-events: none;
 }

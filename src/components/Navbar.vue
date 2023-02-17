@@ -1,5 +1,4 @@
 <script setup>
-    import LoginModal from "@/components/LoginModal.vue"
     import { inject, ref } from "vue";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
     import { promptLogout } from 'libs/firebaseSystem.js'

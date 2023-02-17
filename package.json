@@ -15,6 +15,8 @@
   "dependencies": {
     "@rive-app/canvas": "^1.0.97",
     "animejs": "^3.2.1",
+    "audio-loader": "^1.0.3",
+    "audio-play": "^2.3.1",
     "blockly": "^5.20210325.0",
     "bootstrap": "^5.2.1",
     "canvas-confetti": "^1.6.0",
@@ -29,7 +31,8 @@
     "vue-feather": "^2.0.0",
     "vue-router": "^4.1.5",
     "vue-sweetalert2": "^5.0.5",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "zingtouch": "^1.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.0",

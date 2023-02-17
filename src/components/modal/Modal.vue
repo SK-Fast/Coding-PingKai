@@ -13,13 +13,11 @@ onMounted(() => {
 })
 
 const openModal = () => {
-      isopen.value = true
-      firstTime.value = false
+  isopen.value = true
+  firstTime.value = false
 }
 const closeModal = () => {
-      isopen.value = false
-
-      escEvent.value
+  isopen.value = false
 }
 
 defineExpose({openModal, closeModal})
