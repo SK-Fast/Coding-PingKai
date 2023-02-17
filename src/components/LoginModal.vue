@@ -2,18 +2,26 @@
     import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
-    import { ref, inject } from "vue";
+    import { ref, inject, defineExpose } from "vue";
     import { newUserData } from "libs/firebaseSystem"
 
-    const modalBase = ref(null)
     const loggingIn = ref(false)
     const errorMsg = ref("")
     const router = inject("router")
+    const modalBase = ref(null)
 
     const knownErrors = {
         "(auth/popup-closed-by-user)": "การลงชื่อเข้าใช้ถูกยกเลิก",
         "(auth/account-exists-with-different-credential)": "มีบัญชีนี้อยู่แล้ว",
         "(auth/popup-blocked)": "การลงชื่อเข้าใช้ถูกยกเลิกโดยเบราว์เซอร์",
+    }
+
+    const openL = () => {
+        modalBase.value.openModal()
+    }
+
+    const closeL = () => {
+        modalBase.value.closeModal()
     }
 
     const googleLogin = async () => {
@@ -39,25 +47,14 @@
 
         if (result['user']) {
             await newUserData(result.user)
-            Modal.methods.closeModal()
+            closeL()
             loggingIn.value = false
 
             router.push("/dashboard")
         }
     }
-</script>  
 
-<script>
-const emailAddress = ref(null)
-
-export default {
-    openL: () => {
-        Modal.methods.openModal()
-    },
-    closeL: () => {
-        Modal.methods.closeModal()
-    },
-}
+    defineExpose({openL, closeL})
 </script>
 
 <template>

@@ -19,13 +19,14 @@ const router = createRouter({
 const store = createStore({
     state: {
         user: null,
-        devMode: import.meta.env.MODE == 'development'
+        devMode: import.meta.env.MODE == 'development',
+        fireLoginModal: null
     },
     computed: {
         count() {
             return this.$store.state.user
         }
-    }
+    },
 })
 
 window.codeGens = {}

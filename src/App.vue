@@ -18,6 +18,10 @@
   let oldPage = ""
 
   onMounted(() => {
+    store.state.fireLoginModal = () => {
+      loginModal.value.openL()
+    }
+    
     oldPage = route.fullPath
 
     cookieAccepted.value = window.localStorage.getItem("cookie_accepted") || false
@@ -31,7 +35,7 @@
     }
 
     if (to.meta.needAuth && store.state.user == null) {
-        LoginModal.openL(to)
+      loginModal.value.openL()
         return false
       }
 

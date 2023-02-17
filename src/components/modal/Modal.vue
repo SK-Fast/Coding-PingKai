@@ -1,35 +1,29 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineExpose } from "vue";
 import ModalBack from "./ModalBack.vue"
 
 const modalBack = ref(null)
 
-onMounted(() => {
-  console.log(modalBack.value)
-
-})
-
-</script>  
-
-<script>
 const isopen = ref(false)
 const firstTime = ref(true)
 const escEvent = ref(null)
 
-export default {
-  methods: {
-    openModal: () => {
+onMounted(() => {
+  console.log(modalBack.value)
+})
+
+const openModal = () => {
       isopen.value = true
       firstTime.value = false
-    },
-    closeModal: () => {
+}
+const closeModal = () => {
       isopen.value = false
 
       escEvent.value
-    }
-  }
 }
-</script>
+
+defineExpose({openModal, closeModal})
+</script>  
 
 <template>
   <ModalBack ref="modalBack" :class='[{ "modal-opened": isopen }, { "modal-closed": !isopen}, { "d-none": firstTime }]'>

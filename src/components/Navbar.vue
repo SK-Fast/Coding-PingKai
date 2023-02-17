@@ -14,7 +14,7 @@
     const openLogin = () => {
         console.log("login entry")
 
-        LoginModal.openL()
+        store.state.fireLoginModal()
     }
 
     const auth = getAuth();

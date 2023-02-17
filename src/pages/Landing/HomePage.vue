@@ -1,10 +1,8 @@
 <script setup>
 import { ref, inject, onMounted } from "vue";
-import LoginModal from "@/components/LoginModal.vue"
 
 const store = inject("store")
 const router = inject("router")
-const loginModal = ref(null)
 
 onMounted(() => {
   if (store.state.user) {
@@ -15,8 +13,7 @@ onMounted(() => {
 const openLogin = () => {
   console.log("login entry landing")
 
-  LoginModal.openL()
-
+  store.state.fireLoginModal()
 }
 
 </script>
