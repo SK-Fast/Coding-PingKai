@@ -206,6 +206,8 @@ onMounted(async () => {
 
             pageLoading.value = false
 
+            updateBlockLimit()
+
             setTimeout(() => { 
                 playModeEnabled.value = false
             }, 2000)
