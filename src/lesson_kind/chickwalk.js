@@ -239,6 +239,7 @@ export const init = async (e, data) => {
 
         if (d == "F") {
             let f = makeBlock('/chickwalk_tiles/flag.png', cw, ch)
+            f.zIndex = 98
 
             flags.push({
                 x: w,
@@ -249,6 +250,7 @@ export const init = async (e, data) => {
 
         if (d == "C") {
             chick = makeBlock('/chickwalk_tiles/chick_L.png', cw, ch)
+            chick.zIndex = 99
             chickMapPos[0] = w
             chickMapPos[1] = h
         }
