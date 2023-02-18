@@ -35,7 +35,7 @@
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle" ref="editorMiddle">
         <div class="col-md-3 p-4 pt-0 run-code-menu" :class="{'open': playModeEnabled}">
-            <div class="runResult mt-3" ref="runResult"
+            <div id="runResult" class="runResult mt-3" ref="runResult"
                 :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
             <div class="d-flex justify-content-center mt-2">
@@ -70,44 +70,16 @@
                 </BlockEditor>
             </div>
 
-            <div class="shadow-sm p-2 d-md-none d-block" v-if="hasBlockLimit">
+            <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit" :class="{'border-danger': blockLeft == 0}">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
-                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
-                    </p>
-                    <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน
+                    <p class="m-0 ms-2">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
                     </p>
                 </div>
             </div>
 
-            <div
-                class="tutorial-view justify-content-center align-items-center p-md-3 p-0 bg-light-300 border-light-400 border-top">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-md-1 text-center d-md-block d-none">
-                        <img src="/chick.png" class="chick-frame mb-2">
-                        <h5>ไก่น้อย</h5>
-                    </div>
-                    <div class="ms-md-3 ms-0 flex-grow-1">
-                        <div class="card bg-light-200 p-md-0 p-2 h-100 w-100">
-                            <div class="card-body d-flex flex-column">
-                                <div class="flex-grow-1">
-                                    <p>hi</p>
-                                </div>
-
-                                <div>
-                                    <div>
-                                        <div class="float-end">
-                                            <button class="btn btn-secondary me-2">ขั้นตอนที่แล้ว</button>
-                                            <button class="btn btn-primary">ไปต่อ</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <DialogueView/>
+            
         </div>
 </div>
 </template>
@@ -119,6 +91,7 @@ import { findLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
 import { writeUserData, getUserData } from '../../libs/firebaseSystem.js'
 import CongratsModal from "@/components/CongratsModal.vue"
+import DialogueView from "./component/DialogueView.vue"
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -170,6 +143,8 @@ const blocklyConfig = ref({
     trashcan: true
 })
 
+const nextMapLoading = ref(false)
+
 const updateBlockLimit = () => {
     blockLeft.value = blocklyWorkspace.remainingCapacity()
 }
@@ -213,6 +188,7 @@ onMounted(async () => {
             }, 2000)
 
         } else {
+
             await Swal.fire({
                 title: 'ไม่เจอบทเรียน',
                 text: "ไม่พบบทเรียนในระบบ",
@@ -244,10 +220,7 @@ const delay = () => {
     return new Promise(resolve => setTimeout(resolve, delayInms.value));
 }
 
-const nextMapLoading = ref(false)
-
 const continueLevel = async() => {
-    console.log('yeah')
     congratModal.value.closeM()
     nextMapLoading.value = true
     pageLoading.value = true
@@ -472,10 +445,6 @@ const runCode = async () => {
     display: inline-block;
 }
 
-.tutorial-view {
-    height: 200px;
-}
-
 .chick-frame {
     border-radius: 50px;
     width: 100px;
@@ -531,13 +500,16 @@ const runCode = async () => {
         z-index: 50;
         background: linear-gradient(180deg, #D8D8D8 0%, #F3F3F3 100%);
         top: 100%;
-        transition: top 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: top 0.25s;
+        transition-timing-function: cubic-bezier(0.36, 0, 0.66, -0.56);
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
     }
 
     .run-code-menu.open {
+        transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
         top: calc(40vh - 50px);
+        box-shadow: 0 -0.5rem 1rem rgb(0 0 0 / 7%) !important;
     }
 }
 

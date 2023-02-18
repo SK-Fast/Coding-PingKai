@@ -2,7 +2,7 @@
     import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
-    import { ref, inject, defineExpose } from "vue";
+    import { ref, inject } from "vue";
     import { newUserData } from "libs/firebaseSystem"
 
     const loggingIn = ref(false)

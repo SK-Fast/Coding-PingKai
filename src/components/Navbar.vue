@@ -59,7 +59,7 @@
                         <div class="dropdown">
                             <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded avatar-navbar" :style="'background-image: url(' + (store.state.user.photoURL || 'placeholder-avatar.jpg') + ')'">
+                                    <div class="avatar img-rounded avatar-navbar" :style="'background-image: url(' + (store.state.user.photoURL || '/placeholder-avatar.jpg') + ')'">
                                     <div class="avatar-status" />
                                 </div>
                             </div>

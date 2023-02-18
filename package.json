@@ -27,6 +27,7 @@
     "path": "^0.12.7",
     "pixi.js": "^7.1.2",
     "sweetalert2": "^11.4.8",
+    "typewriter-effect": "^2.19.0",
     "vue": "^3.2.37",
     "vue-feather": "^2.0.0",
     "vue-router": "^4.1.5",
