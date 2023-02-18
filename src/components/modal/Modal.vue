@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, defineExpose } from "vue";
+import { onMounted, ref } from "vue";
 import ModalBack from "./ModalBack.vue"
 
 const modalBack = ref(null)

@@ -32,11 +32,18 @@
         </div>
     </div>
     -->
+
+    <h2 class="mt-4">การตั้งค่าเพิ่มเติม</h2>
+
+    <ConfigCard title="ลบบัญชี" desc="ทำการลบบัญชีโดยถาวร" class="mt-2">
+        <button class="btn btn-danger" @click="deleteAccount">ลบบัญชี</button>
+    </ConfigCard>
 </template>
 
 <script setup>
-import { getAuth, updateProfile } from '@firebase/auth';
+import { getAuth, updateProfile, deleteUser, reauthenticateWithCredential, GoogleAuthProvider } from '@firebase/auth';
 import { inject, onMounted, ref } from 'vue';
+import ConfigCard from '@/components/ConfigCard.vue'
 
 const store = inject('store')
 
@@ -97,6 +104,48 @@ const emailReveal = async() => {
             unrevealedText.value.classList.remove("d-none")
             revealedText.value.classList.add("d-none")
         }
+    }
+}
+
+
+const deleteAccount = async() => {
+    const res = await Swal.fire({
+        title: 'ยืนยันการลบบัญชี',
+        html: `
+        <p>คุณกำลังทำการลบบัญชีนี้ เมื่อทำการลบบัญชีนี้แล้ว ข้อมูลเหล่านี้จะถูกลบโดยถาวร:</p>
+        <ul>
+            <li>ข้อมูลผู้ใช้</li>
+            <li>ความคืบหน้าทั้งหมด</li>
+        </ul>
+        <p>ข้อมูลเหล่านี้จะไม่สามารถกู้คืนได้ คุณยืนยันที่จะลบรหัสนี้หรือไม่</p>
+        <p>(ต้องยืนยัน Google Account ก่อนลบเพื่อยืนยันตัวตน)</p>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก',
+    })
+
+    if (res.isConfirmed) {
+        setTimeout(async () => {
+            const { deleteUserData } = await import('libs/firebaseSystem.js')
+
+            let credential = await store.state.fireLoginModal("reauth")
+
+            let oauth2Credential = GoogleAuthProvider.credential(store.state.user.accessToken)
+
+            await reauthenticateWithCredential(store.state.user, oauth2Credential)
+
+            await deleteUserData(store.state.user)
+
+            await deleteUser(store.state.user)
+
+            document.body.classList.add("circle-close")
+
+            setTimeout(async () => {
+                window.location.href = '/?deleted=true'
+            }, 1200)
+        }, 200)
     }
 }
 </script>

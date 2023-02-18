@@ -10,14 +10,34 @@
     const router = inject("router")
     const modalBase = ref(null)
 
+    const modalTitle = ref("กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่")
+    const modalSub = ref("ลงชื่อเข้าใช้")
+
     const knownErrors = {
         "(auth/popup-closed-by-user)": "การลงชื่อเข้าใช้ถูกยกเลิก",
         "(auth/account-exists-with-different-credential)": "มีบัญชีนี้อยู่แล้ว",
         "(auth/popup-blocked)": "การลงชื่อเข้าใช้ถูกยกเลิกโดยเบราว์เซอร์",
     }
 
-    const openL = () => {
+    let loginPromise;
+    let loginKind = "login"
+
+    const openL = async(kindOf) => {
         modalBase.value.openModal()
+
+        loginKind = kindOf
+
+        if (kindOf == "reauth") {
+            modalTitle.value = "กรุณาลงชื่อเข้าใช้ใหม่เพื่อไปต่อ"
+            modalSub.value = "ลงชื่อเข้าใช้เพื่อไปต่อ"
+        } else {
+            modalTitle.value = "กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่"
+            modalSub.value = "ลงชื่อเข้าใช้"
+        }
+
+        return new Promise((resolve) => {
+            loginPromise = resolve
+        })
     }
 
     const closeL = () => {
@@ -48,9 +68,14 @@
         if (result['user']) {
             await newUserData(result.user)
             closeL()
+
+            loginPromise(result)
+
             loggingIn.value = false
 
-            router.push("/dashboard")
+            if (loginKind == "login") {
+                router.push("/dashboard")
+            }
         }
     }
 
@@ -61,8 +86,8 @@
     <Modal ref="modalBase">
         <div class="login-header"></div>
         <div class="text-center">
-            <h3>ลงชื่อเข้าใช้</h3>
-            <p class="text-muted">กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่</p>
+            <h3>{{ modalSub }}</h3>
+            <p class="text-muted">{{ modalTitle }}</p>
         </div>
 
         <div class="alert alert-danger" v-if="errorMsg != ''">

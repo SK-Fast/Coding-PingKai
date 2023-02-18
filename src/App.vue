@@ -18,8 +18,8 @@
   let oldPage = ""
 
   onMounted(() => {
-    store.state.fireLoginModal = () => {
-      loginModal.value.openL()
+    store.state.fireLoginModal = async (kindOf = "login") => {
+      return await loginModal.value.openL(kindOf)
     }
     
     oldPage = route.fullPath

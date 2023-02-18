@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, connectAuthEmulator, signOut, onAuthStateChanged } from 'firebase/auth'
-import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
+import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
 import * as logger from 'libs/logger.js'
 
@@ -61,6 +61,18 @@ export async function newUserData(user) {
     })
 
     logger.success("Created new data for the user")
+}
+
+export async function deleteUserData(user) {
+
+    const firestore = getFirestore()
+    const userDoc = doc(firestore, "users", user.uid)
+
+    logger.info("Deleting user data...")
+
+    await deleteDoc(userDoc)
+
+    logger.success("Deleted!")
 }
 
 export async function writeUserData(user, data) {

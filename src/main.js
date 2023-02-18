@@ -63,6 +63,21 @@ const initVueApp = async () => {
 
     app.mount('#app')
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.get('deleted')) {
+        document.body.classList.add("circle-open")
+
+        setTimeout(() => {
+            Swal.fire({
+                title: 'บัญชีถูกลบแล้ว',
+                icon: 'success',
+                confirmButtonColor: '#F23051',
+                confirmButtonText: 'ปิด',
+            })
+        }, 1000)
+    }
 }
 
 initVueApp()

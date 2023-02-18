@@ -364,3 +364,35 @@ a, .btn-link {
 .btn[disabled="true"] {
     opacity: 0.5;
 }
+
+.btn-danger {
+    color: white;
+}
+
+.circle-close {
+    animation: circleCloseAnim 1s cubic-bezier(0.16, 1, 0.3, 1);
+    clip-path: circle(0% at 50% 50%);
+}
+
+.circle-open {
+    animation: circleOpenAnim 1s cubic-bezier(0.7, 0, 0.84, 0);
+    clip-path: circle(100% at 50% 50%);
+}
+
+@keyframes circleCloseAnim {
+    0% {
+        clip-path: circle(100% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(0% at 50% 50%);
+    }
+}
+
+@keyframes circleOpenAnim {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
