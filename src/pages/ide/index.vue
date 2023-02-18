@@ -16,7 +16,7 @@
         </div>
         <div class="flex-grow-1 d-flex justify-content-center d-md-block d-none">
             <div class="text-center">
-                <h5 class="m-0">สอนเดิน</h5>
+                <h5 class="m-0">{{ levelDataRef['title'] || "[]" }}</h5>
                 <p class="text-muted m-0">ไก่น้อย ผจญภัย</p>
             </div>
         </div>
@@ -105,6 +105,7 @@ let lessonData;
 let lessonKind;
 let blockset;
 
+const levelDataRef = ref({})
 const bEditor = ref(null)
 const pageLoading = ref(true)
 const codeRunning = ref(false)
@@ -169,6 +170,8 @@ onMounted(async () => {
 
             blockset.init()
             toolbox.contents = lessonData.blocks
+
+            levelDataRef.value = lessonData.levelData
 
             if (lessonData.levelData["blockLimit"]) {
                 blocklyConfig.value['maxBlocks'] = lessonData.levelData.blockLimit
@@ -463,7 +466,7 @@ const runCode = async () => {
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 100;
+    z-index: 1056;
 }
 
 .editor-zone.editor-running {
