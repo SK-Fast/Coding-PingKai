@@ -22,15 +22,15 @@ onMounted(async() => {
                 <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
                     <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
                     <p class="m-0 mt-1 text-monospace">
-                        <span class="text-primary me-2">STREAK {{ userData['streak'] || '.' }}</span>
-                        <span class="text-warning">EXP {{ userData['exp'] || '.' }}</span>
+                        <span class="text-primary me-2">STREAK {{ userData['streak'] || '0' }}</span>
+                        <span class="text-warning">EXP {{ userData['exp'] || '0' }}</span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-column align-items-center mt-2" v-if="userData != {} && sectionData != {}">
-            <div class="card col-md-6">
+        <div class="d-flex flex-column align-items-center mt-2">
+            <div class="card col-md-6" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="flex-grow-1 bg">

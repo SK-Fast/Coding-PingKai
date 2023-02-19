@@ -106,5 +106,35 @@ export const dialogue = [
             type: "txt-continue",
             text: "ขึ้นไปข้างบน ลงไปวางบนที่ว่างใน Editor ดูสิ"
         },
+        {
+            type: "wait_block_paste",
+            count: 1,
+            autoJump: true
+        },
+    ],
+    [
+        {
+            type: "txt",
+            text: "ดีมาก! ทีนี้ ลองนำบล็อกอีก 2 บล็อก มาต่อกันดู"
+        },
+        {
+            type: "wait_block_paste",
+            count: 3,
+            autoJump: true
+        },
+    ],
+    [
+        {
+            type: "txt",
+            text: "ทีนี้ ลองรันโค้ดดูสิ!"
+        },
+        {
+            type: "focus_element",
+            id: "runCodeBtn"
+        },
+        {
+            type: "focus_element",
+            id: "playModeBtn"
+        },
     ],
 ]

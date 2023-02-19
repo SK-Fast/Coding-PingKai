@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-md-2 d-md-none d-block">
-            <a @click="togglePlayMode" href="#" class="playmode-btn"><vue-feather type="play" class="me-2" stroke="#606060" /></a>
+            <a @click="togglePlayMode" id="playModeBtn" href="#" class="playmode-btn"><vue-feather type="play" class="me-2" stroke="#606060" /></a>
         </div>
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle" ref="editorMiddle">
@@ -39,7 +39,7 @@
                 :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <div class="btn-group tool-btns">
+                <div class="btn-group tool-btns" id="runCodeBtn">
                     <div class="btn btn-success run-code-btn" @click="runCode" v-if="!codeRunning">
                         <vue-feather type="play" stroke="#FFF" />
                     </div>
@@ -150,6 +150,8 @@ const nextMapLoading = ref(false)
 
 const updateBlockLimit = () => {
     blockLeft.value = blocklyWorkspace.remainingCapacity()
+    
+    dialogueView.value.blockCountUpdate(blocklyWorkspace.getAllBlocks(false).length)
 }
 
 onMounted(async () => {
@@ -325,6 +327,10 @@ const runCode = async () => {
                 level_passed: parseInt(levelID) + 1
             })
         }
+
+        await writeUserData(store.state.user, {
+            exp: userData.exp + 10
+        })
 
         const confetti = await import('canvas-confetti');
 

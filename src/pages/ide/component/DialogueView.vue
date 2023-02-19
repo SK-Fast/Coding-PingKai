@@ -15,8 +15,10 @@
                         <div>
                             <div v-if="buttonContinue">
                                 <div class="float-end">
-                                    <button class="btn btn-secondary me-2" @click="previousSection">ขั้นตอนที่แล้ว</button>
-                                    <button class="btn btn-primary" @click="continueSection">ไปต่อ</button>
+                                    <button class="btn btn-secondary me-2" v-if="previousBtnEnabled"
+                                        @click="previousSection">ขั้นตอนที่แล้ว</button>
+                                    <button class="btn btn-primary" v-if="nextBtnEnabled"
+                                        @click="continueSection">ไปต่อ</button>
                                 </div>
                             </div>
                         </div>
@@ -29,12 +31,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 
 const textContent = ref(null)
 let sectionIndex = 0
 let dialogue = []
 const buttonContinue = ref(false)
+const nextBtnEnabled = ref(true)
+const previousBtnEnabled = ref(true)
+let blockCount = 0
+let updateIntervals = []
 
 const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
@@ -47,6 +53,21 @@ const typeText = async (txt) => {
         textContent.value += txt.charAt(i)
         await delay(25)
     }
+}
+
+const waitForBlockCount = (bC) => {
+    return new Promise((resolve) => {
+        let iv = setInterval(() => {
+            console.log(bC, blockCount)
+            if (blockCount >= bC) {
+                console.log("resolve")
+                resolve()
+                clearInterval(iv)
+            }
+        }, 100)
+
+        updateIntervals.push(iv)
+    })
 }
 
 const runSection = async (section) => {
@@ -120,7 +141,28 @@ const runSection = async (section) => {
                     }, 10000);
                 }
             }
+
+            if (data.type == "wait_block_paste") {
+                await waitForBlockCount(data.count)
+
+                if (data['autoJump']) {
+                    continueSection()
+                    return
+                }
+            }
         }
+    }
+
+    if (sectionIndex <= 0) {
+        previousBtnEnabled.value = false
+    } else {
+        previousBtnEnabled.value = true
+    }
+
+    if (sectionIndex >= dialogue.length - 1) {
+        nextBtnEnabled.value = false
+    } else {
+        nextBtnEnabled.value = true
     }
 
     buttonContinue.value = true
@@ -150,7 +192,17 @@ const resetText = () => {
     textContent.value = ""
 }
 
-defineExpose({ runDialogue, typeText, resetText })
+onUnmounted(() => {
+    for (const i of updateIntervals) {
+        clearInterval(i)
+    }
+})
+
+const blockCountUpdate = (bC) => {
+    blockCount = bC
+}
+
+defineExpose({ runDialogue, typeText, resetText, blockCountUpdate })
 </script>
 
 <style scoped>
