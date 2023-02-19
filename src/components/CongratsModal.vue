@@ -1,6 +1,7 @@
 <script setup>
     import Modal from "./modal/Modal.vue"
     import { ref, inject } from "vue";
+    import { getMaxLevel } from "../lessons/lessons";
 
     const modalBase = ref("modalBase")
 
@@ -19,10 +20,11 @@
 
 <template>
     <Modal ref="modalBase">
-        <div class="col-md-5">
-            <h3>เก่งดีนิ</h3>
-            <p>แต่นายลืมโอน Truemoney wallet 0694206942</p>
-            <button class="btn btn-primary" @click="emit('continue')">ไปต่อ</button>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="@/assets/chick_congrats.png" class="col-8 img-fluid">
+            <h3>ยินดีด้วย!</h3>
+            <p>คุณผ่านด่านนี้แล้ว!</p>
+            <button class="btn btn-primary w-100" @click="emit('continue')">ด่านต่อไป</button>
         </div>
     </Modal>
 </template>
