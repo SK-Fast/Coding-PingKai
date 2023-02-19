@@ -6,7 +6,7 @@
                 <img src="/chick.png" class="chick-frame mb-2">
             </div>
             <div class="ms-md-3 ms-0 flex-grow-1">
-                <div class="card bg-light-200 p-md-0 p-2 h-100 w-100">
+                <div class="card bg-light-200 p-md-0 p-2 h-100 w-100" @click="continueSection">
                     <div class="card-body d-flex flex-column text-box-body">
                         <div class="text-scrollable">
                             <p ref="textBox">{{ textContent }}</p>
@@ -41,6 +41,7 @@ const nextBtnEnabled = ref(true)
 const previousBtnEnabled = ref(true)
 let blockCount = 0
 let updateIntervals = []
+let typing = false
 
 const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
@@ -72,6 +73,7 @@ const waitForBlockCount = (bC) => {
 
 const runSection = async (section) => {
     buttonContinue.value = false
+    typing = true
 
     for (const data of section) {
         let doRun = true
@@ -146,6 +148,7 @@ const runSection = async (section) => {
                 await waitForBlockCount(data.count)
 
                 if (data['autoJump']) {
+                    typing = false
                     continueSection()
                     return
                 }
@@ -166,6 +169,8 @@ const runSection = async (section) => {
     }
 
     buttonContinue.value = true
+
+    typing = false
 }
 
 function updateDialogue() {
@@ -173,6 +178,9 @@ function updateDialogue() {
 }
 
 const continueSection = () => {
+    if (typing) {
+        return
+    }
     sectionIndex++
     updateDialogue()
 }
@@ -213,6 +221,7 @@ defineExpose({ runDialogue, typeText, resetText, blockCountUpdate })
 .text-box-body {
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 
 .text-scrollable {
@@ -244,5 +253,9 @@ defineExpose({ runDialogue, typeText, resetText, blockCountUpdate })
         bottom: -0px;
         opacity: 1;
     }
+}
+
+.nextBtn img {
+    image-rendering: optimizeSpeed;
 }
 </style>
