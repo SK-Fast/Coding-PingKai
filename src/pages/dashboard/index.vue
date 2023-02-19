@@ -15,7 +15,7 @@ onMounted(async() => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container mt-3">
         <div class="d-flex flex-column align-items-center p-2">
             <div class="d-flex flex-column align-items-center">
                 <div class="avatar col-5 img-rounded" :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
