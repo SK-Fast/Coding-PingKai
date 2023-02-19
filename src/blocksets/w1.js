@@ -125,9 +125,9 @@ export const init = () => {
     }
     
     langGenerator["until_flag"] = (block) => {
-        //console.log("END: ", langGenerator.valueToCode(block, 'DO') || 'pass')
-        
-        return `while is_over_flag() == false:\n\tgo_right('')\n`;
+        let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
+
+        return `loopCount = 0\nwhile is_over_flag() == false:\n${doLine}\n\tloopCount = loopCount + 1\n\tif loopCount > 100:\n\t\tbreak\n`
     }
 
     langGenerator["is_over_flag"] = (block) => {

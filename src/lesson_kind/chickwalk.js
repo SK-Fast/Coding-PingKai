@@ -37,6 +37,7 @@ export const run = async (script, data, delay, w) => {
     let currentPosY = data.chickMapPos[1]
 
     let flags = data.flags
+    let flagChecks = [...data.flags]
     let flagCollected = 0
 
     const flagCheck = () => {
@@ -44,7 +45,11 @@ export const run = async (script, data, delay, w) => {
     }
 
     const staticFlagCheck = () => {
-        return data.flags.find((d) => d.x == currentPosX && d.y == currentPosY)
+        return flagChecks.find((d) => d.x == currentPosX && d.y == currentPosY)
+    }
+
+    const staticFlagCheckIndex = () => {
+        return flagChecks.findIndex((d) => d.x == currentPosX && d.y == currentPosY)
     }
 
     const cantMoveWarn = (c, bID) => {
@@ -74,6 +79,8 @@ export const run = async (script, data, delay, w) => {
             y: y,
             easing: 'easeOutElastic(1, .6)'
         })
+
+        await updateMove()
     }
 
     interpreter.addFunction('go_left', async (bID) => {
@@ -88,7 +95,7 @@ export const run = async (script, data, delay, w) => {
             cantMoveWarn(w, bID)
         }
 
-        await updateMove()
+        
     });
 
     interpreter.addFunction('go_right', async (bID) => {
@@ -106,7 +113,7 @@ export const run = async (script, data, delay, w) => {
             cantMoveWarn(w, bID)
         }
 
-        await updateMove()
+        
     });
 
     interpreter.addFunction('go_up', async (bID) => {
@@ -125,7 +132,7 @@ export const run = async (script, data, delay, w) => {
             cantMoveWarn(w, bID)
         }
 
-        await updateMove()
+        
     });
 
     interpreter.addFunction('go_down', async (bID) => {
@@ -140,13 +147,19 @@ export const run = async (script, data, delay, w) => {
             cantMoveWarn(w, bID)
         }
 
-        await updateMove()
+        
     });
 
     interpreter.addFunction('is_over_flag', async () => {
         const sFDetect = staticFlagCheck()
+        const sFIDetect = staticFlagCheckIndex()
+        const isFlag = sFDetect != undefined
 
-        return sFDetect != undefined
+        if (isFlag) {
+            flagChecks.splice(sFIDetect, 1);
+        }
+
+        return isFlag
     });
 
     await interpreter.evaluate(script)
@@ -164,8 +177,10 @@ export const reset = (w, data) => {
     resetAllBlocks(w)
 
     for (const flag of data.flags) {
+        console.log(flag)
         flag.obj.width = data.cellSize
         flag.obj.height = data.cellSize
+        console.log(flag)
     }
 }
 
