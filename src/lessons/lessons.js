@@ -33,3 +33,24 @@ export function findLevel(i) {
         }
     }
 }
+
+export function getSectionFromID(i) {
+    let ii = 0
+    let startI = 0
+
+    for (const section of sections) {
+        startI = ii
+
+        for (const level of section.levels) {
+            if (ii == i) {
+                return {
+                    ...section,
+                    levelCount: section.levels.length,
+                    startIndex: startI
+                }
+            }
+
+            ii++
+        }
+    }
+}

@@ -35,17 +35,17 @@ export const dialogue = [
         },
         {
             type: "txt-continue",
-            text: "ผมจะมาสอนการใช้งานหน้าเขียนโค้ดนี้ครับ"
+            text: " ผมจะมาสอนการใช้งานหน้าเขียนโค้ดนี้ครับ"
         },
     ],
     [
         {
             type: "txt",
-            text: "ลองดูบล็อกทางด้านข้างดูสิ จะมี <b>ขึ้นไปข้างบน</b>"
+            text: "ลองดูบล็อกทางด้านข้างดูสิ จะมี ขึ้นไปข้างบน"
         },
         {
             type: "focus_block",
-            blockType: "go_up"
+            blockIndex: 0
         },
         {
             type: "delay",
@@ -53,11 +53,11 @@ export const dialogue = [
         },
         {
             type: "txt-continue",
-            text: "และลงไปข้างล่าง"
+            text: " และลงไปข้างล่าง"
         },
         {
             type: "focus_block",
-            blockType: "go_down"
+            blockIndex: 1
         },
     ],
     [
@@ -67,17 +67,24 @@ export const dialogue = [
         },
         {
             type: "focus_element",
-            id: "runResult"
-        },
-        {
-            type: "enterPlayMode"
+            id: "runResult",
         },
         {
             type: "delay",
-            ms: 1000
+            ms: 200,
         },
         {
-            type: "exitPlaymode"
+            type: "enterPlayMode",
+            mobile: true,
+        },
+        {
+            type: "delay",
+            ms: 3000,
+            mobile: true,
+        },
+        {
+            type: "exitPlaymode",
+            mobile: true,
         },
     ],
     [
@@ -93,11 +100,11 @@ export const dialogue = [
         },
         {
             type: "guide_block_drag",
-            blockType: "go_up"
+            blockIndex: 0
         },
         {
             type: "txt-continue",
-            text: "<b>ขึ้นไปข้างบน</b> ลงไปวางบนที่ว่างใน Editor ดูสิ"
+            text: "ขึ้นไปข้างบน ลงไปวางบนที่ว่างใน Editor ดูสิ"
         },
     ],
 ]

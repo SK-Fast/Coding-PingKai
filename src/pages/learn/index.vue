@@ -28,7 +28,7 @@
                 <div class="lvl-btn" @click="(event) => goToLesson(level.levelI, event)" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
                     <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                     <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
-                    <img src="@/assets/level/check.png" width="50" height="50" v-if="level.lvlState == 'done'">
+                    <img src="@/assets/level/check.png" width="150" height="150" v-if="level.lvlState == 'done'">
 
                     <div class="start-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
                         เริ่ม

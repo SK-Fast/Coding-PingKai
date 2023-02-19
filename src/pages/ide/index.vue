@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <DialogueView/>
+            <DialogueView ref="dialogueView" @onDialogueData="newDialogueData"/>
             
         </div>
 </div>
@@ -113,6 +113,8 @@ const runResult = ref(null)
 const codeDone = ref(true)
 const congratModal = ref(null)
 const editorMiddle = ref(null)
+
+const dialogueView = ref(null)
 
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
@@ -179,6 +181,7 @@ onMounted(async () => {
             }
 
             blocklyWorkspace = bEditor.value.initBlockly()
+            
 
             console.log(blocklyWorkspace)
 
@@ -186,10 +189,17 @@ onMounted(async () => {
 
             updateBlockLimit()
 
-            setTimeout(() => { 
-                playModeEnabled.value = false
-            }, 2000)
-
+            if (window.outerWidth <= 600) {
+                setTimeout(() => { 
+                    playModeEnabled.value = false
+                    dialogueView.value.runDialogue(lessonData.dialogue)
+                }, 2000)
+            } else {
+                setTimeout(() => {
+                    console.log(lessonData.dialogue)
+                    dialogueView.value.runDialogue(lessonData.dialogue)
+                }, 2000)
+            }
         } else {
 
             await Swal.fire({
@@ -274,6 +284,17 @@ const exitPlayMode = (playSound = true) => {
     }
 }
 
+const newDialogueData = (data) => {
+    
+
+    if (data.type == "enterPlayMode") {
+        playModeEnabled.value = true
+    }
+    if (data.type == "exitPlaymode") {
+        playModeEnabled.value = false
+    }
+}
+
 const runCode = async () => {
     let code = blockset.generate(blocklyWorkspace)
 
@@ -319,6 +340,9 @@ const runCode = async () => {
 
     } else {
         playAudio("failed-run.mp3")
+
+        dialogueView.value.resetText()
+        dialogueView.value.typeText("ดูเหมือนว่าโค้ดยังไม่ถูกน่ะ ลองแก้ไขโค้ดดูใหม่น่ะ คุณทำได้!")
 
         if (window.outerWidth < 600) {
             exitPlayMode(false)

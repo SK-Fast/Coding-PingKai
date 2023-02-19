@@ -1,7 +1,16 @@
 <script setup>
-import { inject } from 'vue';
+import { inject, onMounted, ref } from 'vue';
+import { getUserData } from 'libs/firebaseSystem.js'
+import { getSectionFromID } from '@/lessons/lessons.js'
 
 const store = inject('store')
+const userData = ref({})
+const sectionData = ref({})
+
+onMounted(async() => {
+    userData.value = await getUserData(store)
+    sectionData.value = getSectionFromID(userData.value.level_passed)
+})
 
 </script>
 
@@ -13,29 +22,29 @@ const store = inject('store')
                 <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
                     <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
                     <p class="m-0 mt-1 text-monospace">
-                        <span class="text-primary me-2">STREAK 0</span>
-                        <span class="text-warning">EXP 0</span>
+                        <span class="text-primary me-2">STREAK {{ userData['streak'] || '.' }}</span>
+                        <span class="text-warning">EXP {{ userData['exp'] || '.' }}</span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-column align-items-center mt-2">
+        <div class="d-flex flex-column align-items-center mt-2" v-if="userData != {} && sectionData != {}">
             <div class="card col-md-6">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="flex-grow-1 bg">
                             <p class="text-muted">ต่อจากครั้งที่แล้ว</p>
-                            <h3>พื้นฐาน</h3>
-                            <p class="m-0">พื้นฐานในการใช้ Coding PingKai</p>
+                            <h3>{{ sectionData['title'] || 'กำลังโหลด...' }}</h3>
+                            <p class="m-0">{{ sectionData['desc'] || '' }}</p>
                         </div>
 
                         <div class="col-md-3 d-flex align-items-end justify-content-end">
-                            <button class="btn btn-primary">ไปต่อ</button>
+                            <router-link to="/learn" class="btn btn-primary">ไปต่อ</router-link>
                         </div>
                     </div>
                     <div class="progress mt-2">
-                      <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar" role="progressbar" :style="`width: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`"></div>
                     </div>
                 </div>
             </div>
@@ -45,23 +54,15 @@ const store = inject('store')
                     <div class="d-flex">
                         <p class="text-muted">ด่านต่างๆ</p>
                         <div class="flex-grow-1"></div>
-                        <router-link to="/Moreinfo1" class="float-end text-primary">ดูทั้งหมด</router-link>
                     </div>
 
-                    <div class="d-flex">
-                        <div class="card col-4 btn-transparent">
-                            <div class="level-card-img" style="background-image: url('tutorial.png')"></div>
-                            
-                            <div class="p-2 mt-1">
-                                <h5>พื้นฐาน</h5>
-                                <p class="text-muted m-0">พื้นฐานในการใช้ Coding PingKai</p>
-                            </div>
-                        </div>
-                    </div>
-
+                    <router-link to="/learn">
+                        <img src="@/assets/levels_dashboard.png" class="img-fluid">
+                    </router-link>
                 </div>
             </div>
 
+            <!--
             <div class="card col-md-6 mt-2">
                 <div class="card-body">
                     <div class="d-flex">
@@ -83,6 +84,7 @@ const store = inject('store')
 
                 </div>
             </div>
+            -->
 
         </div>
     </div>
@@ -104,8 +106,5 @@ const store = inject('store')
 
 .badge-img {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-.bg {
-    background: linear-gradient(90deg, rgba(255,255,255,1) 37%, rgba(0,0,0,1) 100%);
 }
 </style>

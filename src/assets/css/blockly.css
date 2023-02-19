@@ -156,3 +156,23 @@
         transform: scale(1);
     }   
 }
+
+.dragdown-guide {
+    position: fixed;
+    z-index: 999;
+
+    animation: dragDownGuide 10s;
+    pointer-events: none;
+}
+
+@keyframes dragDownGuide {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

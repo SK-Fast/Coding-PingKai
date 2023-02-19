@@ -12,7 +12,8 @@
 @import "./components/input.scss";
 @import "./mixins.scss";
 
-html, body {
+html,
+body {
     font-family: 'Bai Jamjuree', sans-serif;
     font-weight: 500;
     background-color: map-get($map: $white-colors, $key: "background");
@@ -58,7 +59,8 @@ $btn-border-radius: 5px;
     color: black;
 }
 
-.btn-primary:focus, .btn-primary:hover {
+.btn-primary:focus,
+.btn-primary:hover {
     color: white;
 }
 
@@ -121,7 +123,11 @@ $btn-border-radius: 5px;
     background-repeat: no-repeat;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight: 600;
 }
 
@@ -172,7 +178,8 @@ hr {
     @include CardBaseShadow;
 }
 
-a, .btn-link {
+a,
+.btn-link {
     cursor: pointer;
     color: map-get($map: $theme-colors, $key: "primary");
 }
@@ -211,7 +218,7 @@ a, .btn-link {
 }
 
 @media only screen and (max-width: 600px) {
-    .dropdown-menu-end[data-bs-popper] { 
+    .dropdown-menu-end[data-bs-popper] {
         left: 0 !important;
     }
 
@@ -273,6 +280,7 @@ a, .btn-link {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(-360deg);
     }
@@ -327,6 +335,7 @@ a, .btn-link {
     0% {
         clip-path: circle(0% at var(--x) var(--y));
     }
+
     100% {
         clip-path: circle(100% at 50% 50%);
     }
@@ -336,6 +345,7 @@ a, .btn-link {
     0% {
         clip-path: circle(100% at 50% 50%);
     }
+
     100% {
         clip-path: circle(0% at 50% 50%);
     }
@@ -353,9 +363,11 @@ a, .btn-link {
     0% {
         outline-offset: 0px;
     }
+
     50% {
         outline-offset: 5px;
     }
+
     100% {
         outline-offset: 0px;
     }
@@ -383,6 +395,7 @@ a, .btn-link {
     0% {
         clip-path: circle(100% at 50% 50%);
     }
+
     100% {
         clip-path: circle(0% at 50% 50%);
     }
@@ -392,7 +405,45 @@ a, .btn-link {
     0% {
         clip-path: circle(0% at 50% 50%);
     }
+
     100% {
         clip-path: circle(100% at 50% 50%);
+    }
+}
+
+.element-focus {
+    animation: elementTada 1s linear;
+}
+
+@keyframes elementTada {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+        -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
     }
 }

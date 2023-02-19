@@ -33,16 +33,56 @@ export const levelData = {
 }
 
 export const dialogue = [
-    {
-        type: "txt",
-        text: "ยินดีต้อนรับสู่โค้ดดิ้งปิ้งไก่!"
-    },
-    {
-        type: "txt-continue",
-        text: " ผมจะมาสอนการใช้งานหน้าเขียนโค้ดนี้ครับ"
-    },
-    {
-        type: "txt",
-        text: "ลองกดตรงคำว่า Blocks ดูสิ จะมี เดินไป ข้างหน้า ข้างหลัง ด้านซ้าย ด้านขวา"
-    },
+    [
+        {
+            type: "txt",
+            text: "โอ้! ไม่นะ!"
+        },
+        {
+            type: "delay",
+            ms: 100
+        },
+        {
+            type: "txt-continue",
+            text: " มีหินขวางทางเดินของเราอยู่"
+        },
+        {
+            type: "delay",
+            ms: 100
+        },
+        {
+            type: "txt-continue",
+            text: " เราต้องเดินหลบเพื่อไปหาธง"
+        },
+    ],
+    [
+        {
+            type: "txt",
+            text: "ลองใช้บล็อก"
+        },
+        {
+            type: "focus_block",
+            blockIndex: 2
+        },
+        {
+            type: "txt-continue",
+            text: " ไปทางซ้าย"
+        },
+        {
+            type: "delay",
+            ms: 100
+        },
+        {
+            type: "txt-continue",
+            text: " และ"
+        },
+        {
+            type: "focus_block",
+            blockIndex: 3
+        },
+        {
+            type: "txt-continue",
+            text: " ไปทางขวา ดูสิ"
+        },
+    ],
 ]
