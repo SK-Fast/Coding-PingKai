@@ -11,12 +11,13 @@
         <div class="card-body">
             <div class="d-flex flex-column">
                 <code v-for="(item, index) in devData.env">
-                  {{ index }}: {{ item }}
-                </code>
+                      {{ index }}: {{ item }}
+                    </code>
             </div>
         </div>
     </div>
 
+    <button class="btn btn-primary" @click="appUpdate">อัปเดตแอปเลยตอนนี้</button>
 </template>
 
 <script setup>
@@ -28,4 +29,15 @@ const store = inject("store")
 const devData = ref({
     env: import.meta.env
 })
+
+const appUpdate = () => {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+            for (let registration of registrations) {
+                registration.update()
+            }
+        })
+    }
+    window.location.reload(true);
+}
 </script>
