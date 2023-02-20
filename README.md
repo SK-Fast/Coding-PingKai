@@ -6,8 +6,10 @@
 **โคดดิ้ง ปิ้งไก่** เป็นสื่อการสอนเด็กๆ เกี่ยวกับ Algorithm ผ่านการสอน Block Coding และ Python Web application นี้เขียนในภาษา Javascript และ Framework ชื่อ "Vue"
 
 ## Screenshots
-![World Screen](./guide/world.png)
-![Login Screen](./guide/login.png)
+![Landing](./guide/landing.png)
+![Dashboard](./guide/dashboard.png)
+![Workspace](./guide/workspace.png)
+![Settings](./guide/settings.png)
 
 ## รันโปรแกรม/Setup
 คุณต้องลงโปรแกรมดังนี้เพื่อรัน โคดดิ้ง ปิ้งไก่
