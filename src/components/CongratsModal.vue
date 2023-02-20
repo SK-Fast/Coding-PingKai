@@ -4,9 +4,15 @@
     import { getMaxLevel } from "../lessons/lessons";
 
     const modalBase = ref("modalBase")
+    const userData = ref({})
+    const continueEnabled = ref(true)
 
-    const openM = () => {
+    const openM = (levelID) => {
         modalBase.value.openModal()
+
+        if (levelID + 1 >= getMaxLevel()) {
+            continueEnabled.value = false
+        }
     }
 
     const closeM = () => {
@@ -24,7 +30,8 @@
             <img src="@/assets/chick_congrats.png" class="col-8 img-fluid">
             <h3>ยินดีด้วย!</h3>
             <p>คุณผ่านด่านนี้แล้ว!</p>
-            <button class="btn btn-primary w-100" @click="emit('continue')">ด่านต่อไป</button>
+            <button class="btn btn-secondary w-100" @click="closeM">ปิด</button>
+            <button v-if="continueEnabled" class="btn btn-primary w-100 mt-2" @click="emit('continue')">ด่านต่อไป</button>
         </div>
     </Modal>
 </template>

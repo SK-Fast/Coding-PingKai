@@ -42,7 +42,7 @@ export function findLevel(i) {
     }
 }
 
-export function getMaxLevel(i) {
+export function getMaxLevel() {
     let ii = 0
 
     for (const section of sections) {

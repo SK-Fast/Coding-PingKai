@@ -325,9 +325,10 @@ const runCode = async () => {
 
     if (levelPassed) {
         console.log(congratModal.value)
-        congratModal.value.openM()
 
         playAudio("correct.wav")
+
+        congratModal.value.openM(levelID)
 
         const userData = await getUserData(store)
 
