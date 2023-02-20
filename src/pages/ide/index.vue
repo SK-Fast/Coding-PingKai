@@ -43,8 +43,11 @@
                     <div class="btn btn-success run-code-btn" @click="runCode" v-if="!codeRunning">
                         <vue-feather type="play" stroke="#FFF" />
                     </div>
-                    <div class="btn btn-warning" @click="stopCode" v-if="codeRunning" :disabled="!codeDone">
+                    <div class="btn btn-warning" @click="stopCode" v-if="codeRunning && codeDone">
                         <vue-feather type="refresh-cw" stroke="#FFF" />
+                    </div>
+                    <div class="btn btn-danger" @click="stopCode" v-if="codeRunning && !codeDone">
+                        <vue-feather type="octagon" stroke="#FFF" />
                     </div>
                     <div class="btn btn-danger d-md-none d-block" @click="exitPlayMode()">
                         <vue-feather type="chevron-down" stroke="#FFF" />
@@ -127,6 +130,9 @@ const lessonKindData = ref({
 })
 
 let levelID = ""
+let sessionData = {
+    codeStop: false
+}
 
 let blocklyWorkspace;
 let interpreterData;
@@ -250,10 +256,10 @@ const continueLevel = async() => {
 }
 
 const stopCode = async () => {
-    if (!codeDone.value) {
-        return
-    }
+    sessionData.codeStop = true
+
     codeRunning.value = false
+    codeDone.value = true
 
     lessonKind.reset(blocklyWorkspace, interpreterData)
 }
@@ -298,6 +304,8 @@ const newDialogueData = (data) => {
 }
 
 const runCode = async () => {
+    lessonKind.reset(blocklyWorkspace, interpreterData)
+
     let code = blockset.generate(blocklyWorkspace)
 
     codeRunning.value = true
@@ -306,7 +314,8 @@ const runCode = async () => {
 
     codeDone.value = false
 
-    let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace)
+    sessionData.codeStop = false
+    let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace, sessionData)
 
     console.log(levelPassed)
 

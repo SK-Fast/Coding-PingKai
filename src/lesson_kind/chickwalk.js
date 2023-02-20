@@ -30,7 +30,7 @@ function blockExist(lvlPos, x, y) {
  * @param {Function} delay Global Delay
  * @param {WorkspaceSvg} w Blockly Workspace
  */
-export const run = async (script, data, delay, w) => {
+export const run = async (script, data, delay, w, sessionData) => {
     const interpreter = createInterpretBase()
     
     let currentPosX = data.chickMapPos[0]
@@ -86,8 +86,6 @@ export const run = async (script, data, delay, w) => {
     interpreter.addFunction('go_left', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX - 1, currentPosY)
 
-        activeBlock(w, bID)
-
         if (!c) {
             currentPosX--
             await moveChick(data.chick.x - data.cellSize, data.chick.y)
@@ -101,8 +99,6 @@ export const run = async (script, data, delay, w) => {
     interpreter.addFunction('go_right', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
         
-        activeBlock(w, bID)
-
         console.log(c)
         console.log(!c)
 
@@ -112,16 +108,22 @@ export const run = async (script, data, delay, w) => {
         } else {
             cantMoveWarn(w, bID)
         }
-
-        
     });
 
+    interpreter.addFunction('check_code_stop', () => {
+        if (sessionData.codeStop == true) {
+            throw "Python Signal Killed"
+        }
+    })
+
+    interpreter.addFunction('block_highlight', (bID) => {
+        activeBlock(w, bID)
+    })
+    
     interpreter.addFunction('go_up', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY - 1)
 
         let block = w.getBlockById(bID)
-
-        activeBlock(w, bID)
 
         console.log(c)
 
@@ -137,8 +139,6 @@ export const run = async (script, data, delay, w) => {
 
     interpreter.addFunction('go_down', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY + 1)
-
-        activeBlock(w, bID)
 
         if (!c) {
             currentPosY++
@@ -170,17 +170,19 @@ export const run = async (script, data, delay, w) => {
 }
 
 export const reset = (w, data) => {
+    anime.remove(data.chick)
+
     data.chick.x = data.originPos[0]
     data.chick.y = data.originPos[1]
     data.chick.rotation = 0
-    
+        
     resetAllBlocks(w)
 
     for (const flag of data.flags) {
-        console.log(flag)
+        anime.remove(flag)
+
         flag.obj.width = data.cellSize
         flag.obj.height = data.cellSize
-        console.log(flag)
     }
 }
 

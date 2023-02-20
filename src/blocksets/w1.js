@@ -102,6 +102,8 @@ export const blocklyJSON = [
 ]
 
 export const generate = (w) => {
+    langGenerator.STATEMENT_PREFIX = 'check_code_stop()\nblock_highlight(%1)\n';
+
     return langGenerator.workspaceToCode(w)
 }
 
