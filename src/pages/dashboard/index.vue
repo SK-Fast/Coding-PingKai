@@ -6,11 +6,60 @@ import { getSectionFromID } from '@/lessons/lessons.js'
 const store = inject('store')
 const userData = ref({})
 const sectionData = ref({})
+const updateAvailable = ref(false)
+const updatingApp = ref(false)
+const updateProgress = ref(0)
+const oldVersion = ref("")
+const newVersion = ref("")
 
-onMounted(async() => {
+onMounted(async () => {
     userData.value = await getUserData(store)
     sectionData.value = getSectionFromID(userData.value.level_passed)
+
+    checkForUpdates()
 })
+
+const appUpdate = async () => {
+    updateAvailable.value = false
+    updatingApp.value = true
+
+    console.log("Updating")
+
+    if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations()
+
+        let prog = 0
+        for (let registration of registrations) {
+            registration.update()
+            console.log("Updating Register ", prog)
+            updateProgress.value = (prog / registrations.length) * 100
+            prog++
+        }
+
+        const names = await caches.keys()
+
+        prog = 0
+
+        for (let name of names) {
+            caches.delete(name)
+            console.log("Clearing Cache ", name)
+            updateProgress.value = (prog / names.length) * 100
+        }
+    }
+
+    window.location.reload()
+}
+
+const checkForUpdates = async () => {
+    const versionRes = await fetch("/version.json", {cache: "no-store"})
+    const versionData = await versionRes.json()
+
+    if (versionData.version != __APP_VERSION__) {
+        oldVersion.value = __APP_VERSION__
+        newVersion.value = versionData.version
+        updateAvailable.value = true
+    }
+}
 
 </script>
 
@@ -18,7 +67,8 @@ onMounted(async() => {
     <div class="container mt-3">
         <div class="d-flex flex-column align-items-center p-2">
             <div class="d-flex flex-column align-items-center">
-                <div class="avatar col-5 img-rounded" :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
+                <div class="avatar col-5 img-rounded"
+                    :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
                 <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
                     <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
                     <p class="m-0 mt-1 text-monospace">
@@ -30,6 +80,16 @@ onMounted(async() => {
         </div>
 
         <div class="d-flex flex-column align-items-center mt-2">
+            <div class="btn col-md-6 btn-primary text-center mb-2" v-if="updateAvailable" @click="appUpdate">
+                <p class="m-0"><vue-feather type="refresh-cw" animation="spin" animation-speed="slow"
+                        size="15"></vue-feather> มีอัปเดตใหม่! แตะเพื่อดาวน์โหลด ({{ oldVersion }} <vue-feather
+                        type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
+            </div>
+
+            <div class="progress mt-2 col-md-6 mb-2" v-if="updatingApp" style="height: 30px;">
+                <div class="progress-bar" role="progressbar" :style="`width: ${updateProgress}%`">กำลังอัปเดต...</div>
+            </div>
+
             <div class="card col-md-6" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
                 <div class="card-body">
                     <div class="d-flex">
@@ -44,7 +104,9 @@ onMounted(async() => {
                         </div>
                     </div>
                     <div class="progress mt-2">
-                      <div class="progress-bar" role="progressbar" :style="`width: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`"></div>
+                        <div class="progress-bar" role="progressbar"
+                            :style="`width: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,28 +125,28 @@ onMounted(async() => {
             </div>
 
             <!--
-            <div class="card col-md-6 mt-2">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <p class="text-muted">รางวัลต่างๆ</p>
-                        <div class="flex-grow-1"></div>
-                        <router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>
-                    </div>
+                        <div class="card col-md-6 mt-2">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <p class="text-muted">รางวัลต่างๆ</p>
+                                    <div class="flex-grow-1"></div>
+                                    <router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>
+                                </div>
 
-                    <div class="d-flex">
-                        <div class="card col-3 btn-transparent">
-                            <img src="@/assets/badges/the_beginnings.png" class="img-fluid badge-img">
-                            
-                            <div class="p-2 mt-1 text-center">
-                                <h5>จุดเริ่มต้น</h5>
-                                <p class="text-muted m-0">สำหรับคนที่ผ่านด้านแรก</p> 
+                                <div class="d-flex">
+                                    <div class="card col-3 btn-transparent">
+                                        <img src="@/assets/badges/the_beginnings.png" class="img-fluid badge-img">
+                                        
+                                        <div class="p-2 mt-1 text-center">
+                                            <h5>จุดเริ่มต้น</h5>
+                                            <p class="text-muted m-0">สำหรับคนที่ผ่านด้านแรก</p> 
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-            -->
+                        -->
 
         </div>
     </div>

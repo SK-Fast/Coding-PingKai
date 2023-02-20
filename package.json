@@ -1,12 +1,12 @@
 {
   "name": "coding-pingkai",
   "private": true,
-  "version": "0.0.8.1",
+  "version": "0.0.8.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "emu": "firebase emulators:start",
-    "build": "vite build",
+    "build": "node update_version.js && vite build",
     "build-dev": "vite build --mode development",
     "both": "node ./development/both.js",
     "preview": "vite preview",

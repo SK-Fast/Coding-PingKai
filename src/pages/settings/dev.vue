@@ -29,15 +29,4 @@ const store = inject("store")
 const devData = ref({
     env: import.meta.env
 })
-
-const appUpdate = () => {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
-                registration.update()
-            }
-        })
-    }
-    window.location.reload(true);
-}
 </script>

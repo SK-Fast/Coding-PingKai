@@ -7,30 +7,30 @@ export default defineConfig({
   plugins: [vue(), VitePWA({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico', 'logos/apple-touch-icon.png', 'logos/masked-icon.svg', './rive/logout.riv'],
-      manifest: {
-        name: 'Coding Pingkai',
-        short_name: 'Coding PingKai',
-        description: 'Learn algorithm for everyone!',
-        theme_color: '#FFF4CE',
-        icons: [
-          {
-            src: 'logos/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'logos/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
-      }
+    manifest: {
+      name: 'Coding Pingkai',
+      short_name: 'Coding PingKai',
+      description: 'Learn algorithm for everyone!',
+      theme_color: '#FFF4CE',
+      icons: [
+        {
+          src: 'logos/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: 'logos/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png'
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable'
+        }
+      ]
+    }
   })],
   resolve: {
     alias: {
@@ -41,5 +41,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+  },
+  define: {
+    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version),
   }
 })
