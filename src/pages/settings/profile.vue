@@ -132,9 +132,7 @@ const deleteAccount = async() => {
 
             let credential = await store.state.fireLoginModal("reauth")
 
-            let oauth2Credential = GoogleAuthProvider.credential(store.state.user.accessToken)
-
-            await reauthenticateWithCredential(store.state.user, oauth2Credential)
+            await reauthenticateWithCredential(store.state.user, credential)
 
             await deleteUserData(store.state.user)
 

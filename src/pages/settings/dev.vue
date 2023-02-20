@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <button class="btn btn-primary" @click="appUpdate">อัปเดตแอปเลยตอนนี้</button>
+    <button class="btn btn-primary w-100 mt-2" @click="appUpdate">อัปเดตแอปเลยตอนนี้</button>
 </template>
 
 <script setup>

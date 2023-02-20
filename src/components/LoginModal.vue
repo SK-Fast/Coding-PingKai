@@ -69,7 +69,9 @@
             await newUserData(result.user)
             closeL()
 
-            loginPromise(result)
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+
+            loginPromise(credential)
 
             loggingIn.value = false
 
