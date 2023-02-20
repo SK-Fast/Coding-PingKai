@@ -33,4 +33,12 @@
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     border-radius: 30px 30px 5px 30px;
 }
+
+@media only screen and (max-width: 600px) {
+    .ac-card {
+        background: #FFFFFF;    
+        box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 30px 30px 0px 0px;
+    }
+}
 </style>

@@ -217,6 +217,12 @@ a,
     animation: dropdownPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.acceptcookies-card {
+    position: fixed;
+    bottom: 25px;
+    right: 15px;
+}
+
 @media only screen and (max-width: 600px) {
     .dropdown-menu-end[data-bs-popper] {
         left: 0 !important;
@@ -237,6 +243,12 @@ a,
     .navbar {
         display: none;
     }
+
+    .acceptcookies-card {
+        position: fixed;
+        bottom: px;
+        right: 0px;
+    }
 }
 
 @keyframes dropdownPop {
@@ -251,12 +263,6 @@ a,
 
 .swal2-cancel {
     background-color: map-get($map: $theme-colors, $key: "secondary") !important;
-}
-
-.acceptcookies-card {
-    position: fixed;
-    bottom: 25px;
-    right: 15px;
 }
 
 .btn-secondary {
