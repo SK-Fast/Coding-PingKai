@@ -9,6 +9,7 @@
 
     const openM = (levelID) => {
         modalBase.value.openModal()
+        levelID = parseInt(levelID)
 
         if (levelID + 1 >= getMaxLevel()) {
             continueEnabled.value = false
