@@ -69,14 +69,6 @@ export default [
         },
        component: dashboard,
     },
-    { 
-        path: '/Moreinfo1',
-        component: Moreinfo1,
-    },
-    { 
-        path: '/Moreinfo2',
-        component: Moreinfo2,
-    },
     {
         path: '/Lookprofile',
         component: Lookprofile,
