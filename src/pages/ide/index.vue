@@ -214,8 +214,6 @@ onMounted(async () => {
 
             toolboxE = document.querySelectorAll('.injectionDiv .blocklyFlyout')[1]
 
-            closeBlocksMenu()
-
         } else {
 
             await Swal.fire({
@@ -374,7 +372,7 @@ const runCode = async () => {
     }
 }
 
-const blockMenuOn = ref(false)
+const blockMenuOn = ref(true)
 
 const openBlocksMenu = () => {
     blockMenuOn.value = true
