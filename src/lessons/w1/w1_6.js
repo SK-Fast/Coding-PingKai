@@ -24,7 +24,7 @@ export const blocks = [
 export const levelKind = () => {return import("@/lesson_kind/chickwalk.js")}
 export const levelData = {
     title: "การวนซ้ำหลายรอบ",
-    altTitle: "W1-4",
+    altTitle: "W1-5",
     width: 5,
     height: 4,
     blockLimit: 8,
@@ -32,7 +32,7 @@ export const levelData = {
         "F", " ", " ", " ", "F", 
         " ", "#", "#", "#", " ", 
         " ", "#", "#", "#", " ", 
-        "F", " ", "C", " ", "F"
+        "F", " ", "C", "# ", "F"
     ]
 }
 
@@ -40,7 +40,7 @@ export const dialogue = [
     [
         {
             type: "txt",
-            text: "คล้ายๆ กับด่านก่อนเลย แต่ไปได้ทั้ง 4 ทิศเลย ลองดูสิ!"
+            text: "คล้ายๆ กับด่าน4และด่าน5เลย แต่มีหินประกบอยู่ด้วย ลองดูสิ!"
         }
     ],
 ]
