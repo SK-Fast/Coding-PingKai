@@ -11,6 +11,7 @@
     <div class="editor-top flex-row justify-content-center" :class="{ 'loading': !codeDone }">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
+            <a @click="toggleBlocksMenu" id="blocksMenuBtn" href="#" class="blockmenu-btn me-2 d-md-none d-block"><img src="@/assets/blocks_icon.svg"></a>
 
             <img src="@/assets/logo/logobeta.png" class="me-2" height="35">
         </div>
@@ -67,7 +68,7 @@
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
             <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
-                @mousemove="updateBlockLimit" @touchend="updateBlockLimit">
+                @mousemove="updateBlockLimit" @touchend="updateBlockLimit" @touchstart="updateBlockLimit">
 
                 <BlockEditor ref="bEditor" :options="blocklyConfig">
                 </BlockEditor>
@@ -160,6 +161,8 @@ const updateBlockLimit = () => {
     dialogueView.value.blockCountUpdate(blocklyWorkspace.getAllBlocks(false).length)
 }
 
+let toolboxE;
+
 onMounted(async () => {
     // Load Level
     levelID = router.currentRoute.value.params['id']
@@ -208,6 +211,11 @@ onMounted(async () => {
                     dialogueView.value.runDialogue(lessonData.dialogue)
                 }, 2000)
             }
+
+            toolboxE = document.querySelectorAll('.injectionDiv .blocklyFlyout')[1]
+
+            closeBlocksMenu()
+
         } else {
 
             await Swal.fire({
@@ -363,6 +371,31 @@ const runCode = async () => {
         if (window.outerWidth < 600) {
             exitPlayMode(false)
         }
+    }
+}
+
+const blockMenuOn = ref(false)
+
+const openBlocksMenu = () => {
+    blockMenuOn.value = true
+
+    setTimeout(() => {
+        toolboxE.style.display = "block"
+    }, 10);
+}
+
+
+const closeBlocksMenu = () => {
+    blockMenuOn.value = false
+
+    toolboxE.style.display = "none"
+}
+
+const toggleBlocksMenu = () => {
+    if (blockMenuOn.value) {
+        closeBlocksMenu()
+    } else {
+        openBlocksMenu()
     }
 }
 
