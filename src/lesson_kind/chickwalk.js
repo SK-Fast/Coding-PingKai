@@ -86,6 +86,8 @@ export const run = async (script, data, delay, w, sessionData) => {
     interpreter.addFunction('go_left', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX - 1, currentPosY)
 
+        data.chick.texture = data.chickFrames.L
+
         if (!c) {
             currentPosX--
             await moveChick(data.chick.x - data.cellSize, data.chick.y)
@@ -99,6 +101,8 @@ export const run = async (script, data, delay, w, sessionData) => {
     interpreter.addFunction('go_right', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
         
+        data.chick.texture = data.chickFrames.R
+
         console.log(c)
         console.log(!c)
 
@@ -123,6 +127,8 @@ export const run = async (script, data, delay, w, sessionData) => {
     interpreter.addFunction('go_up', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY - 1)
 
+        data.chick.texture = data.chickFrames.T
+
         let block = w.getBlockById(bID)
 
         console.log(c)
@@ -139,6 +145,8 @@ export const run = async (script, data, delay, w, sessionData) => {
 
     interpreter.addFunction('go_down', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX, currentPosY + 1)
+
+        data.chick.texture = data.chickFrames.B
 
         if (!c) {
             currentPosY++
@@ -178,6 +186,8 @@ export const reset = (w, data) => {
         
     resetAllBlocks(w)
 
+    data.chick.texture = data.chickFrames.L
+
     for (const flag of data.flags) {
         anime.remove(flag)
 
@@ -197,6 +207,13 @@ export const init = async (e, data) => {
         background: '#57ae6a',
         resizeTo: e
     });
+
+    const chickFrames = {
+        "T": PIXI.Texture.from('/chickwalk_tiles/chick_B.png'),
+        "B": PIXI.Texture.from('/chickwalk_tiles/chick_T.png'),
+        "L": PIXI.Texture.from('/chickwalk_tiles/chick_L.png'),
+        "R": PIXI.Texture.from('/chickwalk_tiles/chick_R.png'),
+    }
 
     e.appendChild(app.view);
 
@@ -231,7 +248,7 @@ export const init = async (e, data) => {
         ground.zIndex = -1
 
         container.addChild(ground)
-
+        
         return ground
     }
 
@@ -321,6 +338,7 @@ export const init = async (e, data) => {
         lvlData: data,
         cellSize: cellSize,
         lvlPos: blockPos,
-        interpreter: null
+        interpreter: null,
+        chickFrames: chickFrames
     }
 }

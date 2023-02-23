@@ -7,8 +7,6 @@ import settings_dev from '@/pages/settings/dev.vue'
 import exit from '@/pages/exit/exit.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
-import Moreinfo1 from '@/pages/dashboard/Moreinfo1.vue'
-import Moreinfo2 from '@/pages/dashboard/Moreinfo2.vue'
 import Lookprofile from '@/pages/settings/Lookprofile.vue'
 import congrat from '@/pages/congrat/congrat.vue'
 
@@ -68,14 +66,6 @@ export default [
             needAuth: true
         },
        component: dashboard,
-    },
-    { 
-        path: '/Moreinfo1',
-        component: Moreinfo1,
-    },
-    { 
-        path: '/Moreinfo2',
-        component: Moreinfo2,
     },
     {
         path: '/Lookprofile',

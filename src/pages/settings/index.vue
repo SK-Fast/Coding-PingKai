@@ -26,19 +26,15 @@
 import { onMounted, inject } from 'vue';
 import { currentPagePath } from 'libs/routeLib.js'
 import { promptLogout } from 'libs/firebaseSystem.js'
-
 const router = inject('router')
-
 onMounted(() => {
     if (currentPagePath() == "/settings") {
         router.push('/settings/general');
     }
 })
-
 const logoutClicked = () => {
     promptLogout()
 }
-
 </script>
 
 <style scoped>
@@ -46,7 +42,6 @@ const logoutClicked = () => {
     margin-bottom: 5px;
     text-align: left;
 }
-
 .settings-btn:not(.btn-primary) {
     background: rgba(0, 0, 0, 0.1);
 }
