@@ -20,7 +20,7 @@
                             target="_none"><vue-feather type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
                             รายงานปัญหาแอป</a>
                         
-                        <a class="text-dark" href="https://github.com/SK-Fast/Coding-PingKai"
+                        <a class="text-black" href="https://github.com/SK-Fast/Coding-PingKai"
                             target="_none"><vue-feather type="github" size="16" stroke="#212529"></vue-feather>
                             Github</a>
                     </div>
