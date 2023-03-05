@@ -1,5 +1,5 @@
 <template>
-    <div class="page-trans bg-light-400" :class="{'loading': lvlLoading}" :style="`--x: ${lvlLoadX}%;--y: ${lvlLoadY}%`">
+    <div class="page-trans bg-light-400" :class="{ 'loading': lvlLoading }" :style="`--x: ${lvlLoadX}%;--y: ${lvlLoadY}%`">
     </div>
     <div class="mt-5">
         <div class="container text-md-start text-center">
@@ -9,10 +9,10 @@
         <div class="d-flex justify-content-center" v-if="dataLoading">
             <div class="chick-spinner"></div>
         </div>
-        
+
         <div class="lvl-scroll" ref="lvlScroll" v-if="dataLoading == false">
-        <div class="d-flex flex-md-row flex-column p-5 lvl-all">
-            <!--
+            <div class="d-flex flex-md-row flex-column p-5 lvl-all">
+                <!--
             <div class="lvl-container">
                 <div class="lvl-btn done">
                     <img src="@/assets/level/check.png" width="50" height="50">
@@ -24,27 +24,28 @@
                 </div>
             </div>
             -->
-            <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                <div class="lvl-btn" @click="(event) => goToLesson(level.levelI, event)" :class="level.lvlState" :style="`--pos: ${level.y}%;`" :title="level.title">
-                    <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
-                    <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
-                    <img src="@/assets/level/check.png" width="150" height="150" v-if="level.lvlState == 'done'">
+                <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
+                    <div class="lvl-btn" @click="(event) => goToLesson(level.levelI, event)" :class="level.lvlState"
+                        :style="`--pos: ${level.y}%;`" :title="level.title">
+                        <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
+                        <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
+                        <img src="@/assets/level/check.png" width="150" height="150" v-if="level.lvlState == 'done'">
 
-                    <div class="start-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
-                        เริ่ม
-                        <img src="@/assets/start_arrow.svg" class="arrow-tooltip" height="20">
-                    </div>
+                        <div class="start-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
+                            เริ่ม
+                            <img src="@/assets/start_arrow.svg" class="arrow-tooltip" height="20">
+                        </div>
 
-                    <!--
+                        <!--
                     <div class="level-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
                         <img src="@/assets/arrow_up.svg" class="arrow-tooltip" height="20">
                         <h3>{{ level.title }}</h3>
                         <button class="btn btn-primary w-100">เริ่ม</button>
                     </div>
                     -->
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </template>
@@ -61,12 +62,13 @@ const dataLoading = ref(true)
 const lvlLoading = ref(false)
 const lvlLoadX = ref(0)
 const lvlLoadY = ref(0)
+let userData;
 
-onMounted(async() => {
+onMounted(async () => {
     const { sections } = await import("@/lessons/lessons.js")
     const { getUserData } = await import("libs/firebaseSystem.js")
 
-    const userData = await getUserData(store)
+    userData = await getUserData(store)
 
     let i = 0
     let delayT = 0
@@ -98,6 +100,20 @@ onMounted(async() => {
 })
 
 const goToLesson = (i, e) => {
+    console.log(i, userData.level_passed)
+    if (i > userData.level_passed) {
+
+        Swal.fire({
+            title: 'ด่านถูกล็อกไว้',
+            text: "คุณต้องผ่านด่านที่แล้วก่อน",
+            icon: 'error',
+            confirmButtonText: 'ปิด',
+        })
+
+
+        return
+    }
+
     lvlLoading.value = true
 
     lvlLoadX.value = (e.clientX / window.innerWidth) * 100
@@ -160,15 +176,19 @@ const goToLesson = (i, e) => {
     0% {
         transform: translateY(0px);
     }
+
     25% {
         transform: translateY(10px);
     }
+
     50% {
         transform: translateY(0px);
     }
+
     75% {
         transform: translateY(-10px);
     }
+
     100% {
         transform: translateY(0px);
     }
@@ -191,6 +211,7 @@ const goToLesson = (i, e) => {
     0% {
         transform: translateY(100%);
     }
+
     100% {
         transform: translateY(0%);
     }
@@ -255,6 +276,4 @@ const goToLesson = (i, e) => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
-}
-
-</style>
+}</style>
