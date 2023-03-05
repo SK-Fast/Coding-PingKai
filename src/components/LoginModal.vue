@@ -66,7 +66,7 @@
         })
 
         if (result['user']) {
-            await newUserData(result.user)
+            let isNewUser = await newUserData(result.user)
             closeL()
 
             const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -75,7 +75,9 @@
 
             loggingIn.value = false
 
-            if (loginKind == "login") {
+            if (isNewUser) {
+                router.push("/workspace/0")
+            } else if (loginKind == "login") {
                 router.push("/dashboard")
             }
         }
@@ -85,7 +87,7 @@
 </script>
 
 <template>
-    <Modal ref="modalBase">
+    <Modal ref="modalBase" class="lm">
         <div class="login-header"></div>
         <div class="text-center">
             <h3>{{ modalSub }}</h3>
@@ -115,3 +117,9 @@
         -->
     </Modal>
 </template>
+
+<style scoped>
+.lm {
+    z-index: 99999;
+}
+</style>

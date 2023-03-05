@@ -36,6 +36,7 @@ export function initApp() {
 /**
  * 
  * @param {import('firebase/auth').User} user 
+ * @returns {boolean} Is new user?
  */
 export async function newUserData(user) {
 
@@ -45,7 +46,7 @@ export async function newUserData(user) {
     const docCheck = await getDoc(userDoc)
 
     if (docCheck.exists()) {
-        return
+        return false
     }
 
     logger.info("New user detected, creating user data...")
@@ -61,6 +62,8 @@ export async function newUserData(user) {
     })
 
     logger.success("Created new data for the user")
+
+    return true
 }
 
 export async function deleteUserData(user) {
