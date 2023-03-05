@@ -116,7 +116,7 @@ const goToLesson = (i, e) => {
 
 .lvl-all {
     height: calc(100vh - 262px);
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 .start-tooltip {
