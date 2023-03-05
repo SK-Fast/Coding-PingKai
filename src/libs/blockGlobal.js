@@ -19,7 +19,9 @@ export const activeBlock = (w, bID, classname = "worked") => {
     let block = w.getBlockById(bID)
 
     if (block) {
-        block.svgGroup_.classList.add(classname)
+        setTimeout(() => {
+            block.svgGroup_.classList.add(classname)
+        }, 10);
     }
 }
 
