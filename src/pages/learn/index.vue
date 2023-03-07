@@ -83,8 +83,12 @@ onMounted(async () => {
                 lvlState = "done"
             }
 
+            if (i > 15) {
+                delayT = 0
+            }
+
             levels.value.push({
-                y: Math.cos(i * 100) * 100,
+                y: Math.sin(i * 100) * 100,
                 lvlState: lvlState,
                 title: level.title,
                 animDelay: delayT,
