@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app'
+import { getPerformance } from "firebase/performance";
 import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
 import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
@@ -16,6 +17,8 @@ const firebaseConfig = {
 export function initApp() {
     return new Promise((resolve) => {
         const app = initializeApp(firebaseConfig)
+
+        getPerformance(app)
 
         if (import.meta.env.MODE == "development") {
             connectAuthEmulator(getAuth(), `http://localhost:${import.meta.env.VITE_AUTH_PORT}`, {
