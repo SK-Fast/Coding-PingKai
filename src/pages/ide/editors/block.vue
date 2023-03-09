@@ -59,6 +59,16 @@ defineExpose({
 })
 
 onMounted(() => {
-
+    Blockly.Msg.ADD_COMMENT = "เพิ่มคอมเม้นต์"
+    Blockly.Msg.COLLAPSE_ALL = "ยุบบล็อกทั้งหมด"
+    Blockly.Msg.COLLAPSE_BLOCK = "ยุบบล็อก"
+    Blockly.Msg.EXPAND_ALL = "ขยายบล็อกทั้งหมด"
+    Blockly.Msg.EXPAND_BLOCK = "ขยายบล็อก"
+    Blockly.Msg.UNDO = "ยกเลิก"
+    Blockly.Msg.REDO = "ทําซ้ํา"
+    Blockly.Msg.CLEAN_UP = "จัดระเบียบบล็อก"
+    Blockly.Msg.DELETE_BLOCK = "ลบบล็อก"
+    Blockly.Msg.DELETE_X_BLOCKS = "ลบ %1 บล็อก"
+    Blockly.Msg.DUPLICATE_BLOCK = "ทำสำเนา"
 })
 </script>
