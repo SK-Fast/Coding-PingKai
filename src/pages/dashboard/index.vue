@@ -97,7 +97,7 @@ const checkForUpdates = async () => {
             </div>
         </div>
 
-        <div class="d-flex flex-column align-items-center mt-2">
+        <div class="d-flex flex-column align-items-center mt-2 main-content">
             <div class="btn col-md-6 btn-primary text-center mb-2" v-if="updateAvailable" @click="appUpdate">
                 <p class="m-0"><vue-feather type="refresh-cw" animation="spin" animation-speed="slow"
                         size="15"></vue-feather> มีอัปเดตใหม่! แตะเพื่อดาวน์โหลด ({{ oldVersion }} <vue-feather
@@ -191,9 +191,23 @@ const checkForUpdates = async () => {
     animation-fill-mode: forwards;
 }
 
-.container>div:nth-child(2) {
+.main-content>div:nth-child(1) {
     animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
-    animation-delay: 0.05s;
+    animation-delay: 0.1s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.main-content>div:nth-child(2) {
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: 0.2s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.main-content>div:nth-child(3) {
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: 0.3s;
     opacity: 0;
     animation-fill-mode: forwards;
 }
@@ -216,12 +230,12 @@ const checkForUpdates = async () => {
 
 @keyframes slideUp {
     0% {
-        transform: translateY(50px);
+        transform: translateY(50px) scale(0.9);
         opacity: 0;
     }
 
     100% {
-        transform: translateY(0px);
+        transform: translateY(0px) scale(1);
         opacity: 1;
     }
 }
