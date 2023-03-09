@@ -2,6 +2,7 @@
 import { inject, onMounted, ref } from 'vue';
 import { getUserData } from 'libs/firebaseSystem.js'
 import { getSectionFromID } from '@/lessons/lessons.js'
+import achievementsData from '../../achievements/achievements.js'
 
 const store = inject('store')
 const userData = ref({})
@@ -12,9 +13,26 @@ const updateProgress = ref(0)
 const oldVersion = ref("")
 const newVersion = ref("")
 
+const achievementList = ref([])
+
 onMounted(async () => {
     userData.value = await getUserData(store)
     sectionData.value = getSectionFromID(userData.value.level_passed)
+
+    let achievements = []
+
+    if (!userData.value.achievements) {
+        achievements = []
+    } else {
+        achievements = userData.value.achievements
+    }
+
+    for (const achievementID of achievements) {
+        achievementList.value.push({
+            id: achievementID,
+            ...achievementsData[achievementID]
+        })
+    }
 
     checkForUpdates()
 })
@@ -51,7 +69,7 @@ const appUpdate = async () => {
 }
 
 const checkForUpdates = async () => {
-    const versionRes = await fetch("/version.json", {cache: "no-store"})
+    const versionRes = await fetch("/version.json", { cache: "no-store" })
     const versionData = await versionRes.json()
 
     if (versionData.version != __APP_VERSION__) {
@@ -124,29 +142,27 @@ const checkForUpdates = async () => {
                 </div>
             </div>
 
-            <!--
-                        <div class="card col-md-6 mt-2">
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <p class="text-muted">รางวัลต่างๆ</p>
-                                    <div class="flex-grow-1"></div>
-                                    <router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>
-                                </div>
+            <div class="card col-md-6 mt-2">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <p class="text-muted">รางวัลต่างๆ</p>
+                        <div class="flex-grow-1"></div>
+                        <!--<router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>-->
+                    </div>
 
-                                <div class="d-flex">
-                                    <div class="card col-3 btn-transparent">
-                                        <img src="@/assets/badges/the_beginnings.png" class="img-fluid badge-img">
-                                        
-                                        <div class="p-2 mt-1 text-center">
-                                            <h5>จุดเริ่มต้น</h5>
-                                            <p class="text-muted m-0">สำหรับคนที่ผ่านด้านแรก</p> 
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="d-flex">
+                        <div class="card col-3 btn-transparent" v-for="achievement in achievementList">
+                            <img :src="`/achievements/${achievement.id}.png`" class="img-fluid badge-img">
 
+                            <div class="p-2 mt-1 text-center">
+                                <h5>{{achievement.title}}</h5>
+                                <p class="text-muted m-0">{{achievement.desc}}</p>
                             </div>
                         </div>
-                        -->
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     </div>
@@ -170,12 +186,12 @@ const checkForUpdates = async () => {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.container > div:nth-child(1) {
+.container>div:nth-child(1) {
     animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: forwards;
 }
 
-.container > div:nth-child(2) {
+.container>div:nth-child(2) {
     animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
     animation-delay: 0.05s;
     opacity: 0;
@@ -192,6 +208,7 @@ const checkForUpdates = async () => {
     0% {
         width: 0%;
     }
+
     100% {
         width: var(--progress-gotten);
     }
@@ -202,6 +219,7 @@ const checkForUpdates = async () => {
         transform: translateY(50px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0px);
         opacity: 1;

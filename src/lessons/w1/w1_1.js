@@ -15,6 +15,7 @@ export const levelData = {
     altTitle: "W1-1",
     width: 5,
     height: 4,
+    achievement: "the_beginnings",
     data: [
         "#", "#", "F", "#", "#", 
         "#", "#", " ", "#", "#", 

@@ -1,5 +1,6 @@
 <template>
     <CongratsModal ref="congratModal" @continue="continueLevel"/>
+    <AchievementModal ref="achievementModal"/>
     <canvas class="confetti-view" ref="confettiView"></canvas>
     <div class="page-trans bg-light-400" :class="{ 'loaded': !nextMapLoading, 'loading': pageLoading}">
         <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein" v-if="!nextMapLoading">
@@ -93,9 +94,11 @@ import BlockEditor from './editors/block.vue'
 import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
+import { giveAchievement } from '../../libs/achievementUtils.js'
 import { writeUserData, getUserData } from '../../libs/firebaseSystem.js'
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
+import AchievementModal from "@/components/AchievementModal.vue"
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -119,6 +122,7 @@ const congratModal = ref(null)
 const editorMiddle = ref(null)
 
 const dialogueView = ref(null)
+const achievementModal = ref(null)
 
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
@@ -330,11 +334,14 @@ const runCode = async () => {
     codeDone.value = true
 
     if (levelPassed) {
-        console.log(congratModal.value)
 
-        playAudio("correct.wav")
+        store.state.fireLoading()
 
-        congratModal.value.openM(levelID)
+        let achRes;
+
+        if (levelDataRef.value["achievement"]) {
+            achRes = await giveAchievement(store, levelDataRef.value["achievement"])
+        }
 
         const userData = await getUserData(store)
 
@@ -348,6 +355,16 @@ const runCode = async () => {
             exp: userData.exp + 10
         })
 
+        if (achRes && achRes.success) {
+            achievementModal.value.openM(levelDataRef.value["achievement"], achRes.data)
+        }
+
+        playAudio("correct.wav")
+
+        congratModal.value.openM(levelID)
+
+        store.state.fireLoadStop()
+
         const confetti = await import('canvas-confetti');
 
         let confEmitter = confetti.create(confettiView.value, {
@@ -359,7 +376,6 @@ const runCode = async () => {
             particleCount: 250,
             spread: 360,
         })
-
     } else {
         playAudio("failed-run.mp3")
 

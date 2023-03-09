@@ -282,6 +282,10 @@ a,
     animation: chickSpin 2s linear infinite;
 }
 
+.chick-spinner-light {
+    background-image: url("../loading-spinner-white.png");
+}
+
 @keyframes chickSpin {
     from {
         transform: rotate(0deg);

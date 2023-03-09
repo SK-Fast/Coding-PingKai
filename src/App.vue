@@ -2,11 +2,12 @@
   import Navbar from "@/components/Navbar.vue"
   import Footer from "@/components/Footer.vue"
   import MobileNavbar from "@/components/MobileNavbar.vue"
-  import { ref, onMounted, watch, inject } from "vue";
+  import { ref, onMounted, inject } from "vue";
   import links from "./router.js"
   import { useRoute } from "vue-router";
   import LoginModal from "@/components/LoginModal.vue"
   import AcceptCookies from "@/components/AcceptCookies.vue"
+  import SpinningIndicator from "@/components/SpinningIndicator.vue"
 
   const router = inject("router")
   const route = useRoute()
@@ -45,6 +46,7 @@
 
 <template>
   <Navbar />
+  <SpinningIndicator/>
 
   <div class="d-flex flex-column top-pv" :class="route.meta['navbarStyle'] || ''">
 

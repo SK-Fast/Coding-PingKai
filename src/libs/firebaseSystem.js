@@ -63,7 +63,8 @@ export async function newUserData(user) {
         level: 0,
         level_passed: 0,
         streak: 0,
-        userID: user.uid
+        userID: user.uid,
+        achievements: []
     })
 
     logger.success("Created new data for the user")
@@ -106,6 +107,21 @@ export async function getUserData(store) {
     const user = getUser(store)
 
     console.log(user)
+
+    const userDoc = doc(firestore, "users", user.uid)
+
+    const docData = await getDoc(userDoc)
+
+    if (docData.exists()) {
+        return docData.data()
+    } else {
+        return false
+    }
+}
+
+export async function getUserDataNStore(user) {
+
+    const firestore = getFirestore()
 
     const userDoc = doc(firestore, "users", user.uid)
 
