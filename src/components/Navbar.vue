@@ -33,7 +33,7 @@
 
             <a class="navbar-brand me-1">
                 <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">
-                <img v-else src="@/assets/logo/logobeta.png" height="40">
+                <img v-else src="@/assets/logo/Logo_Text.png" height="40">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
