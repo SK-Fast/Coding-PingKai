@@ -86,8 +86,8 @@ const checkForUpdates = async () => {
                         type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
             </div>
 
-            <div class="progress mt-2 col-md-6 mb-2" v-if="updatingApp" style="height: 30px;">
-                <div class="progress-bar" role="progressbar" :style="`width: ${updateProgress}%`">กำลังอัปเดต...</div>
+            <div class="bg-warning mt-2 col-md-6 mb-2" v-if="updatingApp" style="height: 30px;">
+                กำลังอัปเดต...
             </div>
 
             <div class="card col-md-6" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
@@ -104,8 +104,8 @@ const checkForUpdates = async () => {
                         </div>
                     </div>
                     <div class="progress mt-2">
-                        <div class="progress-bar" role="progressbar"
-                            :style="`width: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`">
+                        <div class="progress-bar level-passed-bar rounded" role="progressbar"
+                            :style="`--progress-gotten: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`">
                         </div>
                     </div>
                 </div>
@@ -168,5 +168,43 @@ const checkForUpdates = async () => {
 
 .badge-img {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.container > div:nth-child(1) {
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
+}
+
+.container > div:nth-child(2) {
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: 0.05s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.level-passed-bar {
+    animation: progressReveal 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes progressReveal {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: var(--progress-gotten);
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
 }
 </style>
