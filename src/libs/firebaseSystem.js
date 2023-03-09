@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getPerformance } from "firebase/performance";
 import { getAnalytics } from "firebase/analytics";
+import { getStorage, ref, uploadString } from "firebase/storage";
 import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
 import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
@@ -98,6 +99,16 @@ export async function writeUserData(user, data) {
 
 export function getUser(store) {
     return store.state.user
+}
+
+export async function writeStorageData(store, filePath, fileData) {
+    const user = getUser(store)
+
+    const storage = getStorage();
+
+    const spaceRef = ref(storage, `userData/${user}/${filePath}`);
+
+    await uploadString(spaceRef, fileData);
 }
 
 export async function getUserData(store) {

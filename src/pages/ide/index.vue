@@ -95,7 +95,8 @@ import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
 import { giveAchievement } from '../../libs/achievementUtils.js'
-import { writeUserData, getUserData } from '../../libs/firebaseSystem.js'
+import { save_mergeable } from '../../libs/blocklyFiles.js'
+import { writeUserData, getUserData, writeStorageData } from '../../libs/firebaseSystem.js'
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
 import AchievementModal from "@/components/AchievementModal.vue"
@@ -312,6 +313,20 @@ const newDialogueData = (data) => {
         playModeEnabled.value = false
     }
 }
+/*
+const saveCodeUser = async () => {
+    console.log(Blockly)
+    console.log(Blockly.serialization)
+    const serializer = new Blockly.serialization.blocks.BlockSerializer();
+    const state = serializer.save(blocklyWorkspace);
+
+    console.log(state)
+
+    //serializer.load(state, blocklyWorkspace);
+
+    await writeStorageData(store, `blockly_saves/${levelID}.moderm`)
+}
+*/
 
 const runCode = async () => {
     lessonKind.reset(blocklyWorkspace, interpreterData)
@@ -360,6 +375,8 @@ const runCode = async () => {
         }
 
         playAudio("correct.wav")
+
+        //await saveCodeUser()
 
         congratModal.value.openM(levelID)
 
