@@ -1,13 +1,11 @@
 <div align="center">
-<img src="guide/logo_beta.png">
+<img src="guide/Logo_Text.png">
 <h1>โคดดิ้ง ปิ้งไก่</h1>
 </div>
 
 **โคดดิ้ง ปิ้งไก่** เป็นสื่อการสอนโปรแกรมเมอร์มือใหม่เกี่ยวกับ Algorithm ผ่านการสอน Block Coding และ Python. Web application นี้เขียนในภาษา Javascript และ Framework ชื่อ "Vue"
 
 คุณสามารถทดลองใช้ได้แล้ว[ที่นี้](https://pikai.devpixels.xyz/)
-
-**!!! Web Application นี้กำลังอยู่ในการพัตนา**
 
 ## Screenshots
 ![Landing](./guide/landing.png)
