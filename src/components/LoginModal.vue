@@ -1,5 +1,4 @@
 <script setup>
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
     import Modal from "./modal/Modal.vue"
     import ThirdPartyButton from "./login/ThirdPartyButton.vue"
     import { ref, inject } from "vue";
@@ -45,6 +44,8 @@
     }
 
     const googleLogin = async () => {
+        const { getAuth, GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
+        
         loggingIn.value = true
         errorMsg.value = ""
 

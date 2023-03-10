@@ -1,30 +1,17 @@
 <script setup>
-    import { inject, ref } from "vue";
-    import { getAuth, onAuthStateChanged } from "firebase/auth";
-    import { promptLogout } from 'libs/firebaseSystem.js'
-    import { useRoute } from "vue-router";
+import { inject, ref, onMounted } from "vue";
+import { promptLogout } from 'libs/firebaseSystem.js'
+import { useRoute } from "vue-router";
 
-    const user = ref(null)
-    const router = inject("router")
-    const route = useRoute()
+const route = useRoute()
 
-    const store = inject('store')
+const store = inject('store')
 
-    const openLogin = () => {
-        console.log("login entry")
+const openLogin = () => {
+    console.log("login entry")
 
-        store.state.fireLoginModal()
-    }
-
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, (newUser) => {
-        console.log(newUser)
-        user.value = newUser
-        console.log(router)
-
-        store.state.user = newUser
-    });
+    store.state.fireLoginModal()
+}
 </script>
 
 <template>
@@ -35,9 +22,8 @@
                 <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">
                 <img v-else src="@/assets/logo/Logo_Text.png" height="40">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -55,29 +41,38 @@
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
-                    <router-link class="icon-link nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'" size="25"></vue-feather></router-link>
-                    
-                    <div class="d-flex align-items-center" v-if="user !== null">
+                    <router-link class="icon-link nav-item" to="/settings/general" v-if="store.state.user !== null"><vue-feather
+                            class="m-nav-icon" type="settings"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="25"></vue-feather></router-link>
+
+                    <div class="d-flex align-items-center" v-if="store.state.user !== null">
                         <!--<vue-feather type="save" stroke="#26BF59" />-->
 
                         <div class="dropdown">
-                            <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button" id="dropdownMenuButton1"  aria-expanded="false">
+                            <button data-bs-toggle="dropdown" class="btn p-0 btn-transparent d-flex" type="button"
+                                id="dropdownMenuButton1" aria-expanded="false">
                                 <div class="avatar-container img-rounded ms-1">
-                                    <div class="avatar img-rounded avatar-navbar" :style="'background-image: url(' + (store.state.user.photoURL || '/placeholder-avatar.jpg') + ')'">
-                                    <div class="avatar-status" />
+                                    <div class="avatar img-rounded avatar-navbar"
+                                        :style="'background-image: url(' + (store.state.user.photoURL || '/placeholder-avatar.jpg') + ')'">
+                                        <div class="avatar-status" />
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
+                            </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <!--<li><a class="dropdown-item" href="#">โปรไฟล์</a></li>-->
                                 <li><router-link class="dropdown-item" to="/settings/general">การตั้งค่า</router-link></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger d-flex align-items-center" @click="promptLogout()" href="#">ลงชื่อออก</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger d-flex align-items-center" @click="promptLogout()"
+                                        href="#">ลงชื่อออก</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="d-flex align-items-center" v-else>
-                        <a href="#" @click="openLogin" class="btn mb-md-0 mb-2" :class="`${route.meta['navbarStyle'] == 'landing' ? 'btn-light-100' : 'btn-primary'}`">ลงชื่อเข้าใช้</a>
+                        <a href="#" @click="openLogin" class="btn mb-md-0 mb-2"
+                            :class="`${route.meta['navbarStyle'] == 'landing' ? 'btn-light-100' : 'btn-primary'}`">ลงชื่อเข้าใช้</a>
                     </div>
                 </form>
             </div>
@@ -105,6 +100,4 @@
 
 .nav-pop {
     overflow: hidden;
-}
-
-</style>
+}</style>

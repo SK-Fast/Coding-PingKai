@@ -1,8 +1,3 @@
-import { initializeApp } from 'firebase/app'
-import { getPerformance } from "firebase/performance";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, uploadString } from "firebase/storage";
-import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth'
 import { getFirestore, connectFirestoreEmulator, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import Swal from 'sweetalert2';
 import * as logger from 'libs/logger.js'
@@ -17,7 +12,12 @@ const firebaseConfig = {
 };
 
 export function initApp() {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+        const { initializeApp } = await import('firebase/app')
+        const { getPerformance } = await import('firebase/performance')
+        const { getAnalytics } = await import('firebase/analytics')
+        const { getAuth, connectAuthEmulator } = await import('firebase/auth')
+
         const app = initializeApp(firebaseConfig)
 
         getPerformance(app)
@@ -102,6 +102,8 @@ export function getUser(store) {
 }
 
 export async function writeStorageData(store, filePath, fileData) {
+    const { getStorage, ref, uploadString } = await import("firebase/storage");
+
     const user = getUser(store)
 
     const storage = getStorage();
@@ -146,6 +148,8 @@ export async function getUserDataNStore(user) {
 }
 
 export async function promptLogout() {
+    const { getAuth, signOut } = await import('firebase/auth')
+
     const auth = getAuth()
 
     const res = await Swal.fire({

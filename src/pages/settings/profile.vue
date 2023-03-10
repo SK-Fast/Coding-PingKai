@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-import { getAuth, updateProfile, deleteUser, reauthenticateWithCredential, GoogleAuthProvider } from '@firebase/auth';
 import { inject, onMounted, ref } from 'vue';
 import ConfigCard from '@/components/ConfigCard.vue'
 
@@ -52,10 +51,14 @@ const unrevealedText = ref()
 const revealedText = ref()
 const emailRevealText = ref()
 
-const auth = getAuth()
+let auth;
 let emailRevealed = false
 
 onMounted(async () => {
+    const { getAuth } = await import('@firebase/auth');
+
+    auth = getAuth()
+
     if (store.state.user) {
         console.log(store.state.user)
         userImg.value = store.state.user.photoURL || "/placeholder-avatar.jpg"
@@ -63,6 +66,8 @@ onMounted(async () => {
 })
 
 const changeUsername = async() => {
+    const { updateProfile } = await import('@firebase/auth');
+
     const req = await window.Swal.fire({
       title: "เปลี่ยนชื่อ",
       input: 'text',
@@ -109,6 +114,8 @@ const emailReveal = async() => {
 
 
 const deleteAccount = async() => {
+    const { deleteUser, reauthenticateWithCredential } = await import('@firebase/auth');
+
     const res = await Swal.fire({
         title: 'ยืนยันการลบบัญชี',
         html: `

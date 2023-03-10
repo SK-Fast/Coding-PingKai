@@ -8,6 +8,7 @@ import { initApp } from './libs/firebaseSystem.js'
 import { createStore } from 'vuex'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 console.log('Coding %cPingKai %cStarted', 'color: #FF7733', 'color: #000');
 
@@ -33,6 +34,15 @@ window.codeGens = {}
 
 const initVueApp = async () => {
     const [fapp, fuser] = await initApp()
+
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (newUser) => {
+        console.log(newUser)
+
+        store.state.user = newUser
+    });
+
 
     console.log(fuser)
 
