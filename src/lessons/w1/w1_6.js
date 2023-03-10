@@ -1,19 +1,19 @@
 export const blocks = [
     {
         "kind": "block",
-        "type": "go_up"
+        "type": "go_forward"
     },
     {
         "kind": "block",
-        "type": "go_down"
+        "type": "go_backward"
     },
     {
         "kind": "block",
-        "type": "go_left"
+        "type": "turn_left"
     },
     {
         "kind": "block",
-        "type": "go_right"
+        "type": "turn_right"
     },
     {
         "kind": "block",
@@ -28,6 +28,7 @@ export const levelData = {
     width: 5,
     height: 4,
     blockLimit: 8,
+    startAngle: 270,
     data: [
         "F", " ", " ", " ", "F", 
         " ", "#", "#", "#", " ", 

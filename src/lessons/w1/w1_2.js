@@ -1,19 +1,19 @@
 export const blocks = [
     {
         "kind": "block",
-        "type": "go_up"
+        "type": "go_forward"
     },
     {
         "kind": "block",
-        "type": "go_down"
+        "type": "go_backward"
     },
     {
         "kind": "block",
-        "type": "go_left"
+        "type": "turn_left"
     },
     {
         "kind": "block",
-        "type": "go_right"
+        "type": "turn_right"
     },
 ]
 
@@ -23,7 +23,8 @@ export const levelData = {
     altTitle: "W1-2",
     width: 5,
     height: 4,
-    blockLimit: 4,
+    blockLimit: 5,
+    startAngle: 0,
     data: [
         "#", "#", "#", "#", "#", 
         "#", " ", " ", "F", "#", 
@@ -66,7 +67,7 @@ export const dialogue = [
         },
         {
             type: "txt-continue",
-            text: " ไปทางซ้าย"
+            text: " หันไปทางซ้าย"
         },
         {
             type: "delay",
@@ -82,7 +83,7 @@ export const dialogue = [
         },
         {
             type: "txt-continue",
-            text: " ไปทางขวา ดูสิ"
+            text: " หันไปทางขวา ดูสิ"
         },
     ],
 ]

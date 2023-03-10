@@ -3,41 +3,41 @@ import langGenerator from "blockly/python"
 
 export const blocklyJSON = [
     {
-        "type": "go_left",
-        "message0": '%1 ไปทางซ้าย',
+        "type": "turn_left",
+        "message0": '%1 หันไปทางซ้าย',
         "nextStatement": "Action",
         "previousStatement": "Action",
         "colour": 20,
         "args0": [
             {
               "type": "field_image",
-              "src": "/blockly_editor/arrow-left-circle.png",
+              "src": "/blockly_editor/rotate-ccw.png",
               "width": 15,
               "height": 15
             },
         ]
     },
     {
-        "type": "go_right",
-        "message0": '%1 ไปทางขวา',
+        "type": "turn_right",
+        "message0": '%1 หันไปทางขวา',
         "nextStatement": "Action",
         "previousStatement": "Action",
         "colour": 25,
         "args0": [
             {
               "type": "field_image",
-              "src": "/blockly_editor/arrow-right-circle.png",
+              "src": "/blockly_editor/rotate-cw.png",
               "width": 15,
               "height": 15
             },
         ]
     },
     {
-        "type": "go_up",
-        "message0": '%1 ขึ้นไปข้างบน',
+        "type": "go_forward",
+        "message0": '%1 ไปข้างหน้า',
         "nextStatement": "Action",
         "previousStatement": "Action",
-        "tooltip": "ให้ไก่เดินขึ้นไปข้างบน",
+        "tooltip": "ให้ไก่เดินไปทางด้านหน้าของไก่",
         "colour": 30,
         "args0": [
             {
@@ -49,11 +49,11 @@ export const blocklyJSON = [
         ]
     },
     {
-        "type": "go_down",
-        "message0": '%1 ลงไปข้างล่าง',
+        "type": "go_backward",
+        "message0": '%1 ไปข้างหลัง',
         "nextStatement": "Action",
         "previousStatement": "Action",
-        "tooltip": "ให้ไก่เดินลงไปข้างล่าง",
+        "tooltip": "ให้ไก่เดินไปทางด้านหลังของไก่",
         "colour": 35,
         "args0": [
             {
@@ -110,20 +110,20 @@ export const generate = (w) => {
 export const init = () => {
     Blockly.defineBlocksWithJsonArray(blocklyJSON);
 
-    langGenerator["go_left"] = (block) => {
-        return `go_left('${block.id}')\n`
+    langGenerator["turn_left"] = (block) => {
+        return `turn_left('${block.id}')\n`
     }
 
-    langGenerator["go_right"] = (block) => {
-        return `go_right('${block.id}')\n`
+    langGenerator["turn_right"] = (block) => {
+        return `turn_right('${block.id}')\n`
     }
     
-    langGenerator["go_up"] = (block) => {
-        return `go_up('${block.id}')\n`
+    langGenerator["go_forward"] = (block) => {
+        return `go_forward('${block.id}')\n`
     }
     
-    langGenerator["go_down"] = (block) => {
-        return `go_down('${block.id}')\n`
+    langGenerator["go_backward"] = (block) => {
+        return `go_backward('${block.id}')\n`
     }
     
     langGenerator["until_flag"] = (block) => {

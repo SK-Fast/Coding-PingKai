@@ -1,11 +1,11 @@
 export const blocks = [
     {
         "kind": "block",
-        "type": "go_up"
+        "type": "go_forward"
     },
     {
         "kind": "block",
-        "type": "go_down"
+        "type": "go_backward"
     },
 ]
 
@@ -16,6 +16,7 @@ export const levelData = {
     width: 5,
     height: 4,
     achievement: "the_beginnings",
+    startAngle: 0,
     data: [
         "#", "#", "F", "#", "#", 
         "#", "#", " ", "#", "#", 

@@ -23,6 +23,18 @@ function blockExist(lvlPos, x, y) {
     }
 }
 
+const spriteReturn = (angle) => {
+    if (angle == 0) {
+        return "T"
+    } else if (angle == 90) {
+        return "R"
+    } else if (angle == 180) {
+        return "B"
+    } else if (angle == 270) {
+        return "L"
+    }
+}
+
 /**
  * 
  * @param {string} script Python Source code
@@ -39,6 +51,15 @@ export const run = async (script, data, delay, w, sessionData) => {
     let flags = data.flags
     let flagChecks = [...data.flags]
     let flagCollected = 0
+
+    let addX = 0
+    let addY = 1
+
+    let angle = 0
+
+    if (data.lvlData['startAngle']) {
+        angle = data.lvlData.startAngle
+    }
 
     const flagCheck = () => {
         return flags.find((d) => d.x == currentPosX && d.y == currentPosY)
@@ -83,35 +104,64 @@ export const run = async (script, data, delay, w, sessionData) => {
         await updateMove()
     }
 
-    interpreter.addFunction('go_left', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX - 1, currentPosY)
+    const updateAngleMove = () => {
 
-        data.chick.texture = data.chickFrames.L
-
-        if (!c) {
-            currentPosX--
-            await moveChick(data.chick.x - data.cellSize, data.chick.y)
-        } else {
-            cantMoveWarn(w, bID)
+        if (angle > 270) {
+            angle = 0
         }
 
-        
+        if (angle < 0) {
+            angle = 270
+        }
+
+        console.log(angle)
+
+        if (angle == 0) {
+            console.log("up")
+            data.chick.texture = data.chickFrames.T
+
+            addX = 0
+            addY = 1
+
+        } else if (angle == 90) {
+            console.log("right")
+            data.chick.texture = data.chickFrames.R
+
+            addX = 1
+            addY = 0
+
+        } else if (angle == 180) {
+            console.log("down")
+            data.chick.texture = data.chickFrames.B
+
+            addX = 0
+            addY = -1
+
+        } else if (angle == 270) {
+            console.log("left")
+            data.chick.texture = data.chickFrames.L
+
+            addX = -1
+            addY = 0
+        }
+    }
+
+    updateAngleMove()
+
+    interpreter.addFunction('turn_left', async (bID) => {
+        angle -= 90
+
+        updateAngleMove()
+
+        await delay()
     });
 
-    interpreter.addFunction('go_right', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX + 1, currentPosY)
-        
-        data.chick.texture = data.chickFrames.R
+    interpreter.addFunction('turn_right', async (bID) => { 
+        angle += 90
 
-        console.log(c)
-        console.log(!c)
+        updateAngleMove()
 
-        if (!c) {
-            currentPosX++
-            await moveChick(data.chick.x + data.cellSize, data.chick.y)
-        } else {
-            cantMoveWarn(w, bID)
-        }
+        await delay()
     });
 
     interpreter.addFunction('check_code_stop', () => {
@@ -124,18 +174,16 @@ export const run = async (script, data, delay, w, sessionData) => {
         activeBlock(w, bID)
     })
     
-    interpreter.addFunction('go_up', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX, currentPosY - 1)
-
-        data.chick.texture = data.chickFrames.T
-
-        let block = w.getBlockById(bID)
+    interpreter.addFunction('go_forward', async (bID) => {
+        let c = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY)
 
         console.log(c)
 
         if (!c) {
-            currentPosY--
-            await moveChick(data.chick.x, data.chick.y - data.cellSize)
+            currentPosX = currentPosX + addX
+            currentPosY = currentPosY - addY
+            
+            await moveChick(data.chick.x + (data.cellSize * addX), data.chick.y - (data.cellSize * addY))
         } else {
             cantMoveWarn(w, bID)
         }
@@ -143,19 +191,17 @@ export const run = async (script, data, delay, w, sessionData) => {
         
     });
 
-    interpreter.addFunction('go_down', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX, currentPosY + 1)
-
-        data.chick.texture = data.chickFrames.B
+    interpreter.addFunction('go_backward', async (bID) => {
+        let c = blockExist(data.lvlPos, currentPosX - addX, currentPosY + addY)
 
         if (!c) {
-            currentPosY++
-            await moveChick(data.chick.x, data.chick.y + data.cellSize)
+            currentPosX = currentPosX - addX
+            currentPosY = currentPosY + addY
+
+            await moveChick(data.chick.x - (data.cellSize * addX), data.chick.y + (data.cellSize * addY))
         } else {
             cantMoveWarn(w, bID)
         }
-
-        
     });
 
     interpreter.addFunction('is_over_flag', async () => {
@@ -186,7 +232,7 @@ export const reset = (w, data) => {
         
     resetAllBlocks(w)
 
-    data.chick.texture = data.chickFrames.L
+    data.chick.texture = data.chickFrames[spriteReturn(data.lvlData.startAngle)]
 
     for (const flag of data.flags) {
         anime.remove(flag)
@@ -287,8 +333,9 @@ export const init = async (e, data) => {
         }
 
         if (d == "C") {
-            chick = makeBlock('/chickwalk_tiles/chick_L.png', cw, ch)
+            chick = makeBlock('/chickwalk_tiles/chick_B.png', cw, ch)
             chick.zIndex = 102
+            chick.texture = chickFrames[spriteReturn(data.startAngle)]
             chickMapPos[0] = w
             chickMapPos[1] = h
         }

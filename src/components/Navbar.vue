@@ -42,8 +42,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!store.state.user">
                         <router-link to="/" class="nav-link">หน้าหลัก</router-link>
+                    </li>
+
+                    <li class="nav-item" v-if="store.state.user">
+                        <router-link to="/dashboard" class="nav-link">หน้าหลัก</router-link>
                     </li>
 
                     <li class="nav-item nav-pop" v-if="store.state.user">
@@ -51,7 +55,7 @@
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
-                    <router-link class="nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'" size="25"></vue-feather></router-link>
+                    <router-link class="icon-link nav-item" to="/settings/general" v-if="user !== null"><vue-feather class="m-nav-icon" type="settings" :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'" size="25"></vue-feather></router-link>
                     
                     <div class="d-flex align-items-center" v-if="user !== null">
                         <!--<vue-feather type="save" stroke="#26BF59" />-->
@@ -103,13 +107,4 @@
     overflow: hidden;
 }
 
-.nav-pop .nav-link {
-    animation: popDown 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
- @keyframes popDown {
-    from {
-        transform: translateY(-100%);
-    }
- }
 </style>

@@ -460,6 +460,62 @@ a,
 
 @media (max-width: 576px) {
     .w-md-100 {
-      width: 100%;
+        width: 100%;
+    }
+}
+
+.navbar-nav .nav-link {
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.8;
+}
+
+.navbar-nav .nav-link:active {
+    transform: scale(0.85);
+}
+
+.navbar-nav .nav-link.router-link-active {
+    animation: bounceIn 1s;
+    color: map-get($map: $theme-colors, $key: "primary");
+    opacity: 1;
+}
+
+.icon-link.router-link-active .vue-feather svg {
+    stroke: map-get($map: $theme-colors, $key: "primary");
+}
+
+@keyframes bounceIn {
+
+    0%,
+    20%,
+    40%,
+    60%,
+    80%,
+    100% {
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+
+    0% {
+        transform: scale3d(.85, .85, .85);
+    }
+
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    40% {
+        transform: scale3d(.9, .9, .9);
+    }
+
+    60% {
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+
+    80% {
+        transform: scale3d(.97, .97, .97);
+    }
+
+    100% {
+        transform: scale3d(1, 1, 1);
     }
 }
