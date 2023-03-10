@@ -82,88 +82,98 @@ const checkForUpdates = async () => {
 </script>
 
 <template>
-    <div class="container mt-3">
-        <div class="d-flex flex-column align-items-center p-2">
-            <div class="d-flex flex-column align-items-center">
-                <div class="avatar col-5 img-rounded"
-                    :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
-                <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
-                    <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
-                    <p class="m-0 mt-1 text-monospace">
-                        <span class="text-primary me-2">STREAK {{ userData['streak'] || '0' }}</span>
-                        <span class="text-warning">EXP {{ userData['exp'] || '0' }}</span>
-                    </p>
-                </div>
-            </div>
+    <div class="d-flex align-items-center">
+        <div class="col-2 d-md-block d-none side-container">
+            <img src="/side-imgs/sun.png" class="img-fluid side-img">
         </div>
 
-        <div class="d-flex flex-column align-items-center mt-2 main-content">
-            <div class="btn col-md-6 btn-primary text-center mb-2" v-if="updateAvailable" @click="appUpdate">
-                <p class="m-0"><vue-feather type="refresh-cw" animation="spin" animation-speed="slow"
-                        size="15"></vue-feather> มีอัปเดตใหม่! แตะเพื่อดาวน์โหลด ({{ oldVersion }} <vue-feather
-                        type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
-            </div>
-
-            <div class="bg-warning mt-2 col-md-6 mb-2 p-2 text-center" v-if="updatingApp" style="height: 30px;">
-                กำลังอัปเดต...
-            </div>
-
-            <div class="card col-md-6 w-md-100" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-grow-1 bg">
-                            <p class="text-muted">ต่อจากครั้งที่แล้ว</p>
-                            <h3>{{ sectionData['title'] || 'กำลังโหลด...' }}</h3>
-                            <p class="m-0">{{ sectionData['desc'] || '' }}</p>
-                        </div>
-
-                        <div class="col-md-3 d-flex align-items-end justify-content-end">
-                            <router-link to="/learn" class="btn btn-primary">ไปต่อ</router-link>
-                        </div>
-                    </div>
-                    <div class="progress mt-2">
-                        <div class="progress-bar level-passed-bar rounded" role="progressbar"
-                            :style="`--progress-gotten: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`">
-                        </div>
+        <div class="container mt-3">
+            <div class="d-flex flex-column align-items-center p-2">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="avatar col-5 img-rounded"
+                        :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
+                    <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
+                        <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
+                        <p class="m-0 mt-1 text-monospace">
+                            <span class="text-primary me-2">STREAK {{ userData['streak'] || '0' }}</span>
+                            <span class="text-warning">EXP {{ userData['exp'] || '0' }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <div class="card col-md-6 mt-2">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <p class="text-muted">ด่านต่างๆ</p>
-                        <div class="flex-grow-1"></div>
-                    </div>
-
-                    <router-link to="/learn">
-                        <img src="@/assets/levels_dashboard.png" class="img-fluid">
-                    </router-link>
+            <div class="d-flex flex-column align-items-center mt-2 main-content">
+                <div class="btn col-md-8 btn-primary text-center mb-2" v-if="updateAvailable" @click="appUpdate">
+                    <p class="m-0"><vue-feather type="refresh-cw" animation="spin" animation-speed="slow"
+                            size="15"></vue-feather> มีอัปเดตใหม่! แตะเพื่อดาวน์โหลด ({{ oldVersion }} <vue-feather
+                            type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
                 </div>
-            </div>
 
-            <div class="card col-md-6 mt-2">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <p class="text-muted">รางวัลต่างๆ</p>
-                        <div class="flex-grow-1"></div>
-                        <!--<router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>-->
-                    </div>
+                <div class="bg-warning mt-2 col-md-8 mb-2 p-2 text-center" v-if="updatingApp" style="height: 30px;">
+                    กำลังอัปเดต...
+                </div>
 
-                    <div class="d-flex">
-                        <div class="card col-md-3 btn-transparent" v-for="achievement in achievementList">
-                            <img :src="`/achievements/${achievement.id}.png`" class="img-fluid badge-img">
+                <div class="card col-md-8 w-md-100" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1 bg">
+                                <p class="text-muted">ต่อจากครั้งที่แล้ว</p>
+                                <h3>{{ sectionData['title'] || 'กำลังโหลด...' }}</h3>
+                                <p class="m-0">{{ sectionData['desc'] || '' }}</p>
+                            </div>
 
-                            <div class="p-2 mt-1 text-center">
-                                <h5>{{achievement.title}}</h5>
-                                <p class="text-muted m-0">{{achievement.desc}}</p>
+                            <div class="col-md-3 d-flex align-items-end justify-content-end">
+                                <router-link to="/learn" class="btn btn-primary">ไปต่อ</router-link>
+                            </div>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar level-passed-bar rounded" role="progressbar"
+                                :style="`--progress-gotten: ${((userData.level_passed - sectionData.startIndex) * 100) / (sectionData.levelCount - sectionData.startIndex)}%`">
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
+                <div class="card col-md-8 mt-2">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="text-muted">ด่านต่างๆ</p>
+                            <div class="flex-grow-1"></div>
+                        </div>
+
+                        <router-link to="/learn">
+                            <img src="@/assets/levels_dashboard.png" class="img-fluid">
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="card col-md-8 mt-2">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="text-muted">รางวัลต่างๆ</p>
+                            <div class="flex-grow-1"></div>
+                            <!--<router-link to="/Moreinfo2" class="float-end text-primary">ดูทั้งหมด</router-link>-->
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="card col-md-3 btn-transparent" v-for="achievement in achievementList">
+                                <img :src="`/achievements/${achievement.id}.png`" class="img-fluid badge-img">
+
+                                <div class="p-2 mt-1 text-center">
+                                    <h5>{{ achievement.title }}</h5>
+                                    <p class="text-muted m-0">{{ achievement.desc }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-2 d-md-block d-none side-container">
+            <img src="/side-imgs/flowers.png" class="img-fluid side-img" style="position: relative;top: 40px;">
         </div>
     </div>
 </template>
@@ -216,6 +226,14 @@ const checkForUpdates = async () => {
     animation: progressReveal 1s cubic-bezier(0.16, 1, 0.3, 1);
     animation-delay: 0.5s;
     animation-fill-mode: forwards;
+}
+
+.side-container {
+    min-height: 100vh;
+}
+
+.side-img {
+    position: relative;
 }
 
 @keyframes progressReveal {
