@@ -39,6 +39,10 @@ const openLogin = () => {
                     <li class="nav-item nav-pop" v-if="store.state.user">
                         <router-link to="/learn" class="nav-link">บทเรียน</router-link>
                     </li>
+
+                    <li class="nav-item nav-pop">
+                        <router-link to="/credits" class="nav-link">ผู้จัดทำ</router-link>
+                    </li>
                 </ul>
                 <form class="d-flex align-items-center">
                     <router-link class="icon-link nav-item" to="/settings/general" v-if="store.state.user !== null"><vue-feather

@@ -11,6 +11,7 @@ import dashboard from '@/pages/dashboard/index.vue'
 import Lookprofile from '@/pages/settings/Lookprofile.vue'
 import congrat from '@/pages/congrat/congrat.vue'
 import LearnPage from '@/pages/learn/index.vue'
+import CreditsPage from '@/pages/credits/index.vue'
 
 export default [
     {
@@ -76,7 +77,14 @@ export default [
         component: Lookprofile,
     },
     {
-       path: '/congrat',
-       component: congrat,
-    },
+        path: '/congrat',
+        component: congrat,
+     },
+     {
+        path: '/credits',
+        component: CreditsPage,
+        meta: {
+            navbarStyle: "landing"
+        },
+     },
 ]
