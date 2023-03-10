@@ -104,11 +104,11 @@ const checkForUpdates = async () => {
                         type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
             </div>
 
-            <div class="bg-warning mt-2 col-md-6 mb-2" v-if="updatingApp" style="height: 30px;">
+            <div class="bg-warning mt-2 col-md-6 mb-2 p-2 text-center" v-if="updatingApp" style="height: 30px;">
                 กำลังอัปเดต...
             </div>
 
-            <div class="card col-md-6" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
+            <div class="card w-md-100" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="flex-grow-1 bg">
@@ -151,7 +151,7 @@ const checkForUpdates = async () => {
                     </div>
 
                     <div class="d-flex">
-                        <div class="card col-3 btn-transparent" v-for="achievement in achievementList">
+                        <div class="card col-md-3 btn-transparent" v-for="achievement in achievementList">
                             <img :src="`/achievements/${achievement.id}.png`" class="img-fluid badge-img">
 
                             <div class="p-2 mt-1 text-center">
