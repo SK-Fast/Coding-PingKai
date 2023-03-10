@@ -10,8 +10,8 @@
             <div class="chick-spinner"></div>
         </div>
 
-        <div class="lvl-scroll" ref="lvlScroll" v-if="dataLoading == false">
-            <div class="d-flex flex-md-row flex-column p-5 lvl-all">
+        <div class="lvl-scroll" ref="lvlScroll">
+            <div class="d-flex flex-md-row flex-column p-5 lvl-all" ref="lvlAll">
                 <!--
             <div class="lvl-container">
                 <div class="lvl-btn done">
@@ -57,6 +57,7 @@ const levels = ref([])
 const store = inject("store")
 const router = inject("router")
 const lvlScroll = ref(null)
+const lvlAll = ref(null)
 const dataLoading = ref(true)
 
 const lvlLoading = ref(false)
@@ -101,6 +102,13 @@ onMounted(async () => {
     }
 
     dataLoading.value = false
+
+    setTimeout(() => {
+        if (window.outerWidth < 500) {
+            console.log(userData.level_passed * 150)
+            window.scroll(0, userData.level_passed * 150)
+        }
+    }, 100);
 })
 
 const goToLesson = (i, e) => {
@@ -136,7 +144,7 @@ const goToLesson = (i, e) => {
 
 .lvl-all {
     height: calc(100vh - 262px);
-    overflow-y: hidden;
+    overflow-y: visible;
 }
 
 .start-tooltip {
@@ -280,4 +288,5 @@ const goToLesson = (i, e) => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
-}</style>
+}
+</style>
