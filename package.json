@@ -23,6 +23,7 @@
     "chalk": "^5.1.2",
     "feather-icons": "^4.29.0",
     "firebase": "^9.12.1",
+    "json-tree-view-vue3": "^0.2.3",
     "jspython-interpreter": "^2.1.13",
     "path": "^0.12.7",
     "pixi.js": "^7.1.2",

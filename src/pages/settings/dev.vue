@@ -9,11 +9,15 @@
 
     <div class="card">
         <div class="card-body">
-            <div class="d-flex flex-column">
-                <code v-for="(item, index) in devData.env">
-                      {{ index }}: {{ item }}
-                    </code>
-            </div>
+            <JsonTreeView :data="JSON.stringify(devData.env)" :maxDepth="1" />
+        </div>
+    </div>
+
+    <h4 class="mb-2 mt-2">user</h4>
+
+    <div class="card w-100">
+        <div class="card-body">
+            <JsonTreeView :data="JSON.stringify(store.state.user)" :maxDepth="1" />
         </div>
     </div>
 </template>
@@ -21,6 +25,7 @@
 <script setup>
 import { ref, inject } from 'vue';
 import ConfigCard from '@/components/ConfigCard.vue'
+import { JsonTreeView } from "json-tree-view-vue3";
 
 const store = inject("store")
 
