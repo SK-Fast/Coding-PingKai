@@ -12,7 +12,7 @@ export const playAudio = async(fileName, config) => {
     } else {
         audioFile = await load.default(`/audio/${fileName}`)
 
-        loadedAudios[filePath]
+        loadedAudios[filePath] = audioFile
     }
 
     play.default(audioFile, {
