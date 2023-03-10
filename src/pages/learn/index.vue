@@ -44,6 +44,8 @@
                     </div>
                     -->
                     </div>
+
+                    <div v-if="level.y < -95" class="level-decoration"></div>
                 </div>
             </div>
         </div>
@@ -145,6 +147,17 @@ const goToLesson = (i, e) => {
 .lvl-all {
     height: calc(100vh - 262px);
     overflow-y: visible;
+}
+
+.level-decoration {
+    background-image: url(/decorations/grass.png);
+    background-position: center;
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+
+    position: absolute;
+    bottom: 0;
 }
 
 .start-tooltip {
