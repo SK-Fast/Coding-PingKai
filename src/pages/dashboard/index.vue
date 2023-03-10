@@ -108,7 +108,7 @@ const checkForUpdates = async () => {
                 กำลังอัปเดต...
             </div>
 
-            <div class="card w-md-100" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
+            <div class="card col-md-6 w-md-100" v-if="userData != {} && sectionData != {} && sectionData !== undefined">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="flex-grow-1 bg">
