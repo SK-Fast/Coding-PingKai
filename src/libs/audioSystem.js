@@ -1,6 +1,6 @@
 let loadedAudios = {}
 
-export const playAudio = async(fileName) => {
+export const playAudio = async(fileName, config) => {
     const load = await import('audio-loader')
     const play = await import('audio-play')
 
@@ -15,6 +15,9 @@ export const playAudio = async(fileName) => {
         loadedAudios[filePath]
     }
 
-    play.default(audioFile)
+    play.default(audioFile, {
+        ...config,
+        volume: window.vueStore.state.prefs.volume.master
+    })
 
 }

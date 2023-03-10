@@ -1,10 +1,17 @@
+$primary: #FF7733;
+$secondary: #CC8866;
+$warning: #F2AA18;
+$success: #26BF59;
+$link: #ED6012;
+$danger: #F23051;
+
 $theme-colors: (
-    "primary": #FF7733,
-    "secondary": #CC8866,
-    "warning": #F2AA18,
-    "success": #26BF59,
-    "link": #ED6012,
-    "danger": #F23051,
+    "primary": $primary,
+    "secondary": $secondary,
+    "warning": $warning,
+    "success": $success,
+    "link": $link,
+    "danger": $danger,
     "transparent": #ffffff00,
     "mid-transparent": rgba(0, 0, 0, 10%),
 );
@@ -35,7 +42,10 @@ $font-sizes: (
 );
 
 $btn-link-color: map.get($text-colors, "text");
-$dropdown-link-active-bg: map.get($theme-colors, "primary");
+$dropdown-link-active-bg: $primary;
+$form-range-thumb-bg: $primary;
+$form-range-track-bg: $secondary;
+$form-check-input-checked-bg-color: $primary;
 $dropdown-link-active-color: #fff;
 
 $theme-colors: map-merge($theme-colors, $white-colors);

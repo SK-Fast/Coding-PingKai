@@ -25,7 +25,7 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from 'vue'
-import Blockly from 'blockly';
+import Blockly, { Block } from 'blockly';
 
 const blocklyToolbox = ref(null)
 const blocklyDiv = ref(null)
@@ -45,9 +45,6 @@ const initBlockly = () => {
     console.log(options)
 
     console.log(props.options)
-
-    Blockly.HSV_SATURATION = 0.8
-    Blockly.HSV_VALUE = 1
 
     const workspace = Blockly.inject(blocklyDiv.value, props.options)
 
@@ -70,5 +67,10 @@ onMounted(() => {
     Blockly.Msg.DELETE_BLOCK = "ลบบล็อก"
     Blockly.Msg.DELETE_X_BLOCKS = "ลบ %1 บล็อก"
     Blockly.Msg.DUPLICATE_BLOCK = "ทำสำเนา"
+
+    Blockly.HSV_SATURATION = 0.8
+    Blockly.HSV_VALUE = 1
+
+    Blockly.SOUND_LIMIT = 2000
 })
 </script>

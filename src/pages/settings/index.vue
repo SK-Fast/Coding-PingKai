@@ -5,11 +5,9 @@
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/general">
                 ข้อมูลผู้ใช้
             </router-link>
-            <!--
-            <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/password">
-               รหัสผ่าน
+            <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/pref">
+                การตั้งค่าแอป
             </router-link>
-            -->
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/dev">
                สำหรับผู้พัฒนา
             </router-link>

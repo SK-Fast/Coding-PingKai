@@ -21,7 +21,12 @@ const store = createStore({
     state: {
         user: null,
         devMode: import.meta.env.MODE == 'development',
-        fireLoginModal: null
+        fireLoginModal: null,
+        prefs: {
+            volume: {
+                master: window.localStorage.getItem('volume_master') || 1,
+            }
+        }
     },
     computed: {
         count() {
@@ -30,6 +35,7 @@ const store = createStore({
     },
 })
 
+window.vueStore = store
 window.codeGens = {}
 
 const initVueApp = async () => {

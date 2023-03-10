@@ -3,13 +3,13 @@ import settings from '@/pages/settings/index.vue'
 import settings_password from '@/pages/settings/password.vue'
 import settings_profile from '@/pages/settings/profile.vue'
 import settings_dev from '@/pages/settings/dev.vue'
+import settings_preferences from '@/pages/settings/preferences.vue'
 
 import exit from '@/pages/exit/exit.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
 import Lookprofile from '@/pages/settings/Lookprofile.vue'
 import congrat from '@/pages/congrat/congrat.vue'
-
 import LearnPage from '@/pages/learn/index.vue'
 
 export default [
@@ -41,6 +41,10 @@ export default [
             {
                 path: 'password',
               component: settings_password,
+            },
+            {
+                path: 'pref',
+                component: settings_preferences
             },
             {
                 path: 'dev',
