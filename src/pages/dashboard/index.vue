@@ -82,12 +82,12 @@ const checkForUpdates = async () => {
 </script>
 
 <template>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-start">
         <div class="col-2 d-md-block d-none side-container">
             <img src="/side-imgs/sun.png" class="img-fluid side-img">
         </div>
 
-        <div class="container mt-3">
+        <div class="flex-grow mt-3">
             <div class="d-flex flex-column align-items-center p-2">
                 <div class="d-flex flex-column align-items-center">
                     <div class="avatar col-5 img-rounded"
