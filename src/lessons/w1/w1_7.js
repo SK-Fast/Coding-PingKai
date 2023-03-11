@@ -19,21 +19,25 @@ export const blocks = [
         "kind": "block",
         "type": "until_flag"
     },
+    {
+        "kind": "block",
+        "type": "if_can_walk"
+    },
 ]
 
 export const levelKind = () => {return import("@/lesson_kind/chickwalk.js")}
 export const levelData = {
-    title: "การวนซ้ำหลายรอบ",
-    altTitle: "W1-4",
+    title: "ตรวจสอบเส้นทาง",
+    altTitle: "W1-5",
     width: 5,
     height: 4,
-    blockLimit: 5,
-    startAngle: 90,
+    blockLimit: 8,
+    startAngle: 0,
     data: [
-        "#", "#", "#", " ", "F", 
-        "#", "#", " ", " ", "#", 
-        "#", " ", " ", "#", "#", 
-        "C", " ", "#", "#", "#"
+        "F", "#", "#", "#", "#", 
+        " ", " ", " ", " ", " ", 
+        " ", "#", "#", "#", " ", 
+        "F", "#", "#", "#", "C"
     ]
 }
 
@@ -41,7 +45,7 @@ export const dialogue = [
     [
         {
             type: "txt",
-            text: "ทีนี้ ลองเอาบล็อกทั้ง 2 บล็อกมาใช้รวมกันดูสิ!"
-        }
+            text: "ลองเอาบล็อกที่เรียนมารวมเข้าด้วยกันสิ คุณทำได้!"
+        },
     ],
 ]

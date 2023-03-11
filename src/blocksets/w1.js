@@ -10,10 +10,10 @@ export const blocklyJSON = [
         "colour": 20,
         "args0": [
             {
-              "type": "field_image",
-              "src": "/blockly_editor/rotate-ccw.png",
-              "width": 15,
-              "height": 15
+                "type": "field_image",
+                "src": "/blockly_editor/rotate-ccw.png",
+                "width": 15,
+                "height": 15
             },
         ]
     },
@@ -25,10 +25,10 @@ export const blocklyJSON = [
         "colour": 25,
         "args0": [
             {
-              "type": "field_image",
-              "src": "/blockly_editor/rotate-cw.png",
-              "width": 15,
-              "height": 15
+                "type": "field_image",
+                "src": "/blockly_editor/rotate-cw.png",
+                "width": 15,
+                "height": 15
             },
         ]
     },
@@ -41,10 +41,10 @@ export const blocklyJSON = [
         "colour": 30,
         "args0": [
             {
-              "type": "field_image",
-              "src": "/blockly_editor/arrow-up-circle.png",
-              "width": 15,
-              "height": 15
+                "type": "field_image",
+                "src": "/blockly_editor/arrow-up-circle.png",
+                "width": 15,
+                "height": 15
             },
         ]
     },
@@ -57,10 +57,10 @@ export const blocklyJSON = [
         "colour": 35,
         "args0": [
             {
-              "type": "field_image",
-              "src": "/blockly_editor/arrow-down-circle.png",
-              "width": 15,
-              "height": 15
+                "type": "field_image",
+                "src": "/blockly_editor/arrow-down-circle.png",
+                "width": 15,
+                "height": 15
             },
         ]
     },
@@ -77,7 +77,32 @@ export const blocklyJSON = [
         ],
         "message1": "ทำ %1",
         "args1": [
-          {"type": "input_statement", "name": "DO"}
+            { "type": "input_statement", "name": "DO" }
+        ],
+        "nextStatement": "Action",
+        "previousStatement": "Action",
+        "tooltip": "รันคำสั่งในบล็อกซ่ำจนกว่าไก่จะเจอธง",
+        "colour": 5,
+    },
+    {
+        "type": "if_can_walk",
+        "message0": "ถ้าเดินไป %1 ต่อได้",
+        "args0": [
+            
+            {
+                "type": "field_dropdown",
+                "name": "DIRECTIONS_FIELD",
+                "options": [
+                    ["ทางซ้าย", "left"],
+                    ["ทางขวา", "right"],
+                    ["ข้างหน้า", "front"],
+                    ["ข้างหลัง", "back"],
+                ],
+            },
+        ],
+        "message1": "ทำ %1",
+        "args1": [
+            { "type": "input_statement", "name": "DO" }
         ],
         "nextStatement": "Action",
         "previousStatement": "Action",
@@ -97,7 +122,7 @@ export const blocklyJSON = [
         ],
         "output": "Boolean",
         "tooltip": "เช็กว่าไก่ยืนอยู่บนที่ที่มีธงหรือไม่ผ",
-        "colour": 3,
+        "colour": 4,
     }
 ]
 
@@ -117,24 +142,30 @@ export const init = () => {
     langGenerator["turn_right"] = (block) => {
         return `turn_right('${block.id}')\n`
     }
-    
+
     langGenerator["go_forward"] = (block) => {
         return `go_forward('${block.id}')\n`
     }
-    
+
     langGenerator["go_backward"] = (block) => {
         return `go_backward('${block.id}')\n`
     }
-    
+
     langGenerator["until_flag"] = (block) => {
         let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
 
         return `loopCount = 0\nwhile is_over_flag() == false:\n${doLine}\n\tloopCount = loopCount + 1\n\tif loopCount > 100:\n\t\tbreak\n`
     }
 
+    langGenerator["if_can_walk"] = (block) => {
+        let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
+
+        return `if check_walls('${block.getFieldValue('DIRECTIONS_FIELD')}'):\n${doLine}`
+    }
+
     langGenerator["is_over_flag"] = (block) => {
         //console.log("END: ", langGenerator.valueToCode(block, 'DO') || 'pass')
-        
+
         return [`is_over_flag()`, langGenerator.ORDER_FUNCTION_CALL];
     }
 }

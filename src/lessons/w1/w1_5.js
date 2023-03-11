@@ -27,13 +27,13 @@ export const levelData = {
     altTitle: "W1-4",
     width: 5,
     height: 4,
-    blockLimit: 8,
+    blockLimit: 10,
     startAngle: 90,
     data: [
-        "F", " ", " ", " ", "F", 
-        " ", "#", "#", "#", " ", 
-        " ", "#", "#", "#", " ", 
-        "F", " ", "C", " ", "F"
+        "#", "#", "#", "#", "F", 
+        "#", "#", "#", "#", " ", 
+        "#", "#", "#", "#", " ", 
+        "C", " ", " ", " ", "F"
     ]
 }
 
@@ -41,7 +41,23 @@ export const dialogue = [
     [
         {
             type: "txt",
-            text: "คล้ายๆ กับด่านก่อนเลย แต่ไปได้ทั้ง 4 ทิศเลย ลองดูสิ!"
-        }
+            text: "เราต้องเก็บธงให้ครบทั้งหมด ลองใช้บล็อก"
+        },
+        {
+            type: "focus_block",
+            blockIndex: 4
+        },
+        {
+            type: "txt-continue",
+            text: " ทำซ่ำจนกว่าจะเจอธง "
+        },
+        {
+            type: "delay",
+            ms: 100
+        },
+        {
+            type: "txt-continue",
+            text: " หลายๆ ครั้งดูสิ!"
+        },
     ],
 ]

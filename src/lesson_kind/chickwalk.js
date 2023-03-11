@@ -1,4 +1,4 @@
-export const blockset = () => {return import("@/blocksets/w1.js")}
+export const blockset = () => { return import("@/blocksets/w1.js") }
 import anime from 'animejs';
 import { activeBlock, inactiveAllBlocks, createInterpretBase, warnBlock, resetAllBlocks } from '../libs/blockGlobal.js';
 
@@ -9,7 +9,19 @@ import { activeBlock, inactiveAllBlocks, createInterpretBase, warnBlock, resetAl
  * @param {*} y 
  * @returns 
  */
-function blockExist(lvlPos, x, y) {
+function blockExist(lvlPos, x, y, lvlData) {
+    if (x < 0 || y < 0) {
+        return "void"
+    }
+
+    if (x > lvlData.width - 1) {
+        return "void"
+    }
+
+    if (y > lvlData.height - 1) {
+        return "void"
+    }
+
     let f = lvlPos.find((d) => d.x == x && d.y == y)
 
     if (f) {
@@ -44,7 +56,7 @@ const spriteReturn = (angle) => {
  */
 export const run = async (script, data, delay, w, sessionData) => {
     const interpreter = createInterpretBase()
-    
+
     let currentPosX = data.chickMapPos[0]
     let currentPosY = data.chickMapPos[1]
 
@@ -77,7 +89,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         warnBlock(c, bID)
     }
 
-    const updateMove = async() => {
+    const updateMove = async () => {
         const flagDetect = flagCheck()
 
         if (flagDetect) {
@@ -93,7 +105,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         await delay()
     }
 
-    const moveChick = async(x, y) => {
+    const moveChick = async (x, y) => {
         anime({
             targets: data.chick,
             x: x,
@@ -104,7 +116,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         await updateMove()
     }
 
-    const updateAngleMove = () => {
+    const updateAngleMove = (changeSprite = true) => {
 
         if (angle > 270) {
             angle = 0
@@ -114,32 +126,34 @@ export const run = async (script, data, delay, w, sessionData) => {
             angle = 270
         }
 
-        console.log(angle)
-
         if (angle == 0) {
-            console.log("up")
-            data.chick.texture = data.chickFrames.T
+            if (changeSprite) {
+                data.chick.texture = data.chickFrames.T
+            }
 
             addX = 0
             addY = 1
 
         } else if (angle == 90) {
-            console.log("right")
-            data.chick.texture = data.chickFrames.R
+            if (changeSprite) {
+                data.chick.texture = data.chickFrames.R
+            }
 
             addX = 1
             addY = 0
 
         } else if (angle == 180) {
-            console.log("down")
-            data.chick.texture = data.chickFrames.B
+            if (changeSprite) {
+                data.chick.texture = data.chickFrames.B
+            }
 
             addX = 0
             addY = -1
 
         } else if (angle == 270) {
-            console.log("left")
-            data.chick.texture = data.chickFrames.L
+            if (changeSprite) {
+                data.chick.texture = data.chickFrames.L
+            }
 
             addX = -1
             addY = 0
@@ -156,7 +170,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         await delay()
     });
 
-    interpreter.addFunction('turn_right', async (bID) => { 
+    interpreter.addFunction('turn_right', async (bID) => {
         angle += 90
 
         updateAngleMove()
@@ -173,26 +187,23 @@ export const run = async (script, data, delay, w, sessionData) => {
     interpreter.addFunction('block_highlight', (bID) => {
         activeBlock(w, bID)
     })
-    
-    interpreter.addFunction('go_forward', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY)
 
-        console.log(c)
+    interpreter.addFunction('go_forward', async (bID) => {
+        let c = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData)
+
 
         if (!c) {
             currentPosX = currentPosX + addX
             currentPosY = currentPosY - addY
-            
+
             await moveChick(data.chick.x + (data.cellSize * addX), data.chick.y - (data.cellSize * addY))
         } else {
             cantMoveWarn(w, bID)
         }
-
-        
     });
 
     interpreter.addFunction('go_backward', async (bID) => {
-        let c = blockExist(data.lvlPos, currentPosX - addX, currentPosY + addY)
+        let c = blockExist(data.lvlPos, currentPosX - addX, currentPosY + addY, data.lvlData)
 
         if (!c) {
             currentPosX = currentPosX - addX
@@ -216,6 +227,42 @@ export const run = async (script, data, delay, w, sessionData) => {
         return isFlag
     });
 
+    interpreter.addFunction('check_walls', async (direction) => {
+        if (direction == "front") {
+            let blockExists = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData) == undefined
+            return blockExists
+        } else if (direction == "back") {
+            let blockExists = blockExist(data.lvlPos, currentPosX - addX, currentPosY + addY, data.lvlData) == undefined
+
+            return blockExists
+        } else if (direction == "left") {
+
+            angle -= 90
+
+            updateAngleMove(false)
+
+            let blockExists = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData) == undefined
+
+            angle += 90
+
+            updateAngleMove(false)
+
+            return blockExists
+        } else if (direction == "right") {
+            angle += 90
+
+            updateAngleMove(false)
+
+            let blockExists = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData) == undefined
+            
+            angle -= 90
+
+            updateAngleMove(false)
+            
+            return blockExists
+        }
+    });
+
     await interpreter.evaluate(script)
 
     inactiveAllBlocks(w)
@@ -229,7 +276,7 @@ export const reset = (w, data) => {
     data.chick.x = data.originPos[0]
     data.chick.y = data.originPos[1]
     data.chick.rotation = 0
-        
+
     resetAllBlocks(w)
 
     data.chick.texture = data.chickFrames[spriteReturn(data.lvlData.startAngle)]
@@ -277,8 +324,6 @@ export const init = async (e, data) => {
 
     let cellSize = e.clientWidth / data.width
 
-    console.log(cellSize)
-
     let tileSwap = false
 
     let chick;
@@ -294,14 +339,14 @@ export const init = async (e, data) => {
         ground.zIndex = -1
 
         container.addChild(ground)
-        
+
         return ground
     }
 
     let blockPos = []
     let chickMapPos = []
     let flags = []
-    
+
     for (const d of data.data) {
 
         let groundImg = '/chickwalk_tiles/rect.png'
@@ -373,9 +418,6 @@ export const init = async (e, data) => {
             cw = cw + cellSize
         }
     }
-
-    console.log("blockPos", blockPos)
-    console.log("chickMapPos", chickMapPos)
 
     return {
         chick: chick,
