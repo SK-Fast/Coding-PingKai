@@ -23,6 +23,24 @@
         </div>
     </div>
 
+    <div class="card mt-2">
+        <div class="card-body p-4">
+            <p>การเชื่อมต่อ</p>
+            <div class="card" v-for="providerData in store.state.user.providerData">
+                <div class="card-body d-flex">
+                    <div>
+                        <img src="/google.png" height="50" v-if="providerData.providerId == 'google.com'">
+                        <img src="/facebook.png" height="50" v-if="providerData.providerId == 'facebook.com'">
+                    </div>
+                    <div class="ms-2 flex-grow">
+                        <h5 class="m-0">{{providerData.displayName}}</h5>
+                        <p class="text-muted m-0">{{providerData.providerId}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--
     <div class="card mt-2">
         <div class="card-body p-4">
@@ -125,7 +143,7 @@ const deleteAccount = async() => {
             <li>ความคืบหน้าทั้งหมด</li>
         </ul>
         <p>ข้อมูลเหล่านี้จะไม่สามารถกู้คืนได้ คุณยืนยันที่จะลบรหัสนี้หรือไม่</p>
-        <p>(ต้องยืนยัน Google Account ก่อนลบเพื่อยืนยันตัวตน)</p>
+        <p>(ต้องยืนยันรหัสผ่านก่อนลบเพื่อยืนยันตัวตน)</p>
         `,
         icon: 'warning',
         showCancelButton: true,
