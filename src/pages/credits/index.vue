@@ -20,9 +20,10 @@
                         <h4 class="badge bg-danger">งานเอกสาร</h4>
                     </div>
 
+                    <p class="mb-1">""</p>
 
                     <div class="column justify-content-center ">
-                        <a href="https://www.instagram.com/m2w.k8ng/" target="_blank"><vue-feather type="instagram" size="20px"></vue-feather></a>
+                        <a href="https://www.instagram.com/tee.dzxet/" target="_blank"><vue-feather type="instagram" size="20px"></vue-feather></a>
                     </div>
                 </div>
 
@@ -51,7 +52,7 @@
                         <h4 class="badge bg-success">กราฟฟิก</h4>
                     </div>
 
-                    <p class="mb-1">"ว่าไง ใครแคร์"</p>
+                    <p class="mb-1">"แล้วไง ใครแคร์"</p>
 
                     <div class="column justify-content-center">
                         <a href="https://www.youtube.com/channel/UC7uTOVn3-I1HHNOaSj-tbwg" class="me-2" target="_blank"><vue-feather type="youtube" size="20px"></vue-feather></a>

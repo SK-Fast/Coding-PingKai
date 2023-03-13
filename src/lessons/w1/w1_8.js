@@ -31,10 +31,10 @@ export const levelData = {
     altTitle: "W1-5",
     width: 5,
     height: 4,
-    blockLimit: 8,
-    startAngle: 0,
+    blockLimit: 10,
+    startAngle: 90,
     data: [
-        " ", "#", "#", "#", "#", 
+        "#", "#", "#", "#", "#", 
         " ", " ", "C", " ", " ", 
         " ", "#", "#", "#", " ", 
         "F", "#", "#", "#", "F"

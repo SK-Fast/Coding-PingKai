@@ -115,7 +115,7 @@ onMounted(async () => {
 
 const goToLesson = (i, e) => {
     console.log(i, userData.level_passed)
-    if (i > userData.level_passed) {
+    if (i > userData.level_passed && import.meta.env.MODE !== 'development') {
 
         Swal.fire({
             title: 'ด่านถูกล็อกไว้',

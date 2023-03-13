@@ -31,6 +31,10 @@ export const sections = [
             {
                 title: "W1-7",
                 levelData: () => {return import("./w1/w1_7.js")}
+            },
+            {
+                title: "W1-8",
+                levelData: () => {return import("./w1/w1_8.js")}
             }
         ]
     }
