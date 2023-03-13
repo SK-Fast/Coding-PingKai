@@ -147,7 +147,7 @@ const checkForUpdates = async () => {
                     </div>
                 </div>
 
-                <div class="card col-md-8 mt-2">
+                <div class="card col-md-8 mt-2" v-if="achievementList && achievementList.length > 0">
                     <div class="card-body">
                         <div class="d-flex">
                             <p class="text-muted">รางวัลต่างๆ</p>
