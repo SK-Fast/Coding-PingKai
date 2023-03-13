@@ -14,7 +14,7 @@
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
             <a @click="toggleBlocksMenu" id="blocksMenuBtn" href="#" class="blockmenu-btn me-2 d-md-none d-block"><img src="@/assets/blocks_icon.svg"></a>
 
-            <img src="@/assets/logo/logobeta.png" class="me-2" height="35">
+            <img src="@/assets/logo/Logo_Text.png" class="me-2" height="35">
         </div>
         <div class="flex-grow-1 d-flex justify-content-center d-md-block d-none">
             <div class="text-center">
