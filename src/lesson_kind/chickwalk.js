@@ -167,7 +167,7 @@ export const run = async (script, data, delay, w, sessionData) => {
 
     updateAngleMove()
 
-    interpreter.addFunction('turn_left', async (bID) => {
+    interpreter.addFunction('turn_left', async (bID = "") => {
         angle -= 90
 
         updateAngleMove()
@@ -175,7 +175,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         await everyStepUpdate()
     });
 
-    interpreter.addFunction('turn_right', async (bID) => {
+    interpreter.addFunction('turn_right', async (bID = "") => {
         angle += 90
 
         updateAngleMove()
@@ -193,7 +193,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         activeBlock(w, bID)
     })
 
-    interpreter.addFunction('go_forward', async (bID) => {
+    interpreter.addFunction('go_forward', async (bID = "") => {
         let c = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData)
 
         if (!c) {
@@ -208,7 +208,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         await everyStepUpdate()
     });
 
-    interpreter.addFunction('go_backward', async (bID) => {
+    interpreter.addFunction('go_backward', async (bID = "") => {
         let c = blockExist(data.lvlPos, currentPosX - addX, currentPosY + addY, data.lvlData)
 
         if (!c) {

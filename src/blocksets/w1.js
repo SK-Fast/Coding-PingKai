@@ -177,33 +177,50 @@ export const blocklyJSON = [
     }
 ]
 
-export const generate = (w) => {
-    langGenerator.STATEMENT_PREFIX = 'check_code_stop()\nblock_highlight(%1)\n';
+let editorGen = false
 
-    return langGenerator.workspaceToCode(w)
+export const generate = (w, forEditor = false) => {
+    editorGen = forEditor
+    if (forEditor) {
+        langGenerator.STATEMENT_PREFIX = '';
+    } else {
+        langGenerator.STATEMENT_PREFIX = 'check_code_stop()\nblock_highlight(%1)\n';
+    }
+
+    let code = langGenerator.workspaceToCode(w)
+
+    if (forEditor) {
+        code = code.replace(/"""/g, '')
+    }
+
+    return code
 }
 
 export const init = () => {
     langGenerator["turn_left"] = (block) => {
-        return `turn_left('${block.id}')\n`
+        return `turn_left(${editorGen ? '' : '"' + block.id + '"'})\n`
     }
 
     langGenerator["turn_right"] = (block) => {
-        return `turn_right('${block.id}')\n`
+        return `turn_right(${editorGen ? '' : '"' + block.id + '"'})\n`
     }
 
     langGenerator["go_forward"] = (block) => {
-        return `go_forward('${block.id}')\n`
+        return `go_forward(${editorGen ? '' : '"' + block.id + '"'})\n`
     }
 
     langGenerator["go_backward"] = (block) => {
-        return `go_backward('${block.id}')\n`
+        return `go_backward(${editorGen ? '' : '"' + block.id + '"'})\n`
     }
 
     langGenerator["until_flag"] = (block) => {
         let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
 
-        return `loopCount = 0\nwhile is_over_flag() == false:\n${doLine}\n\tloopCount = loopCount + 1\n\tif loopCount > 100:\n\t\tbreak\n`
+        if (editorGen) {
+            return `while is_over_flag() == false:\n${doLine}\n`
+        } else {
+            return `loopCount = 0\nwhile is_over_flag() == false:\n${doLine}\n\tloopCount = loopCount + 1\n\tif loopCount > 100:\n\t\tbreak\n`
+        }
     }
 
     langGenerator["if_can_walk"] = (block) => {

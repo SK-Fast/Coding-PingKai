@@ -210,7 +210,7 @@ onMounted(async () => {
             blocklyWorkspace = bEditor.value.initBlockly(blockset.blocklyJSON)
             console.log(blocklyWorkspace)
             updateBlockLimit()
-            
+
             let pythonSnippets = blockset.pythonSnippets
 
             console.log(pEditor.value)
@@ -267,6 +267,26 @@ const delay = () => {
 
 const switchMode = (v) => {
     editorMode.value = v
+
+    if (v == 1) {
+        let originCode = monacoEditor.getValue()
+        let codeLine = originCode.split('\n')
+
+        if (originCode == '' || codeLine == '\tpass') {
+            let code = blockset.generate(blocklyWorkspace, true)
+            let lines = []
+
+            for (const l of code.split('\n')) {
+                if (l == 'async def main():' || l == 'main()') {
+                    continue
+                }
+                lines.push(l.replace('  ', ''))
+            }
+
+            monacoEditor.getModel().setValue(lines.join('\n'));
+            console.log(monacoEditor.getValue())
+        }
+    }
 }
 
 const continueLevel = async () => {
@@ -428,8 +448,23 @@ const runCode = () => {
 
         evalCode(code)
     } else if (editorMode.value == 1) {
-        console.log(monacoEditor)
-        evalCode(monacoEditor.getValue())
+        let originCode = monacoEditor.getValue()
+        let resultCode = ""
+
+        for (const v of originCode.split('\n')) {
+            let tabC = ''
+            const tabCount = (v.match(/  /g) || []).length;
+
+            console.log(tabCount)
+
+            tabC = '  '.repeat(tabCount)
+
+            resultCode += `\n${tabC}check_code_stop()\n`
+            resultCode += `${v}\n`
+        }
+
+        console.log(resultCode)
+        evalCode(resultCode)
     }
 }
 

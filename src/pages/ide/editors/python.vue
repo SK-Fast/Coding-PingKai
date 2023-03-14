@@ -16,7 +16,7 @@ const initEditor = async (snippet) => {
     const monaco = await import("monaco-editor")
 
     const editor = monaco.editor.create(editorContainer.value, {
-        value: `print("Hello World!")`,
+        value: ``,
         language: "python",
         automaticLayout: true,
         minimap: false
