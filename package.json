@@ -28,6 +28,7 @@
     "get-folder-size": "^4.0.0",
     "json-tree-view-vue3": "^0.2.3",
     "jspython-interpreter": "^2.1.13",
+    "monaco-editor": "^0.36.1",
     "path": "^0.12.7",
     "pixi.js": "^7.1.2",
     "sweetalert2": "^11.4.8",

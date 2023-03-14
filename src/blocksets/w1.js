@@ -1,4 +1,56 @@
 import langGenerator from "blockly/python"
+import * as monaco from "monaco-editor"
+
+export const pythonSnippets = [
+    {
+        label: 'go_forward',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ให้ไก่เดินไปทางด้านหน้าของไก่',
+        insertText: [
+          'go_forward()'
+        ].join('\n')
+    },
+    {
+        label: 'go_backward',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ให้ไก่เดินไปทางด้านหลังของไก่',
+        insertText: [
+          'go_backward()'
+        ].join('\n')
+    },
+    {
+        label: 'turn_left',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ให้ไก่หันไปทางซ้าย',
+        insertText: [
+          'turn_left()'
+        ].join('\n')
+    },
+    {
+        label: 'turn_right',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ให้ไก่หันไปทางขวา',
+        insertText: [
+          'turn_right()'
+        ].join('\n')
+    },
+    {
+        label: 'is_over_flag',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ตรวจสอบดูว่าไก่ยืนอยู่บนธงหรือไม่',
+        insertText: [
+          'is_over_flag()'
+        ].join('\n')
+    },
+    {
+        label: 'can_walk_to',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'ตรวจสอบกำแพง',
+        insertText: [
+          'can_walk_to("left")'
+        ].join('\n')
+    },
+]
 
 export const blocklyJSON = [
     {
@@ -157,7 +209,7 @@ export const init = () => {
     langGenerator["if_can_walk"] = (block) => {
         let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
 
-        return `if check_walls('${block.getFieldValue('DIRECTIONS_FIELD')}'):\n${doLine}`
+        return `if can_walk_to('${block.getFieldValue('DIRECTIONS_FIELD')}'):\n${doLine}`
     }
 
     langGenerator["is_over_flag"] = (block) => {

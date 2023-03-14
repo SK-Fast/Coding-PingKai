@@ -1,0 +1,62 @@
+.mtk6 {
+    color: var(--bs-primary) !important;
+}
+
+.mtk20 {
+    color: var(--bs-danger) !important;
+}
+
+.mtk1.bracket-highlighting-0 {
+    color: var(--bs-secondary) !important;
+}
+
+.monaco-editor .line-numbers {
+    color: var(--bs-secondary) !important;
+}
+
+.monaco-editor .line-numbers.active-line-number {
+    color: var(--bs-primary) !important;
+}
+
+.view-line span, .line-numbers {
+    font-family: 'Ubuntu Mono', monospace !important;
+}
+
+.monaco-editor .view-overlays .current-line {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    border: none !important;
+
+    animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.monaco-editor .cursors-layer .cursor {
+    transition-property: left, top;
+    transition-duration: 0.1s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+
+.cdr.wordHighlightText {
+    animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+.selected-text {
+    transition-property: left, top, width, height;
+    transition-duration: 0.1s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slider {
+    border-radius: 6px;
+}

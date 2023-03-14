@@ -27,10 +27,10 @@
         <div class="flex-grow-1 d-md-none d-block"></div>
         <div class="col-md-2 d-md-block d-none">
             <div class="rounded bg-light-400 p-1 editor-mode float-end me-2">
-                <button class="btn btn-primary">Block</button>
-                <!--
-                    <button class="btn btn-transparent">Python</button>
-                    -->
+                <button class="btn" :class="{ 'btn-primary': editorMode == 0, 'btn-transparent': editorMode != 0 }"
+                    @click="switchMode(0)">Block</button>
+                <button class="btn" :class="{ 'btn-primary': editorMode == 1, 'btn-transparent': editorMode != 1 }"
+                    @click="switchMode(1)">Python</button>
             </div>
         </div>
         <div class="col-md-2 d-md-none d-block">
@@ -63,7 +63,7 @@
             <div class="card shadow-sm mt-2 d-md-block d-none" v-if="hasBlockLimit">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
-                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
+                    <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใช้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
                     </p>
                     <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน
                     </p>
@@ -74,15 +74,16 @@
             <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
                 @mousemove="updateBlockLimit" @touchend="updateBlockLimit" @touchstart="updateBlockLimit">
 
-                <BlockEditor ref="bEditor" :options="blocklyConfig">
+                <BlockEditor ref="bEditor" :options="blocklyConfig" :class="{ 'd-none': editorMode != 0 }">
                 </BlockEditor>
+                <PythonEditor ref="pEditor" class="h-100" :class="{ 'd-none': editorMode != 1 }"></PythonEditor>
             </div>
 
             <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit"
                 :class="{ 'border-danger': blockLeft == 0 }">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
-                    <p class="m-0 ms-2">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
+                    <p class="m-0 ms-2">คุณใช้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
                     </p>
                 </div>
             </div>
@@ -95,16 +96,15 @@
 
 <script setup>
 import BlockEditor from './editors/block.vue'
+import PythonEditor from './editors/python.vue'
 import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
 import { giveAchievement } from '../../libs/achievementUtils.js'
-import { save_mergeable } from '../../libs/blocklyFiles.js'
 import { writeUserData, getUserData, writeStorageData } from '../../libs/firebaseSystem.js'
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
 import AchievementModal from "@/components/AchievementModal.vue"
-import Blockly from "blockly"
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -113,6 +113,7 @@ const toolbox = {
 
 const router = inject("router")
 const store = inject("store")
+const editorMode = ref(0)
 
 let lessonData;
 let lessonKind;
@@ -120,6 +121,7 @@ let blockset;
 
 const levelDataRef = ref({})
 const bEditor = ref(null)
+const pEditor = ref(null)
 const pageLoading = ref(true)
 const codeRunning = ref(false)
 const runResult = ref(null)
@@ -147,6 +149,7 @@ let sessionData = {
 
 let blocklyWorkspace;
 let interpreterData;
+let monacoEditor;
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -166,6 +169,10 @@ const blocklyConfig = ref({
 const nextMapLoading = ref(false)
 
 const updateBlockLimit = () => {
+    if (editorMode.value !== 0) {
+        return
+    }
+
     blockLeft.value = blocklyWorkspace.remainingCapacity()
 
     dialogueView.value.blockCountUpdate(blocklyWorkspace.getAllBlocks(false).length)
@@ -193,7 +200,6 @@ onMounted(async () => {
 
             blockset.init()
             toolbox.contents = lessonData.blocks
-
             levelDataRef.value = lessonData.levelData
 
             if (lessonData.levelData["blockLimit"]) {
@@ -202,13 +208,15 @@ onMounted(async () => {
             }
 
             blocklyWorkspace = bEditor.value.initBlockly(blockset.blocklyJSON)
-
-
             console.log(blocklyWorkspace)
+            updateBlockLimit()
+            
+            let pythonSnippets = blockset.pythonSnippets
+
+            console.log(pEditor.value)
+            monacoEditor = await pEditor.value.initEditor(pythonSnippets)
 
             pageLoading.value = false
-
-            updateBlockLimit()
 
             if (window.outerWidth <= 600) {
                 setTimeout(() => {
@@ -255,6 +263,10 @@ const requestEnd = async () => {
 
 const delay = () => {
     return new Promise(resolve => setTimeout(resolve, delayInms.value));
+}
+
+const switchMode = (v) => {
+    editorMode.value = v
 }
 
 const continueLevel = async () => {
@@ -333,18 +345,12 @@ const saveCodeUser = async () => {
 }
 */
 
-const runCode = async () => {
-    lessonKind.reset(blocklyWorkspace, interpreterData)
-
-    let code = blockset.generate(blocklyWorkspace)
-
+const evalCode = async (code) => {
     codeRunning.value = true
 
-    code = '"""\n' + code + '"""\n'
+    codeDone.value = false
 
     console.log(code)
-
-    codeDone.value = false
 
     sessionData.codeStop = false
     let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace, sessionData)
@@ -409,6 +415,21 @@ const runCode = async () => {
         if (window.outerWidth < 600) {
             exitPlayMode(false)
         }
+    }
+}
+
+const runCode = () => {
+    lessonKind.reset(blocklyWorkspace, interpreterData)
+
+    if (editorMode.value == 0) {
+        let code = blockset.generate(blocklyWorkspace)
+
+        code = '"""\n' + code + '"""\n'
+
+        evalCode(code)
+    } else if (editorMode.value == 1) {
+        console.log(monacoEditor)
+        evalCode(monacoEditor.getValue())
     }
 }
 
@@ -647,4 +668,5 @@ const toggleBlocksMenu = () => {
     100% {
         background-position: 100% 0%;
     }
-}</style>
+}
+</style>

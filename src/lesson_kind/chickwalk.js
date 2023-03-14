@@ -86,6 +86,9 @@ export const run = async (script, data, delay, w, sessionData) => {
     }
 
     const cantMoveWarn = (c, bID) => {
+        if (!bID) {
+            return
+        }
         warnBlock(c, bID)
     }
 
@@ -101,8 +104,6 @@ export const run = async (script, data, delay, w, sessionData) => {
                 easing: 'easeInBack'
             });
         }
-
-        await delay()
     }
 
     const moveChick = async (x, y) => {
@@ -160,6 +161,10 @@ export const run = async (script, data, delay, w, sessionData) => {
         }
     }
 
+    const everyStepUpdate = async() => {
+        await delay()
+    }
+
     updateAngleMove()
 
     interpreter.addFunction('turn_left', async (bID) => {
@@ -167,7 +172,7 @@ export const run = async (script, data, delay, w, sessionData) => {
 
         updateAngleMove()
 
-        await delay()
+        await everyStepUpdate()
     });
 
     interpreter.addFunction('turn_right', async (bID) => {
@@ -175,7 +180,7 @@ export const run = async (script, data, delay, w, sessionData) => {
 
         updateAngleMove()
 
-        await delay()
+        await everyStepUpdate()
     });
 
     interpreter.addFunction('check_code_stop', () => {
@@ -191,7 +196,6 @@ export const run = async (script, data, delay, w, sessionData) => {
     interpreter.addFunction('go_forward', async (bID) => {
         let c = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData)
 
-
         if (!c) {
             currentPosX = currentPosX + addX
             currentPosY = currentPosY - addY
@@ -200,6 +204,8 @@ export const run = async (script, data, delay, w, sessionData) => {
         } else {
             cantMoveWarn(w, bID)
         }
+
+        await everyStepUpdate()
     });
 
     interpreter.addFunction('go_backward', async (bID) => {
@@ -213,6 +219,8 @@ export const run = async (script, data, delay, w, sessionData) => {
         } else {
             cantMoveWarn(w, bID)
         }
+
+        await everyStepUpdate()
     });
 
     interpreter.addFunction('is_over_flag', async () => {
@@ -227,7 +235,7 @@ export const run = async (script, data, delay, w, sessionData) => {
         return isFlag
     });
 
-    interpreter.addFunction('check_walls', async (direction) => {
+    interpreter.addFunction('can_walk_to', async (direction) => {
         if (direction == "front") {
             let blockExists = blockExist(data.lvlPos, currentPosX + addX, currentPosY - addY, data.lvlData) == undefined
             return blockExists
