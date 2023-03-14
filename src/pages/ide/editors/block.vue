@@ -9,9 +9,9 @@
 @import url(@/assets/css/blockly.css);
 
 .blocklyDiv {
-  height: 100%;
-  width: 100%;
-  text-align: left;
+    height: 100%;
+    width: 100%;
+    text-align: left;
 }
 
 .injectionDiv {
@@ -26,6 +26,7 @@
 <script setup>
 import { onMounted, ref, toRefs } from 'vue'
 import Blockly, { Block } from 'blockly';
+import langGenerator from "blockly/python"
 
 const blocklyToolbox = ref(null)
 const blocklyDiv = ref(null)
@@ -35,7 +36,36 @@ const props = defineProps({
     },
 })
 
-const initBlockly = () => {
+const initBlockly = (bJSON) => {
+    bJSON = [{
+        "type": "on_start",
+        "message0": "%1 เมื่อเริ่ม",
+        "args0": [
+            {
+                "type": "field_image",
+                "src": "/blockly_editor/play-circle.png",
+                "width": 15,
+                "height": 15
+            },
+        ],
+        "message1": "%1",
+        "args1": [
+            { "type": "input_statement", "name": "DO" }
+        ],
+        "tooltip": "รันเมื่อปุ่มเริ่มถูกกด",
+        "deletable": false,
+        "movable": false,
+        "colour": 5,
+    }, ...bJSON]
+
+    langGenerator["on_start"] = (block) => {
+        let doLine = langGenerator.statementToCode(block, 'DO') || '\tpass'
+
+        return `"""\nasync def main():\n${doLine}\nmain()\n"""`
+    }
+
+    Blockly.defineBlocksWithJsonArray(bJSON);
+
     const { options } = toRefs(props)
 
     console.log(options)
@@ -47,6 +77,11 @@ const initBlockly = () => {
     console.log(props.options)
 
     const workspace = Blockly.inject(blocklyDiv.value, props.options)
+
+    const onStartBlock = workspace.newBlock("on_start");
+    onStartBlock.setDeletable(false)
+    onStartBlock.initSvg();
+    onStartBlock.render();
 
     return workspace
 }

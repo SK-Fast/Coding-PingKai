@@ -1,9 +1,10 @@
 <template>
-    <CongratsModal ref="congratModal" @continue="continueLevel"/>
-    <AchievementModal ref="achievementModal"/>
+    <CongratsModal ref="congratModal" @continue="continueLevel" />
+    <AchievementModal ref="achievementModal" />
     <canvas class="confetti-view" ref="confettiView"></canvas>
-    <div class="page-trans bg-light-400" :class="{ 'loaded': !nextMapLoading, 'loading': pageLoading}">
-        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein" v-if="!nextMapLoading">
+    <div class="page-trans bg-light-400" :class="{ 'loaded': !nextMapLoading, 'loading': pageLoading }">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein"
+            v-if="!nextMapLoading">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
@@ -12,7 +13,8 @@
     <div class="editor-top flex-row justify-content-center" :class="{ 'loading': !codeDone }">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
-            <a @click="toggleBlocksMenu" id="blocksMenuBtn" href="#" class="blockmenu-btn me-2 d-md-none d-block"><img src="@/assets/blocks_icon.svg"></a>
+            <a @click="toggleBlocksMenu" id="blocksMenuBtn" href="#" class="blockmenu-btn me-2 d-md-none d-block"><img
+                    src="@/assets/blocks_icon.svg"></a>
 
             <img src="@/assets/logo/Logo_Text.png" class="me-2" height="35">
         </div>
@@ -32,11 +34,12 @@
             </div>
         </div>
         <div class="col-md-2 d-md-none d-block">
-            <a @click="togglePlayMode" id="playModeBtn" href="#" class="playmode-btn"><vue-feather type="play" class="me-2" stroke="#606060" /></a>
+            <a @click="togglePlayMode" id="playModeBtn" href="#" class="playmode-btn"><vue-feather type="play" class="me-2"
+                    stroke="#606060" /></a>
         </div>
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle" ref="editorMiddle">
-        <div class="col-md-3 p-4 pt-0 run-code-menu" :class="{'open': playModeEnabled}">
+        <div class="col-md-3 p-4 pt-0 run-code-menu" :class="{ 'open': playModeEnabled }">
             <div id="runResult" class="runResult mt-3" ref="runResult"
                 :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
@@ -75,7 +78,8 @@
                 </BlockEditor>
             </div>
 
-            <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit" :class="{'border-danger': blockLeft == 0}">
+            <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit"
+                :class="{ 'border-danger': blockLeft == 0 }">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
                     <p class="m-0 ms-2">คุณใข้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
@@ -83,10 +87,10 @@
                 </div>
             </div>
 
-            <DialogueView ref="dialogueView" @onDialogueData="newDialogueData"/>
-            
+            <DialogueView ref="dialogueView" @onDialogueData="newDialogueData" />
+
         </div>
-</div>
+    </div>
 </template>
 
 <script setup>
@@ -100,6 +104,7 @@ import { writeUserData, getUserData, writeStorageData } from '../../libs/firebas
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
 import AchievementModal from "@/components/AchievementModal.vue"
+import Blockly from "blockly"
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -162,7 +167,7 @@ const nextMapLoading = ref(false)
 
 const updateBlockLimit = () => {
     blockLeft.value = blocklyWorkspace.remainingCapacity()
-    
+
     dialogueView.value.blockCountUpdate(blocklyWorkspace.getAllBlocks(false).length)
 }
 
@@ -192,12 +197,12 @@ onMounted(async () => {
             levelDataRef.value = lessonData.levelData
 
             if (lessonData.levelData["blockLimit"]) {
-                blocklyConfig.value['maxBlocks'] = lessonData.levelData.blockLimit
+                blocklyConfig.value['maxBlocks'] = lessonData.levelData.blockLimit + 1
                 hasBlockLimit.value = true
             }
 
-            blocklyWorkspace = bEditor.value.initBlockly()
-            
+            blocklyWorkspace = bEditor.value.initBlockly(blockset.blocklyJSON)
+
 
             console.log(blocklyWorkspace)
 
@@ -206,7 +211,7 @@ onMounted(async () => {
             updateBlockLimit()
 
             if (window.outerWidth <= 600) {
-                setTimeout(() => { 
+                setTimeout(() => {
                     playModeEnabled.value = false
                     dialogueView.value.runDialogue(lessonData.dialogue)
                 }, 2000)
@@ -252,18 +257,18 @@ const delay = () => {
     return new Promise(resolve => setTimeout(resolve, delayInms.value));
 }
 
-const continueLevel = async() => {
+const continueLevel = async () => {
     congratModal.value.closeM()
     nextMapLoading.value = true
     pageLoading.value = true
-    
+
     setTimeout(() => {
         router.push(`/workspace/${parseInt(levelID) + 1}`)
 
         setTimeout(() => {
-            router.go(0) 
+            router.go(0)
         }, 100)
-    },500)
+    }, 500)
 }
 
 const stopCode = async () => {
@@ -304,7 +309,7 @@ const exitPlayMode = (playSound = true) => {
 }
 
 const newDialogueData = (data) => {
-    
+
 
     if (data.type == "enterPlayMode") {
         playModeEnabled.value = true
@@ -334,6 +339,8 @@ const runCode = async () => {
     let code = blockset.generate(blocklyWorkspace)
 
     codeRunning.value = true
+
+    code = '"""\n' + code + '"""\n'
 
     console.log(code)
 
@@ -587,9 +594,11 @@ const toggleBlocksMenu = () => {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.5);
     }
+
     100% {
         transform: scale(1);
     }
@@ -638,5 +647,4 @@ const toggleBlocksMenu = () => {
     100% {
         background-position: 100% 0%;
     }
-}
-</style>
+}</style>

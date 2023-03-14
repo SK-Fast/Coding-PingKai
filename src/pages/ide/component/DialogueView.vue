@@ -60,7 +60,7 @@ const waitForBlockCount = (bC) => {
     return new Promise((resolve) => {
         let iv = setInterval(() => {
             console.log(bC, blockCount)
-            if (blockCount >= bC) {
+            if (blockCount >= (bC + 1)) {
                 console.log("resolve")
                 resolve()
                 clearInterval(iv)
@@ -107,7 +107,7 @@ const runSection = async (section) => {
                 }, 1000);
             }
 
-            if (data.type == "focus_block") {
+            if (data.type == "focus_block" || data.type == "guide_block_drag") {
                 let blockElementAll = document.querySelectorAll(`.blocklyFlyout .blocklyDraggable`)
                 let blockElement = blockElementAll[data.blockIndex]
 
@@ -120,6 +120,7 @@ const runSection = async (section) => {
                 }
             }
 
+            /*
             if (data.type == "guide_block_drag") {
                 let blockElementAll = document.querySelectorAll(`.blocklyFlyout .blocklyDraggable`)
                 let blockElement = blockElementAll[data.blockIndex]
@@ -143,6 +144,7 @@ const runSection = async (section) => {
                     }, 10000);
                 }
             }
+            */
 
             if (data.type == "wait_block_paste") {
                 await waitForBlockCount(data.count)

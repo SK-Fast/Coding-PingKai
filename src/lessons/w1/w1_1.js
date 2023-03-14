@@ -106,7 +106,7 @@ export const dialogue = [
         },
         {
             type: "txt-continue",
-            text: "ขึ้นไปข้างบน ลงไปวางบนที่ว่างใน Editor ดูสิ"
+            text: "ขึ้นไปข้างบน ลงไปวางบนที่ว่างใน เมื่อเริ่ม ดูสิ"
         },
         {
             type: "wait_block_paste",
@@ -117,7 +117,7 @@ export const dialogue = [
     [
         {
             type: "txt",
-            text: "ดีมาก! ทีนี้ ลองนำบล็อกอีก 2 บล็อก มาต่อกันดู"
+            text: "ดีมาก! ทีนี้ ลองนำบล็อกอีก 2 บล็อก มาต่อกันดูน่ะ"
         },
         {
             type: "wait_block_paste",

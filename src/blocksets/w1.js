@@ -1,4 +1,3 @@
-import Blockly from 'blockly';
 import langGenerator from "blockly/python"
 
 export const blocklyJSON = [
@@ -133,8 +132,6 @@ export const generate = (w) => {
 }
 
 export const init = () => {
-    Blockly.defineBlocksWithJsonArray(blocklyJSON);
-
     langGenerator["turn_left"] = (block) => {
         return `turn_left('${block.id}')\n`
     }
