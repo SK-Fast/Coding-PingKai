@@ -12,7 +12,7 @@
     </div>
     <div class="editor-top flex-row justify-content-center" :class="{ 'loading': !codeDone }">
         <div class="d-flex align-items-center p-2 ms-3">
-            <a @click="requestEnd" href="#"><vue-feather type="x" class="me-2" stroke="#606060" /></a>
+            <a @click="requestEnd" href="#"><vue-feather type="home" class="me-2" stroke="#606060" /></a>
             <a @click="toggleBlocksMenu" id="blocksMenuBtn" href="#" class="blockmenu-btn me-2 d-md-none d-block"><img
                     src="@/assets/blocks_icon.svg"></a>
 
