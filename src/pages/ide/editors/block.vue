@@ -55,7 +55,7 @@ const initBlockly = (bJSON) => {
         "tooltip": "รันเมื่อปุ่มเริ่มถูกกด",
         "deletable": false,
         "movable": false,
-        "colour": 5,
+        "colour": 30,
     }, ...bJSON]
 
     langGenerator["on_start"] = (block) => {
