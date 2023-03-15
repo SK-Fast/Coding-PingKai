@@ -16,6 +16,10 @@
                                 stroke="#FF7733"></vue-feather> devpixels.xyz</a>
                     </div>
                     <div class="d-flex flex-column ms-md-5">
+                        <router-link
+                            target="_none" to="/legal/term"><vue-feather type="file-text" size="16" stroke="#FF7733"></vue-feather>
+                            ข้อตกลงในการใช้ซอฟต์แวร์</router-link>
+
                         <a class="text-danger" href="https://github.com/SK-Fast/Coding-PingKai/issues/new?assignees=&labels=&template=%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2.md&title="
                             target="_none"><vue-feather type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
                             รายงานปัญหาแอป</a>

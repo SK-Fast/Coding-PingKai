@@ -15,13 +15,11 @@ export function initApp() {
     return new Promise(async (resolve) => {
         const { initializeApp } = await import('firebase/app')
         const { getPerformance } = await import('firebase/performance')
-        const { getAnalytics } = await import('firebase/analytics')
         const { getAuth, connectAuthEmulator } = await import('firebase/auth')
 
         const app = initializeApp(firebaseConfig)
 
         getPerformance(app)
-        getAnalytics(app)
 
         if (import.meta.env.MODE == "development") {
             connectAuthEmulator(getAuth(), `http://localhost:${import.meta.env.VITE_AUTH_PORT}`, {

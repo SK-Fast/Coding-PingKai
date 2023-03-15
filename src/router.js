@@ -12,6 +12,7 @@ import Lookprofile from '@/pages/settings/Lookprofile.vue'
 import congrat from '@/pages/congrat/congrat.vue'
 import LearnPage from '@/pages/learn/index.vue'
 import CreditsPage from '@/pages/credits/index.vue'
+import Term_LegalPage from '@/pages/legal/term.vue'
 
 export default [
     {
@@ -87,4 +88,8 @@ export default [
             navbarStyle: "landing"
         },
      },
+     {
+        path: '/legal/term',
+        component: Term_LegalPage
+     }
 ]
