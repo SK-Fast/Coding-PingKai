@@ -80,10 +80,10 @@ const socialLogin = async (t) => {
 
         loginPromise(credential)
 
-        loggingIn.value = false
-
         let isNewUser = await newUserData(result.user)
         closeL()
+
+        loggingIn.value = false
 
         if (isNewUser) {
             router.push("/workspace/0")
