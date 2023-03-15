@@ -20,7 +20,7 @@
                         <h4 class="badge bg-danger">งานเอกสาร</h4>
                     </div>
 
-                    <p class="mb-1">""</p>
+                    <p class="mb-1">"กาดอน"</p>
 
                     <div class="column justify-content-center ">
                         <a href="https://www.instagram.com/tee.dzxet/" target="_blank"><vue-feather type="instagram" size="20px"></vue-feather></a>
