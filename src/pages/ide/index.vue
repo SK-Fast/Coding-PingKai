@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm mt-2 d-md-block d-none" v-if="hasBlockLimit">
+            <div class="card shadow-sm mt-2 d-md-block d-none" v-if="hasBlockLimit && editorMode == 0">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
                     <p class="m-0 ms-2" v-if="blockLeft != 0">คุณใช้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
@@ -69,6 +69,14 @@
                     </p>
                 </div>
             </div>
+
+            <div class="card shadow-sm mt-2 d-md-block d-none error-flash" v-if="pythonError != ''">
+                <div class="card-body d-flex">
+                    <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
+                    <p class="m-0 ms-2 text-danger">{{ pythonError }}</p>
+                </div>
+            </div>
+
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
             <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
@@ -79,11 +87,20 @@
                 <PythonEditor ref="pEditor" class="h-100" :class="{ 'd-none': editorMode != 1 }"></PythonEditor>
             </div>
 
-            <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit"
+            <div class="shadow-sm p-2 d-md-none d-block border border-1" v-if="hasBlockLimit && editorMode == 0"
                 :class="{ 'border-danger': blockLeft == 0 }">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
                     <p class="m-0 ms-2">คุณใช้บล็อกได้อีกแค่ <b>{{ blockLeft }}</b> บล็อกเท่านั้น
+                    </p>
+                </div>
+            </div>
+
+            <div class="shadow-sm p-2 d-md-none d-block border border-1 error-flash" v-if="pythonError != ''"
+                :class="{ 'border-danger': blockLeft == 0 }">
+                <div class="card-body d-flex">
+                    <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
+                    <p class="m-0 ms-2 text-danger">{{ pythonError }}
                     </p>
                 </div>
             </div>
@@ -150,6 +167,7 @@ let sessionData = {
 let blocklyWorkspace;
 let interpreterData;
 let monacoEditor;
+let pythonError = ref("")
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -373,7 +391,12 @@ const evalCode = async (code) => {
     console.log(code)
 
     sessionData.codeStop = false
-    let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace, sessionData)
+
+    pythonError.value = ""
+
+    let levelPassed = await lessonKind.run(code, interpreterData, delay, blocklyWorkspace, sessionData).catch((ee) => {
+        pythonError.value = ee
+    })
 
     console.log(levelPassed)
 
@@ -400,7 +423,8 @@ const evalCode = async (code) => {
         }
 
         await writeUserData(store.state.user, {
-            exp: userData.exp + 10
+            exp: userData.exp + 10,
+            last_level_date: new Date()
         })
 
         if (achRes && achRes.success) {
@@ -571,6 +595,17 @@ const toggleBlocksMenu = () => {
 .editor-container {
     background-color: white;
 }
+
+.error-flash {
+    animation: errorFlash 1s;
+}
+
+@keyframes errorFlash {
+    from {
+        background-color: hsl(0, 100%, 89%);
+    }
+}
+
 
 .no-blockwrite {
     width: 100%;

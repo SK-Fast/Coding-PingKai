@@ -58,6 +58,7 @@ export async function newUserData(user) {
     await setDoc(userDoc, {
         creation_date: new Date(),
         exp: 0,
+        last_streaklost_date: new Date(),
         last_level_date: new Date(),
         level: 0,
         level_passed: 0,

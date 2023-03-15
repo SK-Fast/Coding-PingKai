@@ -14,6 +14,7 @@ export const levelData = {
     title: "การใช้งานพื้นฐาน",
     altTitle: "W1-1",
     width: 5,
+    blockLimit: 3,
     height: 4,
     achievement: "the_beginnings",
     startAngle: 0,
