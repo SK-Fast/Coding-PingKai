@@ -1,5 +1,15 @@
 <template>
-    <div class="container d-flex flex-column flex-md-row mt-5">
+    <div class="bg-primary d-md-none d-block text-white p-5 d-flex">
+            <div class="avatar img-rounded col-3" style="height:80px;width:80px" :style="'background-image: url(\'' + (store.state.user.photoURL || '/placeholder-avatar.jpg') + '\')'">
+                <div class="avatar-status" />
+
+            </div>
+        <div class="flex-grow-1 d-flex align-items-center">
+            <h4 class="m-0 ms-4">{{ store.state.user.displayName }}</h4>
+        </div>
+    </div>
+
+    <div class="container d-flex flex-column flex-md-row mt-md-5 mt-3">
         <div class="d-flex flex-column col-md-3 me-2">
             <h2 class="ms-0 mb-2">การตั้งค่า</h2>   
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/general">
@@ -25,6 +35,7 @@ import { onMounted, inject } from 'vue';
 import { currentPagePath } from 'libs/routeLib.js'
 import { promptLogout } from 'libs/firebaseSystem.js'
 const router = inject('router')
+const store = inject('store')
 onMounted(() => {
     if (currentPagePath() == "/settings") {
         router.push('/settings/general');
