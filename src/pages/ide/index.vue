@@ -2,9 +2,8 @@
     <CongratsModal ref="congratModal" @continue="continueLevel" />
     <AchievementModal ref="achievementModal" />
     <canvas class="confetti-view" ref="confettiView"></canvas>
-    <div class="page-trans bg-light-400" :class="{ 'loaded': !nextMapLoading, 'loading': pageLoading }">
-        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein"
-            v-if="!nextMapLoading">
+    <div class="page-trans bg-light-400" :class="{ 'loaded': !pageLoading, 'loading-no-anim': pageLoading }">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
@@ -184,8 +183,6 @@ const blocklyConfig = ref({
     trashcan: true
 })
 
-const nextMapLoading = ref(false)
-
 const updateBlockLimit = () => {
     if (editorMode.value !== 0) {
         return
@@ -234,6 +231,7 @@ onMounted(async () => {
             console.log(pEditor.value)
             monacoEditor = await pEditor.value.initEditor(pythonSnippets)
 
+            console.log('pageLoading.value', pageLoading.value)
             pageLoading.value = false
 
             if (window.outerWidth <= 600) {
@@ -301,15 +299,15 @@ const switchMode = (v) => {
                 lines.push(l.replace('  ', ''))
             }
 
-            monacoEditor.getModel().setValue(lines.join('\n'));
-            console.log(monacoEditor.getValue())
+            if (lines[1] !== '	pass') {
+                monacoEditor.getModel().setValue(lines.join('\n'));
+            }
         }
     }
 }
 
 const continueLevel = async () => {
     congratModal.value.closeM()
-    nextMapLoading.value = true
     pageLoading.value = true
 
     setTimeout(() => {

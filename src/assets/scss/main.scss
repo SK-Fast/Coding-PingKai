@@ -335,6 +335,15 @@ a,
     pointer-events: all;
 }
 
+
+.page-trans.loading-no-anim {
+    --x: 50%;
+    --y: 50%;
+    display: block;
+    cursor: progress;
+    pointer-events: all;
+}
+
 .page-trans.loaded {
     display: block;
     animation: pageHideAnim 2s cubic-bezier(0.7, 0, 0.84, 0);
