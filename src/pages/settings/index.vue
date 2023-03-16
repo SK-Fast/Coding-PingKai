@@ -21,8 +21,10 @@
             <router-link class="btn settings-btn" active-class="btn-primary" to="/settings/dev">
                สำหรับผู้พัฒนา
             </router-link>
-
+            
             <button class="btn btn-outline-danger settings-btn" @click="logoutClicked">ลงชื่อออก</button>
+        
+            <code class="text-muted user-selectable">Coding Pingkai {{ appVersion }}<br/>{{ pwaInstalled ? "PWA Installed" : "PWA not installed" }}<br/>{{ browserName }} {{ osName }}</code>
         </div>
         <div class="flex-grow-1 mt-md-0 mt-2">
             <router-view></router-view>
@@ -31,12 +33,29 @@
 </template>
 
 <script setup>
-import { onMounted, inject } from 'vue';
+import { onMounted, inject, ref } from 'vue';
 import { currentPagePath } from 'libs/routeLib.js'
 import { promptLogout } from 'libs/firebaseSystem.js'
 const router = inject('router')
 const store = inject('store')
-onMounted(() => {
+const appVersion = ref("...")
+const browserName = ref("Unknown browser")
+const osName = ref("Unknown os")
+const pwaInstalled = ref(false)
+
+onMounted(async () => {
+    appVersion.value = __APP_VERSION__
+    pwaInstalled.value = window.matchMedia('(display-mode: standalone)').matches
+
+    const { detect } = await import("detect-browser")
+
+    const browser = detect()
+
+    if (browser) {
+        browserName.value = `${browser.name} ${browser.version}`
+        osName.value = browser.os
+    }
+
     if (currentPagePath() == "/settings") {
         router.push('/settings/general');
     }

@@ -528,3 +528,7 @@ a,
         transform: scale3d(1, 1, 1);
     }
 }
+
+.user-selectable {
+    user-select: text;
+}

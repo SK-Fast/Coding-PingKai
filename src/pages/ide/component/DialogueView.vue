@@ -42,6 +42,7 @@ const previousBtnEnabled = ref(true)
 let blockCount = 0
 let updateIntervals = []
 let typing = false
+let textTyping = false
 
 const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
@@ -50,10 +51,16 @@ const delay = (delayInms) => {
 const emit = defineEmits(['onDialogueData'])
 
 const typeText = async (txt) => {
+    if (textTyping) {
+        return
+    }
+    textTyping = true
+
     for (var i = 0; i < txt.length; i++) {
         textContent.value += txt.charAt(i)
         await delay(25)
     }
+    textTyping = false
 }
 
 const waitForBlockCount = (bC) => {
