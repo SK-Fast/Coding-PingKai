@@ -117,7 +117,7 @@ import { onMounted, ref, inject } from 'vue'
 import { findLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
 import { giveAchievement } from '../../libs/achievementUtils.js'
-import { writeUserData, getUserData, writeStorageData } from '../../libs/firebaseSystem.js'
+import { writeUserData, getUserData, writeStorageData, readStorageData } from '../../libs/firebaseSystem.js'
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
 import AchievementModal from "@/components/AchievementModal.vue"
@@ -196,6 +196,22 @@ const updateBlockLimit = () => {
 
 let toolboxE;
 
+const loadUserCode = async () => {
+    const rs = await readStorageData(store, `blockly_saves/${parseInt(levelID)}.moderm`)
+    if (rs == false) {
+        return false
+    } else {
+        const rqData = JSON.parse(rs)
+
+        console.log(rqData)
+
+        bEditor.value.loadCode(rqData.blockly)
+        pEditor.value.loadCode(rqData.python)
+
+        return true
+    }
+}
+
 onMounted(async () => {
     // Load Level
     levelID = router.currentRoute.value.params['id']
@@ -223,7 +239,8 @@ onMounted(async () => {
                 hasBlockLimit.value = true
             }
 
-            blocklyWorkspace = bEditor.value.initBlockly(blockset.blocklyJSON)
+            let [bW, onStartBlock] = bEditor.value.initBlockly(blockset.blocklyJSON)
+            blocklyWorkspace = bW
             console.log(blocklyWorkspace)
             updateBlockLimit()
 
@@ -233,6 +250,12 @@ onMounted(async () => {
             monacoEditor = await pEditor.value.initEditor(pythonSnippets)
 
             console.log('pageLoading.value', pageLoading.value)
+
+            const fileExists = await loadUserCode()
+            if (fileExists) {
+                onStartBlock.dispose(true)
+            }
+
             pageLoading.value = false
 
             if (window.outerWidth <= 600) {
@@ -364,20 +387,20 @@ const newDialogueData = (data) => {
         playModeEnabled.value = false
     }
 }
-/*
+
 const saveCodeUser = async () => {
-    console.log(Blockly)
-    console.log(Blockly.serialization)
-    const serializer = new Blockly.serialization.blocks.BlockSerializer();
-    const state = serializer.save(blocklyWorkspace);
+    const blocklyCode = bEditor.value.saveCode()
+    const pythonCode = pEditor.value.saveCode()
 
-    console.log(state)
+    const fileData = {
+        version: __APP_VERSION__,
+        level: parseInt(levelID),
+        blockly: blocklyCode,
+        python: pythonCode
+    }
 
-    //serializer.load(state, blocklyWorkspace);
-
-    await writeStorageData(store, `blockly_saves/${levelID}.moderm`)
+    await writeStorageData(store, `blockly_saves/${parseInt(levelID)}.moderm`, JSON.stringify(fileData))
 }
-*/
 
 const evalCode = async (code) => {
     codeRunning.value = true
@@ -403,6 +426,8 @@ const evalCode = async (code) => {
     if (levelPassed) {
 
         store.state.fireLoading()
+
+        await saveCodeUser()
 
         let achRes;
 

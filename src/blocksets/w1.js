@@ -1,4 +1,4 @@
-import langGenerator from "blockly/python"
+import {pythonGenerator as langGenerator} from "blockly/python"
 import * as monaco from "monaco-editor"
 
 export const pythonSnippets = [
