@@ -109,7 +109,7 @@ const checkForUpdates = async () => {
                             type="arrow-right" size="10"></vue-feather> {{ newVersion }})</p>
                 </div>
 
-                <div class="bg-warning mt-2 col-md-8 mb-2 p-2 text-center rounded">
+                <div class="bg-warning mt-2 col-md-8 mb-2 p-2 text-center rounded" v-if="updatingApp">
                     <vue-feather type="refresh-cw" animation="spin" animation-speed="fast"
                             size="15"></vue-feather>
                     กำลังอัปเดต...
