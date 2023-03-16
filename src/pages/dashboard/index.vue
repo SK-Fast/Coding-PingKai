@@ -65,7 +65,7 @@ const appUpdate = async () => {
         }
     }
 
-    window.location.reload()
+    window.location.reload(true)
 }
 
 const checkForUpdates = async () => {
