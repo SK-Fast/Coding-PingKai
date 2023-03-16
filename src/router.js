@@ -62,7 +62,8 @@ export default [
         path: '/workspace/:id',
         meta: {
             navbarStyle: "hide",
-            noScroll: true
+            noScroll: true,
+            oftenRefresh: true
         },
         component: IDE
     },

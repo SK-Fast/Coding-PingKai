@@ -2,8 +2,8 @@
     <CongratsModal ref="congratModal" @continue="continueLevel" />
     <AchievementModal ref="achievementModal" />
     <canvas class="confetti-view" ref="confettiView"></canvas>
-    <div class="page-trans bg-light-400" :class="{ 'loaded': !pageLoading, 'loading-no-anim': pageLoading }">
-        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein">
+    <div class="page-trans bg-light-400" :class="{ 'loaded': !pageLoading, 'loading-no-anim': pageLoading && !nextLevelWarp, 'loading': nextLevelWarp }">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein" v-if="!nextLevelWarp">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
@@ -167,6 +167,7 @@ let blocklyWorkspace;
 let interpreterData;
 let monacoEditor;
 let pythonError = ref("")
+const nextLevelWarp = ref(false)
 
 const blocklyConfig = ref({
     toolbox: toolbox,
@@ -308,14 +309,11 @@ const switchMode = (v) => {
 
 const continueLevel = async () => {
     congratModal.value.closeM()
+    nextLevelWarp.value = true
     pageLoading.value = true
 
     setTimeout(() => {
         router.push(`/workspace/${parseInt(levelID) + 1}`)
-
-        setTimeout(() => {
-            router.go(0)
-        }, 100)
     }, 500)
 }
 

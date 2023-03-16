@@ -62,7 +62,7 @@
         <code class="text-end me-2">Developer Menu         <input class="form-check-input" type="checkbox" v-model="store.state.devMode" :checked="store.state.devMode"></code>
       </div>
 
-      <router-view class="pageView"></router-view>
+      <router-view class="pageView" :key="route.meta['oftenRefresh'] ? $route.fullPath : ''"></router-view>
 
       <Footer class="footer-nav" />
 

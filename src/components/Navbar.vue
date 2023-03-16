@@ -6,6 +6,17 @@ import { useRoute } from "vue-router";
 const route = useRoute()
 
 const store = inject('store')
+const doBlur = ref(false)
+
+const onScroll = (event) => {
+    let scrollY = window.scrollY;
+
+    doBlur.value = scrollY > 50
+}
+
+onMounted(() => {
+    document.addEventListener("scroll", onScroll)
+})
 
 const openLogin = () => {
     console.log("login entry")
@@ -15,7 +26,7 @@ const openLogin = () => {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="route.meta['navbarStyle'] || ''">
+    <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="`${route.meta['navbarStyle'] || ''} ${doBlur ? 'do-blur' : ''}`">
         <div class="container-fluid">
 
             <a class="navbar-brand me-1">
@@ -45,8 +56,8 @@ const openLogin = () => {
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
-                    <router-link class="icon-link nav-item" to="/settings/general" v-if="store.state.user !== null"><vue-feather
-                            class="m-nav-icon" type="settings"
+                    <router-link class="icon-link nav-item" to="/settings/general"
+                        v-if="store.state.user !== null"><vue-feather class="m-nav-icon" type="settings"
                             :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
                             size="25"></vue-feather></router-link>
 
@@ -89,6 +100,11 @@ const openLogin = () => {
     height: 35px;
 }
 
+.navbar.landing.do-blur {
+    background-color: rgba(var(--bs-primary-rgb), 0.8) !important;
+    backdrop-filter: blur(10px);
+}
+
 .navbar.landing {
     background-color: var(--bs-primary) !important;
     box-shadow: none !important;
@@ -104,4 +120,5 @@ const openLogin = () => {
 
 .nav-pop {
     overflow: hidden;
-}</style>
+}
+</style>
