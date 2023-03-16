@@ -150,11 +150,11 @@ const goToLesson = (i, e) => {
 }
 
 .level-decoration {
-    background-image: url(/decorations/grass.png);
+    background-image: url(/decorations/chick.png);
     background-position: center;
     background-size: cover;
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
 
     position: absolute;
     bottom: 0;
@@ -276,6 +276,12 @@ const goToLesson = (i, e) => {
     .lvl-all {
         height: auto;
         overflow-y: visible;
+    }
+
+    .level-decoration {
+        right: 0;
+        height: 100px;
+        width: 100px;
     }
 }
 
