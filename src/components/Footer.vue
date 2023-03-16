@@ -16,16 +16,16 @@
                                 stroke="#FF7733"></vue-feather> devpixels.xyz</a>
                     </div>
                     <div class="d-flex flex-column ms-md-5">
-                        <router-link
-                            target="_none" to="/legal/term"><vue-feather type="file-text" size="16" stroke="#FF7733"></vue-feather>
+                        <router-link target="_none" to="/legal/term"><vue-feather type="file-text" size="16"
+                                stroke="#FF7733"></vue-feather>
                             ข้อตกลงในการใช้ซอฟต์แวร์</router-link>
 
-                        <a class="text-danger" href="https://github.com/SK-Fast/Coding-PingKai/issues/new?assignees=&labels=&template=%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2.md&title="
-                            target="_none"><vue-feather type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
+                        <a class="text-danger" @click="requestIssue" href="#!" target="_none"><vue-feather
+                                type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
                             รายงานปัญหาแอป</a>
-                        
-                        <a class="text-black" href="https://github.com/SK-Fast/Coding-PingKai"
-                            target="_none"><vue-feather type="github" size="16" stroke="#212529"></vue-feather>
+
+                        <a class="text-black" href="https://github.com/SK-Fast/Coding-PingKai" target="_none"><vue-feather
+                                type="github" size="16" stroke="#212529"></vue-feather>
                             Github</a>
                     </div>
                 </div>
@@ -41,5 +41,43 @@
 
 const goToTop = () => {
     window.scrollTo(0, 0)
+}
+
+const requestIssue = async () => {
+    const { detect } = await import("detect-browser")
+
+    const browser = detect()
+
+    let bodyData = `**มีปัญหาอะไรบ้าง**
+คำอธิบายที่ชัดเจนและรัดกุมว่าจุดบกพร่องคืออะไร
+
+**ทำอย่างไรถึงจะเกิดปัญหานี้**
+1. ...
+2. ...
+
+**สิ่งที่คาดว่าจะเกิดขึ้น**
+คำอธิบายที่ชัดเจนและรัดกุมเกี่ยวกับสิ่งที่คุณคาดว่าจะเกิดขึ้น
+
+**ภาพหน้าจอ**
+หากทำได้ ให้เพิ่มภาพหน้าจอเพื่อช่วยอธิบายปัญหาของคุณ
+
+**ข้อมูลเพิ่มเติม**
+เพิ่มข้อมูลอื่น ๆ เกี่ยวกับปัญหาที่นี่
+
+**ข้อมูลระบบ**
+\`\`\`
+Application Version: ${__APP_VERSION__}
+PWA Installed: ${window.matchMedia('(display-mode: standalone)').matches}
+Operating System: ${browser.os}
+Browser: ${browser.name} ${browser.version}
+Agent Type: ${browser.type}
+\`\`\`
+`
+
+    let githubURL = new URL("/SK-Fast/Coding-PingKai/issues/new?assignees=&labels=&title=รายงานปัญหาการใช้งาน", "https://github.com");
+
+    githubURL.searchParams.append('body', bodyData);
+
+    window.open(githubURL.toString())
 }
 </script>
