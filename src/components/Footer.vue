@@ -20,7 +20,7 @@
                                 stroke="#FF7733"></vue-feather>
                             ข้อตกลงในการใช้ซอฟต์แวร์</router-link>
 
-                        <a class="text-danger" @click="requestIssue" href="#!" target="_none"><vue-feather
+                        <a class="text-danger" @click="requestIssue" :href="issueURL" target="_none"><vue-feather
                                 type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
                             รายงานปัญหาแอป</a>
 
@@ -38,12 +38,15 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue"
 
 const goToTop = () => {
     window.scrollTo(0, 0)
 }
 
-const requestIssue = async () => {
+const issueURL = ref("")
+
+onMounted(async () => {
     const { detect } = await import("detect-browser")
 
     const browser = detect()
@@ -78,6 +81,6 @@ Agent Type: ${browser.type}
 
     githubURL.searchParams.append('body', bodyData);
 
-    window.open(githubURL.toString())
-}
+    issueURL.value = githubURL.toString()
+})
 </script>
