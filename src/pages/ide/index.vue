@@ -234,6 +234,7 @@ onMounted(async () => {
             blockset.init()
             toolbox.contents = lessonData.blocks
             levelDataRef.value = lessonData.levelData
+            console.log("levelDataRef", levelDataRef.value)
 
             if (lessonData.levelData["blockLimit"]) {
                 blocklyConfig.value['maxBlocks'] = lessonData.levelData.blockLimit + 1

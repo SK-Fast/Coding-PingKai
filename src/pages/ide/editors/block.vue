@@ -94,6 +94,7 @@ const initBlockly = (bJSON) => {
 
     const onStartBlock = workspace.newBlock("on_start");
     onStartBlock.setDeletable(false)
+    onStartBlock.setMovable(false)
     onStartBlock.initSvg();
     onStartBlock.render();
 
