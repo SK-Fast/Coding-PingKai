@@ -46,6 +46,7 @@
                     </div>
 
                     <div v-if="level.y < -95" class="level-decoration"></div>
+                    <div v-if="level.y > 85" class="level-decoration  level-decoration-top"></div>
                 </div>
             </div>
         </div>
@@ -109,6 +110,8 @@ onMounted(async () => {
         if (window.outerWidth < 500) {
             console.log(userData.level_passed * 150)
             window.scroll(0, userData.level_passed * 150)
+        } else {
+            window.scroll(userData.level_passed * 150, 0)
         }
     }, 100);
 })
@@ -159,6 +162,10 @@ const goToLesson = (i, e) => {
 
     position: absolute;
     bottom: 0;
+}
+
+.level-decoration-top {
+    top: 0;
 }
 
 .start-tooltip {
@@ -284,6 +291,10 @@ const goToLesson = (i, e) => {
         right: 0;
         height: 100px;
         width: 100px;
+    }
+
+    .level-decoration-top {
+        left: 0;
     }
 }
 

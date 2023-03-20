@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm mt-2 d-md-block d-none error-flash" v-if="pythonError != ''">
+            <div class="card shadow-sm mt-2 d-md-block d-none error-flash" v-if="pythonError != '' && editorMode == 1">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
                     <p class="m-0 ms-2 text-danger">{{ pythonError }}</p>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <div class="shadow-sm p-2 d-md-none d-block border border-1 error-flash" v-if="pythonError != ''"
+            <div class="shadow-sm p-2 d-md-none d-block border border-1 error-flash" v-if="pythonError != '' && editorMode == 1"
                 :class="{ 'border-danger': blockLeft == 0 }">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
@@ -227,6 +227,7 @@ onMounted(async () => {
             blockset = await lessonKind.blockset()
 
             lessonKindData.value = lessonKind.kindData
+            lessonKindData.value.ratio = lessonData.levelData.ratio || lessonKind.kindData.ratio
 
             interpreterData = await lessonKind.init(runResult.value, lessonData.levelData)
 
