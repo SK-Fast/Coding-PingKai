@@ -25,8 +25,8 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from 'vue'
-import Blockly, { Block } from 'blockly';
-import langGenerator from "blockly/python"
+import Blockly from 'blockly';
+import {pythonGenerator as langGenerator} from "blockly/python"
 
 const blocklyToolbox = ref(null)
 const blocklyDiv = ref(null)
@@ -35,6 +35,20 @@ const props = defineProps({
         type: Object
     },
 })
+
+let workspace;
+
+const saveCode = () => {
+    const serializer = new Blockly.serialization.blocks.BlockSerializer();
+    const state = serializer.save(workspace);
+
+    return state
+}
+
+const loadCode = (state) => {
+    const serializer = new Blockly.serialization.blocks.BlockSerializer();
+    serializer.load(state, workspace);
+}
 
 const initBlockly = (bJSON) => {
     bJSON = [{
@@ -76,18 +90,20 @@ const initBlockly = (bJSON) => {
 
     console.log(props.options)
 
-    const workspace = Blockly.inject(blocklyDiv.value, props.options)
+    workspace = Blockly.inject(blocklyDiv.value, props.options)
 
     const onStartBlock = workspace.newBlock("on_start");
     onStartBlock.setDeletable(false)
     onStartBlock.initSvg();
     onStartBlock.render();
 
-    return workspace
+    return [workspace, onStartBlock]
 }
 
 defineExpose({
-    initBlockly
+    initBlockly,
+    saveCode,
+    loadCode
 })
 
 onMounted(() => {

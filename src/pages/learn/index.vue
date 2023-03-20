@@ -147,6 +147,7 @@ const goToLesson = (i, e) => {
 .lvl-all {
     height: calc(100vh - 262px);
     overflow-y: visible;
+    overflow-x: scroll;
 }
 
 .level-decoration {
@@ -276,6 +277,7 @@ const goToLesson = (i, e) => {
     .lvl-all {
         height: auto;
         overflow-y: visible;
+        overflow-x: visible;
     }
 
     .level-decoration {

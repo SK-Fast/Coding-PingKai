@@ -473,13 +473,13 @@ a,
     }
 }
 
-.navbar-nav .nav-link {
+.navbar-nav .nav-item {
     transition: transform 0.5s;
     transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
     opacity: 0.8;
 }
 
-.navbar-nav .nav-link:active {
+.navbar-nav .nav-item:active {
     transform: scale(0.85);
 }
 
@@ -527,4 +527,8 @@ a,
     100% {
         transform: scale3d(1, 1, 1);
     }
+}
+
+.user-selectable {
+    user-select: text;
 }

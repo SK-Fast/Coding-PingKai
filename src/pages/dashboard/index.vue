@@ -65,7 +65,8 @@ const appUpdate = async () => {
         }
     }
 
-    window.location.reload()
+    location.href = location.href
+    //window.location.reload(true)
 }
 
 const checkForUpdates = async () => {

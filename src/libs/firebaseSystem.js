@@ -16,6 +16,7 @@ export function initApp() {
         const { initializeApp } = await import('firebase/app')
         const { getPerformance } = await import('firebase/performance')
         const { getAuth, connectAuthEmulator } = await import('firebase/auth')
+        const { getStorage, connectStorageEmulator } = await import('firebase/storage')
 
         const app = initializeApp(firebaseConfig)
 
@@ -25,9 +26,11 @@ export function initApp() {
             connectAuthEmulator(getAuth(), `http://localhost:${import.meta.env.VITE_AUTH_PORT}`, {
                 disableWarnings: true
             });
-    
+
+            connectStorageEmulator(getStorage(app), "127.0.0.1", import.meta.env.VITE_STORAGE_PORT)
+
             connectFirestoreEmulator(getFirestore(), "localhost", import.meta.env.VITE_FIRESTORE_PORT)
-        
+
             logger.success("Emulators Connected")
         }
 
@@ -107,9 +110,36 @@ export async function writeStorageData(store, filePath, fileData) {
 
     const storage = getStorage();
 
-    const spaceRef = ref(storage, `userData/${user}/${filePath}`);
+    let savePath = `/userData/${user.uid}/${filePath}`
+    logger.info(`Saving data to ${savePath}`)
+
+    const spaceRef = ref(storage, savePath);
 
     await uploadString(spaceRef, fileData);
+}
+
+export function readStorageData(store, filePath) {
+    return new Promise(async (resolve) => {
+        const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
+
+        const user = getUser(store)
+
+        const storage = getStorage();
+        let savePath = `/userData/${user.uid}/${filePath}`
+        logger.info(`Reading "${savePath}"...`)
+
+        const spaceRef = ref(storage, savePath);
+
+        const downloadURL = await getDownloadURL(spaceRef).catch(error => {
+            if (error.code === 'storage/object-not-found') {
+                return resolve(false);
+            }
+        })
+        const res = await fetch(downloadURL)
+        const data = await res.text()
+
+        resolve(data)
+    })
 }
 
 export async function getUserData(store) {

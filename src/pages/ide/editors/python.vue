@@ -7,15 +7,24 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 const editorContainer = ref(null)
 const disponseProvider = ref()
+let editor;
 
 onMounted(async () => {
 })
+
+const saveCode = () => {
+    return editor.getValue()
+}
+
+const loadCode = (code) => {
+    return editor.getModel().setValue(code)
+}
 
 const initEditor = async (snippet) => {
     console.log("Importing Monaco...")
     const monaco = await import("monaco-editor")
 
-    const editor = monaco.editor.create(editorContainer.value, {
+    editor = monaco.editor.create(editorContainer.value, {
         value: ``,
         language: "python",
         automaticLayout: true,
@@ -40,7 +49,9 @@ onUnmounted(() => {
 })
 
 defineExpose({
-    initEditor
+    initEditor,
+    saveCode,
+    loadCode
 })
 </script>
 
