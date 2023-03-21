@@ -644,7 +644,7 @@ const toggleBlocksMenu = () => {
     align-items: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .editor-top {
         height: auto;
     }
@@ -720,7 +720,7 @@ const toggleBlocksMenu = () => {
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .editor-zone {
         height: calc(100vh - 200px);
     }

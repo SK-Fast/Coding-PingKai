@@ -11,7 +11,7 @@
         </div>
 
         <div class="lvl-scroll" ref="lvlScroll">
-            <div class="d-flex flex-md-row flex-column p-5 lvl-all" ref="lvlAll">
+            <div class="d-flex p-5 lvl-all" ref="lvlAll">
                 <!--
             <div class="lvl-container">
                 <div class="lvl-btn done">
@@ -151,6 +151,13 @@ const goToLesson = (i, e) => {
     height: calc(100vh - 262px);
     overflow-y: visible;
     overflow-x: scroll;
+    flex-direction: row;
+}
+
+@media only screen and (min-width: 400px) {
+    .lvl-all {
+        height: calc(100vh - 60px);
+    }
 }
 
 .level-decoration {
@@ -263,7 +270,7 @@ const goToLesson = (i, e) => {
     transform: translateY(var(--pos));
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
     .lvl-btn {
         transform: translateX(calc(var(--pos) / 2));
     }
@@ -285,6 +292,7 @@ const goToLesson = (i, e) => {
         height: auto;
         overflow-y: visible;
         overflow-x: visible;
+        flex-direction: column;
     }
 
     .level-decoration {
