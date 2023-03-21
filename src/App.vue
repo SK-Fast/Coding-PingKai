@@ -6,15 +6,12 @@
   import links from "./router.js"
   import { useRoute } from "vue-router";
   import LoginModal from "@/components/LoginModal.vue"
-  import AcceptCookies from "@/components/AcceptCookies.vue"
   import SpinningIndicator from "@/components/SpinningIndicator.vue"
 
   const router = inject("router")
   const route = useRoute()
   const store = inject("store")
   const loginModal = ref(null)
-
-  const cookieAccepted = ref(false)
 
   let oldPage = ""
 
@@ -24,8 +21,6 @@
     }
     
     oldPage = route.fullPath
-
-    cookieAccepted.value = window.localStorage.getItem("cookie_accepted") || false
   })
   
   router.beforeEach((to, from) => {
@@ -65,8 +60,6 @@
       <router-view class="pageView" :key="route.meta['oftenRefresh'] ? $route.fullPath : ''"></router-view>
 
       <Footer class="footer-nav" />
-
-      <AcceptCookies class="acceptcookies-card" v-if="cookieAccepted == false"></AcceptCookies>
     </div>
 
     <MobileNavbar :class="route.meta['navbarStyle'] || ''" />
