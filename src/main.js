@@ -79,7 +79,13 @@ const initVueApp = async () => {
 
     app.mount('#app')
 
-    document.getElementById("preload-i").remove()
+    setTimeout(() => {
+        document.getElementById("preload-i").classList.add('preload-loaded')
+
+        setTimeout(() => {
+            document.getElementById("preload-i").remove()
+        }, 500);
+    }, 100);
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
