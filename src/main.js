@@ -79,6 +79,8 @@ const initVueApp = async () => {
 
     app.mount('#app')
 
+    document.getElementById("preload-i").remove()
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
