@@ -45,9 +45,27 @@ const saveCode = () => {
     return state
 }
 
+function getBlocksByType(type) {
+    let allBlocks = workspace.getAllBlocks()
+  let blocks = [];
+  for (let b of allBlocks) {
+    if (b.type == type) {
+      blocks.push(b);
+    }
+  }
+  return blocks;
+}
+
 const loadCode = (state) => {
     const serializer = new Blockly.serialization.blocks.BlockSerializer();
     serializer.load(state, workspace);
+
+    const onStart = getBlocksByType("on_start")
+
+    for (const b of onStart) {
+        b.setDeletable(false)
+        b.setMovable(false)
+    }
 }
 
 const initBlockly = (bJSON) => {
