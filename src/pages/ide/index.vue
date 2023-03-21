@@ -79,7 +79,7 @@
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
             <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
-                @mousemove="updateBlockLimit" @touchend="openBlocksMenu" @touchstart="closeBlocksMenu">
+                @touchend="openBlocksMenu" @touchstart="closeBlocksMenu">
 
                 <BlockEditor ref="bEditor" :options="blocklyConfig" :class="{ 'd-none': editorMode != 0 }">
                 </BlockEditor>
@@ -243,7 +243,9 @@ onMounted(async () => {
 
             let [bW, onStartBlock] = bEditor.value.initBlockly(blockset.blocklyJSON)
             blocklyWorkspace = bW
-            console.log(blocklyWorkspace)
+
+            blocklyWorkspace.addChangeListener(updateBlockLimit)
+
             updateBlockLimit()
 
             let pythonSnippets = blockset.pythonSnippets
