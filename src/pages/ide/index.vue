@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="d-flex flex-md-row flex-column editor-middle" ref="editorMiddle">
-        <div class="col-md-3 p-4 pt-0 run-code-menu" :class="{ 'open': playModeEnabled }">
+        <div class="col-md-3 p-4 pt-0 run-code-menu d-flex flex-column" :class="{ 'open': playModeEnabled }">
             <div id="runResult" class="runResult mt-3" ref="runResult"
                 :style="`aspect-ratio: ${lessonKindData.ratio[0]} / ${lessonKindData.ratio[1]};`">
             </div>
@@ -66,6 +66,21 @@
                     </p>
                     <p class="m-0 ms-2 text-danger" v-else>คุณไม่เหลือบล็อกให้ใช้แล้ว ถ้าต้องการแก้ไข ให้ลบบล็อกออกก่อน
                     </p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-2 d-md-block d-none" v-if="editorMode == 1">
+                <div class="card-header">
+                    <h5 class="mb-0">ฟังก์ชั่นต่างๆ</h5>
+                </div>
+                <div class="card-body python-snippets">
+                    <div v-for="ps in blocksetRef.pythonSnippets" class="mb-2">
+                        <div>
+                            <code class="user-selectable">{{ ps.insertText.replace('\n', '') }}</code><br>
+                        </div>
+                        <p class="mb-0 text-muted">{{ ps.documentation }}</p>
+                        <hr>
+                    </div>
                 </div>
             </div>
 
@@ -147,6 +162,7 @@ const editorMiddle = ref(null)
 
 const dialogueView = ref(null)
 const achievementModal = ref(null)
+const blocksetRef = ref(null)
 
 const hasBlockLimit = ref(false)
 const blockLeft = ref(4)
@@ -227,6 +243,7 @@ onMounted(async () => {
             blockset = await lessonKind.blockset()
 
             lessonKindData.value = lessonKind.kindData
+            blocksetRef.value = blockset
             lessonKindData.value.ratio = lessonData.levelData.ratio || lessonKind.kindData.ratio
 
             interpreterData = await lessonKind.init(runResult.value, lessonData.levelData)
@@ -763,5 +780,10 @@ const toggleBlocksMenu = () => {
     100% {
         background-position: 100% 0%;
     }
+}
+
+.python-snippets {
+    overflow-y: scroll;
+    height: 30vh;
 }
 </style>

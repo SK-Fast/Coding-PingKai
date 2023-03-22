@@ -45,7 +45,7 @@ export const pythonSnippets = [
     {
         label: 'can_walk_to',
         kind: monaco.languages.CompletionItemKind.Snippet,
-        documentation: 'ตรวจสอบกำแพง',
+        documentation: 'ตรวจสอบกำแพง, มี forward backward left right',
         insertText: [
           'can_walk_to("left")'
         ].join('\n')
@@ -157,7 +157,7 @@ export const blocklyJSON = [
         ],
         "nextStatement": "Action",
         "previousStatement": "Action",
-        "tooltip": "รันคำสั่งในบล็อกซ่ำจนกว่าไก่จะเจอธง",
+        "tooltip": "ถ้าทางที่กำหนดไม่มีกำแพงอยู่ ให้ทำตามคำสั่ง",
         "colour": 5,
     },
     {
@@ -172,7 +172,7 @@ export const blocklyJSON = [
             },
         ],
         "output": "Boolean",
-        "tooltip": "เช็กว่าไก่ยืนอยู่บนที่ที่มีธงหรือไม่ผ",
+        "tooltip": "เช็กว่าไก่ยืนอยู่บนที่ที่มีธงหรือไม่",
         "colour": 4,
     }
 ]
