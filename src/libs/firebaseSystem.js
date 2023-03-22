@@ -195,6 +195,6 @@ export async function promptLogout() {
     if (res.isConfirmed) {
         signOut(auth)
 
-        window.location.reload()
+        window.location.href = "/"
     }
 }
