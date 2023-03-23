@@ -10,12 +10,45 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-console.log('Coding %cPingKai %cStarted', 'color: #FF7733', 'color: #000');
+console.log(`Coding %cPingKai %c ${__APP_VERSION__} Started`, 'color: #FF7733', 'color: #000');
 
 const router = createRouter({
     history: createWebHistory(""),
     routes: Routes
 })
+
+const pre_CheckForUpdates = async () => {
+    console.log("Checking for updates...")
+
+    const versionRes = await fetch("/version.json", { cache: "no-store" })
+    const versionData = await versionRes.json()
+
+    if (versionData.version != __APP_VERSION__) {
+        console.log("Updating tp version ", versionData.version)
+
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations()
+
+            for (let registration of registrations) {
+                registration.update()
+                console.log("Updating Register ", prog)
+                prog++
+            }
+
+            const names = await caches.keys()
+
+            for (let name of names) {
+                caches.delete(name)
+                console.log("Clearing Cache ", name)
+                updateProgress.value = (prog / names.length) * 100
+            }
+        }
+
+        location.href = location.href
+    } else {
+        console.log("No updates found, continuing...")
+    }
+}
 
 const store = createStore({
     state: {
@@ -39,6 +72,8 @@ window.vueStore = store
 window.codeGens = {}
 
 const initVueApp = async () => {
+    await pre_CheckForUpdates()
+
     const [fapp, fuser] = await initApp()
 
     const auth = getAuth();
