@@ -41,7 +41,7 @@ const pre_CheckForUpdates = async () => {
             }
         }
 
-        location.href = location.href
+        window.location.reload(true)
     } else {
         console.log("No updates found, continuing...")
     }
@@ -69,8 +69,6 @@ window.vueStore = store
 window.codeGens = {}
 
 const initVueApp = async () => {
-    await pre_CheckForUpdates()
-
     const [fapp, fuser] = await initApp()
 
     const auth = getAuth();
