@@ -7,6 +7,7 @@
   import { useRoute } from "vue-router";
   import LoginModal from "@/components/LoginModal.vue"
   import SpinningIndicator from "@/components/SpinningIndicator.vue"
+  import { giveAchievement } from "libs/achievementUtils.js"
 
   const router = inject("router")
   const route = useRoute()
@@ -21,6 +22,14 @@
     }
     
     oldPage = route.fullPath
+
+    const d = new Date()
+
+    console.log(d.getDate(), d.getMonth())
+
+    if (d.getDate() == 25 && d.getMonth() == 2) {
+      giveAchievement(store, "mobuu")
+    }
   })
   
   router.beforeEach((to, from) => {

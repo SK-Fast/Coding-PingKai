@@ -4,6 +4,11 @@ export default {
         "title": "จุดเริ่มต้น",
         "desc": "ผ่านด่านแรกเพื่อให้ได้รางวัลนี้"
     },
+    "mobuu": {
+        "type": "special",
+        "title": "MoBuu!",
+        "desc": "ใช้แอปพลิเคชันนี้ในวันที่ 25 มี.ค. 2566"
+    },
     "test_badge": {
         "type": "level_depends",
         "title": "test",
