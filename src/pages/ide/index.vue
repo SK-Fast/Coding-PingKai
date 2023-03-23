@@ -356,8 +356,19 @@ const continueLevel = async () => {
     nextLevelWarp.value = true
     pageLoading.value = true
 
-    setTimeout(() => {
+    setTimeout(async() => {
         router.push(`/workspace/${parseInt(levelID) + 1}`)
+
+        const { detect } = await import("detect-browser")
+
+        const browser = detect()
+
+        if (browser.os == 'iOS') {
+            setTimeout(() => {
+                router.go(0)
+            }, 20);
+        }
+
     }, 500)
 }
 
