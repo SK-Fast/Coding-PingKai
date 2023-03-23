@@ -29,6 +29,8 @@ const pre_CheckForUpdates = async () => {
         if ('serviceWorker' in navigator) {
             const registrations = await navigator.serviceWorker.getRegistrations()
 
+            let prog = 0
+
             for (let registration of registrations) {
                 registration.update()
                 console.log("Updating Register ", prog)
