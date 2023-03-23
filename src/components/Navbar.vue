@@ -29,10 +29,14 @@ const openLogin = () => {
     <nav class="navbar navbar-expand-lg bg-light-300 py-md-0 shadow-sm" :class="`${route.meta['navbarStyle'] || ''} ${doBlur ? 'do-blur' : ''}`">
         <div class="container-fluid">
 
-            <a class="navbar-brand me-1">
+            <router-link class="navbar-brand me-1" to="/">
                 <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">
-                <img v-else src="@/assets/logo/Logo_Text.png" height="40">
-            </a>
+                <video v-else height="40" autoplay muted>
+                    <source src="@/assets/logo/logo_animated.webm" type="video/webm">
+                    <img src="@/assets/logo/Logo_Text.png" height="40">
+
+                </video>
+            </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
