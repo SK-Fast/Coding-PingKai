@@ -92,7 +92,12 @@ const checkForUpdates = async () => {
             <div class="d-flex flex-column align-items-center p-2">
                 <div class="d-flex flex-column align-items-center">
                     <div class="avatar col-5 img-rounded"
-                        :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`"></div>
+                        :style="`background-image: url(${(store.state.user.photoURL || '/placeholder-avatar.jpg')})`">
+                        <router-link to="/settings/general"
+                            class="avatar-status bg-light-400 d-flex justify-content-center align-items-center">
+                            <vue-feather type="settings" size="20" stroke="black"></vue-feather>
+                        </router-link>
+                    </div>
                     <div class="d-flex flex-column align-items-center ms-2 ms-md-0">
                         <h2 class="mt-3">{{ store.state.user.displayName }}</h2>
                         <p class="m-0 mt-1 text-monospace">
@@ -111,8 +116,7 @@ const checkForUpdates = async () => {
                 </div>
 
                 <div class="bg-warning mt-2 col-md-8 mb-2 p-2 text-center rounded" v-if="updatingApp">
-                    <vue-feather type="refresh-cw" animation="spin" animation-speed="fast"
-                            size="15"></vue-feather>
+                    <vue-feather type="refresh-cw" animation="spin" animation-speed="fast" size="15"></vue-feather>
                     กำลังอัปเดต...
                 </div>
 
@@ -259,5 +263,10 @@ const checkForUpdates = async () => {
         transform: translateY(0px) scale(1);
         opacity: 1;
     }
+}
+
+.avatar-status {
+    height: 40px;
+    width: 40px;
 }
 </style>
