@@ -108,11 +108,17 @@ const promptPFPUpload = async () => {
 
             const { updateProfile } = await import('@firebase/auth');
 
-            updateProfile(auth.currentUser, {
+            await updateProfile(auth.currentUser, {
                 photoURL: content
             })
             store.state.user.photoURL = content
             userImg.value = content
+
+            window.toastMixin.fire(
+                {
+                    title: "เปลี่ยนโปรไฟล์เสร็จสิ้น!"
+                }
+            )
 
             input.remove()
         }
