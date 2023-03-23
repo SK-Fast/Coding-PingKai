@@ -29,12 +29,8 @@ const pre_CheckForUpdates = async () => {
         if ('serviceWorker' in navigator) {
             const registrations = await navigator.serviceWorker.getRegistrations()
 
-            let prog = 0
-
             for (let registration of registrations) {
                 registration.update()
-                console.log("Updating Register ", prog)
-                prog++
             }
 
             const names = await caches.keys()
@@ -42,7 +38,6 @@ const pre_CheckForUpdates = async () => {
             for (let name of names) {
                 caches.delete(name)
                 console.log("Clearing Cache ", name)
-                updateProgress.value = (prog / names.length) * 100
             }
         }
 
