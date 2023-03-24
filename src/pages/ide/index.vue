@@ -362,7 +362,8 @@ const continueLevel = async () => {
 
         const browser = detect()
 
-        if (browser.os == 'iOS') {
+        if (browser.os == 'iOS' || browser.name == 'safari' || browser.os == 'Mac OS') {
+            console.log("iOS detected, reloading the application...")
             setTimeout(() => {
                 router.go(0)
             }, 20);
