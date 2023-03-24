@@ -24,10 +24,8 @@ const openLogin = () => {
       <div class="container text-white">
         <div class="d-flex flex-md-row flex-column justify-content-center">
           <div class="col-md-8">
-            <video height="100" autoplay muted>
-              <source src="@/assets/logo/logo_white_notext_animated.webm" type="video/webm">
-              <img src="@/assets/logo/logo-white.svg" height="100">
-            </video>
+            <img src="@/assets/logo/logo-white.svg" height="100">
+
             <div class="ms-2">
               <h4>เรียนอัลกอริทึม สำหรับทุกคน!</h4>
               <div class="d-flex justify-content-center justify-content-md-start col-md-3 mt-4">

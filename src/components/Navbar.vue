@@ -31,11 +31,8 @@ const openLogin = () => {
 
             <router-link class="navbar-brand me-1" to="/">
                 <img v-if="route.meta['navbarStyle'] == 'landing'" src="@/assets/logo/logo_text_white.png" height="40">
-                <video v-else height="40" autoplay muted>
-                    <source src="@/assets/logo/logo_animated.webm" type="video/webm">
-                    <img src="@/assets/logo/Logo_Text.png" height="40">
+                <img v-else src="@/assets/logo/Logo_Text.png" height="40">
 
-                </video>
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
