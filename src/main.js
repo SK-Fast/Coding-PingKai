@@ -69,6 +69,13 @@ window.vueStore = store
 window.codeGens = {}
 
 const initVueApp = async () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.get('skip-loading')) {
+        document.getElementById("preload-i").style.display = "none"
+    }
+
     const [fapp, fuser] = await initApp()
 
     const auth = getAuth();
@@ -116,9 +123,6 @@ const initVueApp = async () => {
             document.getElementById("preload-i").remove()
         }, 500);
     }, 100);
-
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
 
     if (urlParams.get('deleted')) {
         document.body.classList.add("circle-open")
