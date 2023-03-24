@@ -20,6 +20,7 @@ body {
     overflow: hidden;
     overscroll-behavior-y: contain;
     user-select: none;
+    -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
 }
