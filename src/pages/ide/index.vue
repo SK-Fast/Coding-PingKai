@@ -93,8 +93,7 @@
 
         </div>
         <div class="flex-grow-1 d-flex flex-column editor-container">
-            <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }"
-                @touchend="openBlocksMenu" @touchstart="closeBlocksMenu">
+            <div class="flex-grow-1 editor-zone" :class="{ 'editor-running': codeRunning && !codeDone }">
 
                 <BlockEditor ref="bEditor" :options="blocklyConfig" :class="{ 'd-none': editorMode != 0 }">
                 </BlockEditor>
