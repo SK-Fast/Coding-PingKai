@@ -8,8 +8,6 @@ import settings_preferences from '@/pages/settings/preferences.vue'
 import exit from '@/pages/exit/exit.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
-import Lookprofile from '@/pages/settings/Lookprofile.vue'
-import congrat from '@/pages/congrat/congrat.vue'
 import LearnPage from '@/pages/learn/index.vue'
 import CreditsPage from '@/pages/credits/index.vue'
 import Term_LegalPage from '@/pages/legal/term.vue'
@@ -74,14 +72,6 @@ export default [
         },
        component: dashboard,
     },
-    {
-        path: '/Lookprofile',
-        component: Lookprofile,
-    },
-    {
-        path: '/congrat',
-        component: congrat,
-     },
      {
         path: '/credits',
         component: CreditsPage,
