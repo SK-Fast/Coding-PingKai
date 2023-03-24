@@ -1,7 +1,7 @@
 {
   "name": "coding-pingkai",
   "private": true,
-  "version": "beta_iospatch_1.1",
+  "version": "beta_iospatch2_1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
