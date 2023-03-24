@@ -37,6 +37,7 @@
       document.documentElement.style.overflowY = 'hidden'
     } else {
       document.documentElement.style.overflowY = 'auto'
+      window.scroll(0, 0)
     }
 
     if (to.meta.needAuth && store.state.user == null) {
