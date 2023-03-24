@@ -366,7 +366,6 @@ const continueLevel = async () => {
             console.log("iOS detected, reloading the application...")
             setTimeout(() => {
                 location.href = `/workspace/${parseInt(levelID) + 1}?skip-loading=true`
-                router.go(0)
             }, 20);
         }
 
