@@ -32,7 +32,7 @@ onMounted(() => {
     background-color: #00000090;
     z-index: 999;
     height: 80px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(1px);
     transition: transform 0.25s;
     transition-timing-function: cubic-bezier(0.36, 0, 0.66, -0.56);
     pointer-events: none;

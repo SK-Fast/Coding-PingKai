@@ -103,7 +103,7 @@ const openLogin = () => {
 
 .navbar.landing.do-blur {
     background-color: rgba(var(--bs-primary-rgb), 0.8) !important;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(1px);
 }
 
 .navbar.landing {
