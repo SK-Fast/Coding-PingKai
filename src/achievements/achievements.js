@@ -7,7 +7,7 @@ export default {
     "mobuu": {
         "type": "special",
         "title": "MoBuu!",
-        "desc": "ใช้แอปพลิเคชันนี้ในวันที่ 25 มี.ค. 2566"
+        "desc": "สร้างบัญชีใหม่ในวันที่ 25 มี.ค. 2566"
     },
     "test_badge": {
         "type": "level_depends",
