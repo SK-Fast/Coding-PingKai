@@ -3,6 +3,7 @@ import Modal from "./modal/Modal.vue"
 import ThirdPartyButton from "./login/ThirdPartyButton.vue"
 import { ref, inject } from "vue";
 import { newUserData } from "libs/firebaseSystem"
+import { useI18n } from "vue-i18n"
 
 const loggingIn = ref(false)
 const errorMsg = ref("")
@@ -11,6 +12,7 @@ const modalBase = ref(null)
 
 const modalTitle = ref("กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่")
 const modalSub = ref("ลงชื่อเข้าใช้")
+const { t } = useI18n()
 
 const knownErrors = {
     "(auth/popup-closed-by-user)": "การลงชื่อเข้าใช้ถูกยกเลิก",
@@ -31,7 +33,7 @@ const openL = async (kindOf) => {
         modalSub.value = "ลงชื่อเข้าใช้เพื่อไปต่อ"
     } else {
         modalTitle.value = "กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่"
-        modalSub.value = "ลงชื่อเข้าใช้"
+        modalSub.value = t('signin')
     }
 
     return new Promise((resolve) => {

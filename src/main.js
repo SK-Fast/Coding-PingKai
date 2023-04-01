@@ -9,6 +9,8 @@ import { createStore } from 'vuex'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { createI18n } from 'vue-i18n'
+import locales from './locales/all.js'
 
 console.log(`Coding %cPingKai %c ${__APP_VERSION__} Started`, 'color: #FF7733', 'color: #000');
 
@@ -80,6 +82,13 @@ const initVueApp = async () => {
 
     const auth = getAuth();
 
+    const i18n = createI18n({
+        locale: urlParams.get('lang') || 'th',
+        fallbackLocale: 'th',
+        allowComposition: true,
+        messages: locales,
+    })
+
     onAuthStateChanged(auth, (newUser) => {
         console.log(newUser)
 
@@ -94,6 +103,8 @@ const initVueApp = async () => {
     app.component(VueFeather.name, VueFeather);
     app.use(router)
     app.use(store)
+
+    app.use(i18n)
 
     app.use(VueSweetalert2);
     window.Swal = app.config.globalProperties.$swal;

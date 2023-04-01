@@ -41,19 +41,19 @@ const openLogin = () => {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" v-if="!store.state.user">
-                        <router-link to="/" class="nav-link">หน้าหลัก</router-link>
+                        <router-link to="/" class="nav-link">{{ $t("home") }}</router-link>
                     </li>
 
                     <li class="nav-item" v-if="store.state.user">
-                        <router-link to="/dashboard" class="nav-link">หน้าหลัก</router-link>
+                        <router-link to="/dashboard" class="nav-link">{{ $t("home") }}</router-link>
                     </li>
 
                     <li class="nav-item nav-pop" v-if="store.state.user">
-                        <router-link to="/learn" class="nav-link">บทเรียน</router-link>
+                        <router-link to="/learn" class="nav-link">{{ $t("learn") }}</router-link>
                     </li>
 
                     <li class="nav-item nav-pop">
-                        <router-link to="/credits" class="nav-link">ผู้จัดทำ</router-link>
+                        <router-link to="/credits" class="nav-link">{{ $t("credits") }}</router-link>
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
@@ -88,7 +88,7 @@ const openLogin = () => {
                     </div>
                     <div class="d-flex align-items-center" v-else>
                         <a href="#" @click="openLogin" class="btn mb-md-0 mb-2"
-                            :class="`${route.meta['navbarStyle'] == 'landing' ? 'btn-light-100' : 'btn-primary'}`">ลงชื่อเข้าใช้</a>
+                            :class="`${route.meta['navbarStyle'] == 'landing' ? 'btn-light-100' : 'btn-primary'}`">{{ $t("signin") }}</a>
                     </div>
                 </form>
             </div>

@@ -27,9 +27,9 @@ const openLogin = () => {
             <img src="@/assets/logo/logo-white.svg" height="100">
 
             <div class="ms-2">
-              <h4>เรียนอัลกอริทึม สำหรับทุกคน!</h4>
+              <h4>{{ $t("landing.slogan") }}</h4>
               <div class="d-flex justify-content-center justify-content-md-start col-md-3 mt-4">
-                <button @click="openLogin" class="btn btn-light-200">มาเริ่มกันเลย!<vue-feather class="ms-2" type="arrow-right"
+                <button @click="openLogin" class="btn btn-light-200">{{ $t("landing.letsago") }}<vue-feather class="ms-2" type="arrow-right"
                     stroke="#000" size="16px" /></button>
               </div>
             </div>
@@ -46,8 +46,8 @@ const openLogin = () => {
     <div class="container">
       <div class="row text-md-start text-center">
         <div class="col-md-10">
-          <h3>เรียน Algorithm แบบง่าย</h3>
-          <p>มีบทเรียน สอน Algorithm หลายรูปแบบ</p>
+          <h3>{{ $t("landing.title1") }}</h3>
+          <p>{{ $t("landing.title1desc") }}</p>
         </div>
         <div class="col-md-2">
           <img src="@/assets/landing/landing_1.png">
@@ -58,17 +58,17 @@ const openLogin = () => {
           <img src="@/assets/landing/landing_2.png">
         </div>
         <div class="col-md-10">
-          <h3>เป็นขั้นตอน</h3>
-          <p>สอนแบบเป็นขั้นตอน Step-By-Step</p>
+          <h3>{{ $t("landing.title2") }}</h3>
+          <p>{{ $t("landing.title2desc") }}</p>
         </div>
       </div>
     </div>
 
     <div class="mt-5 p-3 d-flex justify-content-center">
       <div class="col-md-5 bg-primary p-5 text-white text-center get-started-card">
-        <h3>มาเริ่มกันเลย!</h3>
-        <p>มารวมกันเรียนอัลกอริทึมใน โค้ดดิ้ง ปิ้งไก่!</p>
-        <button @click="openLogin" class="btn btn-light-200">มาเริ่มกันเลย!<vue-feather type="arrow-right" stroke="#000" size="16px" class="ms-2" /></button>
+        <h3>{{ $t("landing.letsago") }}</h3>
+        <p>{{ $t("landing.cardtxt") }}</p>
+        <button @click="openLogin" class="btn btn-light-200">{{ $t("landing.letsago") }}<vue-feather type="arrow-right" stroke="#000" size="16px" class="ms-2" /></button>
         </div>
     </div>
 
