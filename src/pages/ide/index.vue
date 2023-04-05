@@ -242,7 +242,7 @@ onMounted(async () => {
         if (b) {
             const userData = await getUserData(store)
 
-            if (userData.level_passed !== parseInt(levelID) && import.meta.env.MODE !== 'development') {
+            if (parseInt(levelID) > userData.level_passed && import.meta.env.MODE !== 'development') {
                 await Swal.fire({
                     title: 'ด่านถูกล็อกไว้',
                     text: "คุณต้องผ่านด่านที่แล้วก่อน",
