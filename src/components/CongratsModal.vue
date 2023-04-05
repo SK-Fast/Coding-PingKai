@@ -13,17 +13,10 @@ const pageID = ref('')
 const pageData = ref({})
 
 const pageIndex = ref(0)
-const containerHeight = ref(0)
 const pageDisappears = ref(false)
 const pageComes = ref(false)
 const modalPages = ref()
 const refLvlID = ref(0)
-
-const updateModalHeight = () => {
-    setTimeout(() => {
-        containerHeight.value = modalPages.value.getBoundingClientRect().height
-    }, 100);
-}
 
 const openM = (levelID, moreEvents) => {
     pageIndex.value = 0
@@ -34,8 +27,6 @@ const openM = (levelID, moreEvents) => {
     modalBase.value.openModal()
     levelID = parseInt(levelID)
     refLvlID.value = levelID
-
-    updateModalHeight()
 }
 
 const closeM = () => {
@@ -60,8 +51,6 @@ const continuePage = () => {
         
         pageID.value = pageRef.id
         pageData.value = pageRef['data']
-
-        updateModalHeight()
     }, 500);
 
 
@@ -80,7 +69,7 @@ const emit = defineEmits(['continue'])
 
 <template>
     <Modal ref="modalBase">
-        <div class="modal-pages-container" :style="`height: ${containerHeight}px`">
+        <div class="modal-pages-container">
             <div class="modal-pages" ref="modalPages" :class="{ 'anim-gone': pageDisappears, 'anim-come': pageComes }">
                 <CongratsPage v-if="pageID == 'congrats'"/>
 
@@ -96,7 +85,6 @@ const emit = defineEmits(['continue'])
 <style scoped>
 .modal-pages-container {
     overflow: hidden;
-    transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-pages.anim-gone {
