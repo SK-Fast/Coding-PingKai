@@ -2,8 +2,10 @@
     <CongratsModal ref="congratModal" @continue="continueLevel" />
     <AchievementModal ref="achievementModal" />
     <canvas class="confetti-view" ref="confettiView"></canvas>
-    <div class="page-trans bg-light-400" :class="{ 'loaded': !pageLoading, 'loading-no-anim': pageLoading && !nextLevelWarp, 'loading': nextLevelWarp }">
-        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein" v-if="!nextLevelWarp">
+    <div class="page-trans bg-light-400"
+        :class="{ 'loaded': !pageLoading, 'loading-no-anim': pageLoading && !nextLevelWarp, 'loading': nextLevelWarp }">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column pg-fadein"
+            v-if="!nextLevelWarp">
             <div class="chick-spinner" style="height: 100px; width: 100px;"></div>
             <h4 class="mt-2">กำลังโหลด...</h4>
             <p class="text-muted">ใช่ครับ สิ่งที่คุณกำลังเห็นอยู่คือมันกำลังโหลด</p>
@@ -109,8 +111,8 @@
                 </div>
             </div>
 
-            <div class="shadow-sm p-2 d-md-none d-block border border-1 error-flash" v-if="pythonError != '' && editorMode == 1"
-                :class="{ 'border-danger': blockLeft == 0 }">
+            <div class="shadow-sm p-2 d-md-none d-block border border-1 error-flash"
+                v-if="pythonError != '' && editorMode == 1" :class="{ 'border-danger': blockLeft == 0 }">
                 <div class="card-body d-flex">
                     <vue-feather type="alert-circle" stroke="#F23051" size="20px"></vue-feather>
                     <p class="m-0 ms-2 text-danger">{{ pythonError }}
@@ -237,6 +239,21 @@ onMounted(async () => {
         const b = findLevel(levelID)
 
         if (b) {
+            const userData = await getUserData(store)
+
+            if (userData.level_passed !== parseInt(levelID)) {
+                await Swal.fire({
+                    title: 'ด่านถูกล็อกไว้',
+                    text: "คุณต้องผ่านด่านที่แล้วก่อน",
+                    icon: 'error',
+                    confirmButtonText: 'ปิด',
+                })
+
+                router.push('/learn')
+
+                return
+            }
+
             lessonData = await b.levelData()
             lessonKind = await lessonData.levelKind()
             blockset = await lessonKind.blockset()
@@ -355,7 +372,7 @@ const continueLevel = async () => {
     nextLevelWarp.value = true
     pageLoading.value = true
 
-    setTimeout(async() => {
+    setTimeout(async () => {
         router.push(`/workspace/${parseInt(levelID) + 1}`)
 
         const { detect } = await import("detect-browser")
