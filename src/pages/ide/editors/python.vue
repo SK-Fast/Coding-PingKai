@@ -45,7 +45,9 @@ const initEditor = async (snippet) => {
 }
 
 onUnmounted(() => {
-    disponseProvider.value.dispose()
+    if (disponseProvider.value) {
+        disponseProvider.value.dispose()
+    }
 })
 
 defineExpose({
