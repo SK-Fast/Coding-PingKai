@@ -5,6 +5,7 @@ import Routes from '@/router.js'
 import '@/assets/scss/main.scss'
 import VueFeather from 'vue-feather';
 import { initApp } from './libs/firebaseSystem.js'
+import { checkStreak } from './libs/streakutils.js'
 import { createStore } from 'vuex'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -93,6 +94,7 @@ const initVueApp = async () => {
         console.log(newUser)
 
         store.state.user = newUser
+        checkStreak(store)
     });
 
 

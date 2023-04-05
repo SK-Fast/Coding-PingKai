@@ -21,6 +21,7 @@
     "bootstrap": "^5.2.1",
     "canvas-confetti": "^1.6.0",
     "chalk": "^5.1.2",
+    "date-diff": "^1.0.2",
     "detect-browser": "^5.3.0",
     "discord-webhook-node": "^1.1.8",
     "dotenv": "^16.0.3",

@@ -137,6 +137,7 @@ import { writeUserData, getUserData, writeStorageData, readStorageData } from '.
 import CongratsModal from "@/components/CongratsModal.vue"
 import DialogueView from "./component/DialogueView.vue"
 import AchievementModal from "@/components/AchievementModal.vue"
+import { updateStreak } from '../../libs/streakutils.js'
 
 const toolbox = {
     kind: "flyoutToolbox",
@@ -478,6 +479,8 @@ const evalCode = async (code) => {
 
         await saveCodeUser()
 
+        const streakData = await updateStreak(store)
+
         let achRes;
 
         if (levelDataRef.value["achievement"]) {
@@ -503,9 +506,20 @@ const evalCode = async (code) => {
 
         playAudio("correct.wav")
 
-        //await saveCodeUser()
+        let moreEvents = []
 
-        congratModal.value.openM(levelID)
+        if (streakData.streakUpdate == true) {
+            moreEvents.push({
+                id: "streak_update",
+                data: {
+                    streak: streakData.streak,
+                    oldStreak: streakData.oldStreak
+                }
+            })
+
+        }
+
+        congratModal.value.openM(levelID, moreEvents)
 
         store.state.fireLoadStop()
 

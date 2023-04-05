@@ -1,38 +1,133 @@
 <script setup>
-    import Modal from "./modal/Modal.vue"
-    import { ref, inject } from "vue";
-    import { getMaxLevel } from "../lessons/lessons";
+import Modal from "./modal/Modal.vue"
+import { ref, inject } from "vue";
+import { getMaxLevel } from "../lessons/lessons";
+import CongratsPage from "./congrats-pages/congrats.vue";
+import StreakPage from "./congrats-pages/streak.vue";
 
-    const modalBase = ref("modalBase")
-    const userData = ref({})
-    const continueEnabled = ref(true)
+const modalBase = ref("modalBase")
+const userData = ref({})
+const morePages = ref([])
+const continueEnabled = ref(true)
+const pageID = ref('')
+const pageData = ref({})
 
-    const openM = (levelID) => {
-        modalBase.value.openModal()
-        levelID = parseInt(levelID)
+const pageIndex = ref(0)
+const containerHeight = ref(0)
+const pageDisappears = ref(false)
+const pageComes = ref(false)
+const modalPages = ref()
+const refLvlID = ref(0)
 
-        if (levelID + 1 >= getMaxLevel()) {
+const updateModalHeight = () => {
+    setTimeout(() => {
+        containerHeight.value = modalPages.value.getBoundingClientRect().height
+    }, 100);
+}
+
+const openM = (levelID, moreEvents) => {
+    pageIndex.value = 0
+    morePages.value = [{ id: "congrats" }, ...moreEvents]
+
+    pageID.value = "congrats"
+
+    modalBase.value.openModal()
+    levelID = parseInt(levelID)
+    refLvlID.value = levelID
+
+    updateModalHeight()
+}
+
+const closeM = () => {
+    modalBase.value.closeModal()
+}
+
+const continuePage = () => {
+    pageIndex.value++
+
+    if (morePages.value.length == pageIndex.value) {
+        return emit('continue')
+    }
+
+    pageDisappears.value = true
+    pageComes.value = false
+
+    setTimeout(() => {
+        pageDisappears.value = false
+        pageComes.value = true
+
+        const pageRef = morePages.value[pageIndex.value]
+        
+        pageID.value = pageRef.id
+        pageData.value = pageRef['data']
+
+        updateModalHeight()
+    }, 500);
+
+
+    if (morePages.value.length == pageIndex.value + 1) {
+        if (refLvlID.value + 1 >= getMaxLevel()) {
             continueEnabled.value = false
         }
     }
 
-    const closeM = () => {
-        modalBase.value.closeModal()
-    }
+}
 
-    defineExpose({openM, closeM})
+defineExpose({ openM, closeM })
 
-    const emit = defineEmits(['continue'])
+const emit = defineEmits(['continue'])
 </script>
 
 <template>
     <Modal ref="modalBase">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <img src="@/assets/chick_congrats.png" class="col-8 img-fluid">
-            <h3>ยินดีด้วย!</h3>
-            <p>คุณผ่านด่านนี้แล้ว!</p>
-            <button class="btn btn-secondary w-100" @click="closeM">ปิด</button>
-            <button v-if="continueEnabled" class="btn btn-primary w-100 mt-2" @click="emit('continue')">ด่านต่อไป</button>
+        <div class="modal-pages-container" :style="`height: ${containerHeight}px`">
+            <div class="modal-pages" ref="modalPages" :class="{ 'anim-gone': pageDisappears, 'anim-come': pageComes }">
+                <CongratsPage v-if="pageID == 'congrats'"/>
+
+                <StreakPage v-if="pageID == 'streak_update'" :pageData="pageData"/>
+
+                <button class="btn btn-secondary w-100" @click="closeM">ปิด</button>
+                <button class="btn btn-primary w-100 mt-2" v-if="continueEnabled" @click="continuePage">ต่อไป</button>
+            </div>
         </div>
     </Modal>
 </template>
+
+<style scoped>
+.modal-pages-container {
+    overflow: hidden;
+    transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-pages.anim-gone {
+    animation: slideGone 0.5s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
+.modal-pages.anim-come {
+    animation: slideCome 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideGone {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideCome {
+    0% {
+        transform: translateX(50%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+</style>

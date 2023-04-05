@@ -58,16 +58,19 @@ export async function newUserData(user) {
 
     logger.info("New user detected, creating user data...")
 
+    let lastLevelDate = new Date()
+    lastLevelDate.setDate(lastLevelDate.getDate() - 1)
+
     await setDoc(userDoc, {
         creation_date: new Date(),
         exp: 0,
-        last_streaklost_date: new Date(),
-        last_level_date: new Date(),
+        last_level_date: lastLevelDate,
         level: 0,
         level_passed: 0,
         streak: 0,
         userID: user.uid,
-        achievements: []
+        achievements: [],
+        streak_dates: []
     })
 
     logger.success("Created new data for the user")

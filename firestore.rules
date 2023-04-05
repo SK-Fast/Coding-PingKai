@@ -13,7 +13,8 @@ service cloud.firestore {
       && request.resource.data.level_passed == 0
       && request.resource.data.streak == 0
       && request.resource.data.userID == request.auth.uid
-      && request.resource.data.achievements == [];
+      && request.resource.data.achievements == []
+      && request.resource.data.streak_dates == [];
       allow update: if request.auth.uid == request.resource.data.userID;
       allow delete: if request.auth.uid == userID;
     }

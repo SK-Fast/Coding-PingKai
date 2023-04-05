@@ -144,7 +144,7 @@ const checkForUpdates = async () => {
                 <div class="card col-md-8 mt-2">
                     <div class="card-body">
                         <div class="d-flex">
-                            <p class="text-muted">ด่านต่างๆ</p>
+                            <p class="text-muted">บทเรียนต่างๆ</p>
                             <div class="flex-grow-1"></div>
                         </div>
 
