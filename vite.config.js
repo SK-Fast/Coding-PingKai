@@ -52,7 +52,7 @@ export default defineConfig({
       output: {
         entryFileNames: `assets/[name]-${chunkPrefix}.js`,
         chunkFileNames: `assets/[name]-${chunkPrefix}.js`,
-        assetFileNames: `assets/[name]-${chunkPrefix}.[ext]`
+        assetFileNames: `assets/[name].[ext]`
       }
     }
   },
