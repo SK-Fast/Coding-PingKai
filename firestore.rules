@@ -16,7 +16,7 @@ service cloud.firestore {
       && request.resource.data.achievements == []
       && request.resource.data.streak_dates == [];
       allow update: if request.auth.uid == request.resource.data.userID;
-      allow delete: if request.auth.uid == request.resource.data.userID;
+      allow delete: if request.auth.uid == userID;
     }
   }
 }
