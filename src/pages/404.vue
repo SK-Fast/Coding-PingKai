@@ -13,7 +13,6 @@
                 <p class="mt-5">ไม่พบหน้าเว็ปหรือข้อมูลนี้ <strong>คุณอาจจะพิมพ์ URL ไม่ถูกต้อง</strong></p>
 
                 <div class="mt-5 d-flex flex-column">
-                    <a><vue-feather type="arrow-left" size="16px" /> กลับไปหน้าที่แล้ว</a>
                     <router-link to="/"><vue-feather type="home" size="16px" /> หน้าหลัก</router-link>
                 </div>
             </div>
