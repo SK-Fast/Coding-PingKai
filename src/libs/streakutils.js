@@ -29,8 +29,11 @@ export async function checkStreak(store) {
     if (daySince >= 2) {
         logger.info(`Streak lost! Updating data...`)
 
+        const lastLvlDate = today
+        lastLvlDate.setDate(lastLvlDate.getDate() - 1)
+
         await writeUserData(user, {
-            last_level_date: today,
+            last_level_date: lastLvlDate,
             streak: 0
         })
 
