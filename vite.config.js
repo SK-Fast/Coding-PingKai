@@ -39,7 +39,8 @@ export default defineConfig({
       ]
     },
     workbox: {
-      navigateFallbackDenylist: [/__/],
+      navigateFallback: '/index.html',
+      navigateFallbackWhitelist: [/^(?!\/__)/]
     }
   })],
   resolve: {
