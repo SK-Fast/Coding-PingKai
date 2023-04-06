@@ -37,6 +37,9 @@ export default defineConfig({
           purpose: 'any maskable'
         }
       ]
+    },
+    workbox: {
+      navigateFallbackDenylist: [/__/],
     }
   })],
   resolve: {
