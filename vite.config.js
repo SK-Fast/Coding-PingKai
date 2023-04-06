@@ -40,7 +40,7 @@ export default defineConfig({
     },
     workbox: {
       navigateFallback: '/index.html',
-      navigateFallbackWhitelist: [/^(?!\/__)/]
+      navigateFallbackAllowlist: [/^(?!\/__)/]
     }
   })],
   resolve: {
