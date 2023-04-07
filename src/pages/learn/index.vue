@@ -25,7 +25,7 @@
             </div>
             -->
                 <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                    <div class="lvl-btn" @click="(event) => openPreview(level.levelI, event)" :class="level.lvlState"
+                    <div class="lvl-btn" @dblclick="(event) => goToLesson(previewID, event)" @click="(event) => openPreview(level.levelI, event)" :class="level.lvlState"
                         :style="`--pos: ${level.y}%;`" :title="level.title">
                         <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                         <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
