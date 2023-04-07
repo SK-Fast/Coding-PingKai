@@ -374,6 +374,8 @@ const continueLevel = async () => {
     pageLoading.value = true
 
     setTimeout(async () => {
+        interpreterData.pixiApp.destroy(true)
+
         router.push(`/workspace/${parseInt(levelID) + 1}`)
 
         const { detect } = await import("detect-browser")

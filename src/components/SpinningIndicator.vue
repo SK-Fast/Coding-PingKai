@@ -9,16 +9,23 @@ import { ref, onMounted, inject } from "vue";
 
 const store = inject("store")
 const loading = ref(false)
+const loadingPromise = ref(false)
 
 onMounted(() => {
     console.log("Spinning Mounted")
 
     store.state.fireLoading = () => {
-        loading.value = true
+        loadingPromise.value = true
+        setTimeout(() => {
+            if (loadingPromise.value == true) {
+                loading.value = true
+            }
+        }, 500);
     }
 
     store.state.fireLoadStop = () => {
         loading.value = false
+        loadingPromise.value = false
     }
 })
 

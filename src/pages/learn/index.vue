@@ -25,7 +25,7 @@
             </div>
             -->
                 <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                    <div class="lvl-btn" @click="(event) => goToLesson(level.levelI, event)" :class="level.lvlState"
+                    <div class="lvl-btn" @click="(event) => openPreview(level.levelI, event)" :class="level.lvlState"
                         :style="`--pos: ${level.y}%;`" :title="level.title">
                         <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                         <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
@@ -35,14 +35,6 @@
                             เริ่ม
                             <img src="@/assets/start_arrow.svg" class="arrow-tooltip" height="20">
                         </div>
-
-                        <!--
-                    <div class="level-tooltip bg-light-100 p-3" v-if="level.lvlState == 'continue'">
-                        <img src="@/assets/arrow_up.svg" class="arrow-tooltip" height="20">
-                        <h3>{{ level.title }}</h3>
-                        <button class="btn btn-primary w-100">เริ่ม</button>
-                    </div>
-                    -->
                     </div>
 
                     <div v-if="level.y < -95" class="level-decoration"></div>
@@ -50,6 +42,30 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="level-info bg-light-100 d-flex flex-column p-3"
+        :style="{ 'visibility': firstTimeHide ? 'hidden' : 'visible' }" :class="{ 'onpreview': previewingLesson }">
+        <div>
+            <div class="container-fluid">
+                <div class="preview-canvas mt-3" ref="previewCanvas"
+                    :style="`aspect-ratio: ${previewDataRef.ratio[0]} / ${previewDataRef.ratio[1]};`">
+                </div>
+            </div>
+
+            <h3>{{ previewLessonData['levelData'] ? previewLessonData.levelData.title : "" }}</h3>
+            <ul>
+                <li v-for="pG in previewGoals">{{ pG }}</li>
+            </ul>
+        </div>
+        <div class="flex-grow-1"></div>
+        <p class="text-sm text-danger text-center" v-if="previewIsLocked">คุณต้องปลดล็อกด่านที่แล้วก่อน</p>
+
+        <button class="btn btn-primary btn-lg w-100" v-if="!previewIsLocked"
+            @click="(event) => goToLesson(previewID, event)">เริ่ม</button>
+        <button class="btn btn-primary disabled btn-lg w-100" v-else><vue-feather type="lock" color="#fff"></vue-feather>
+            ด่านถูกล็อกไว้</button>
+        <button class="btn btn-secondary mt-2 btn w-100" @click="closePreview">ปิด</button>
     </div>
 </template>
 
@@ -61,9 +77,19 @@ const store = inject("store")
 const router = inject("router")
 const lvlScroll = ref(null)
 const lvlAll = ref(null)
+const previewDataRef = ref({
+    ratio: [1, 1]
+})
 const dataLoading = ref(true)
 
 const lvlLoading = ref(false)
+const previewingLesson = ref(false)
+const previewID = ref(0)
+const previewIsLocked = ref(false)
+const firstTimeHide = ref(true)
+const previewCanvas = ref()
+const previewLessonData = ref({})
+const previewGoals = ref([])
 const lvlLoadX = ref(0)
 const lvlLoadY = ref(0)
 let userData;
@@ -114,7 +140,73 @@ onMounted(async () => {
             window.scroll(userData.level_passed * 150, 0)
         }
     }, 100);
+
+    setTimeout(() => {
+        firstTimeHide.value = false
+    }, 500);
 })
+
+let oldApp;
+
+const closePreview = async () => {
+    previewingLesson.value = false
+
+    if (oldApp) {
+        oldApp.view.remove()
+        oldApp.destroy(true)
+        oldApp = null
+    }
+
+}
+
+const openPreview = async (i) => {
+    previewingLesson.value = true
+
+    store.state.fireLoading()
+
+    const { findLevel, kindOBlockName } = await import("@/lessons/lessons.js")
+    const lessonBasic = findLevel(i)
+    const lessonData = await lessonBasic.levelData()
+    const lessonKind = await lessonData.levelKind()
+    const blockset = await lessonKind.blockset()
+
+    if (oldApp) {
+        oldApp.view.remove()
+        oldApp.destroy(true)
+    }
+
+    previewID.value = i
+
+    previewIsLocked.value = i > userData.level_passed //&& import.meta.env.MODE !== 'development'
+
+    previewLessonData.value = lessonData
+    let canvasprev = await lessonKind.init(previewCanvas.value, lessonData.levelData)
+
+    oldApp = canvasprev.pixiApp
+
+    console.log(canvasprev)
+
+    previewGoals.value = []
+
+    let goals = []
+
+    for (const b of lessonData.blocks) {
+        const bT = blockset.blocklyJSON.find((e) => b.type == e.type)
+
+        let procBT = kindOBlockName[bT.kindoblock]
+
+        if (!goals.find((e) => e == procBT)) {
+            goals.push(procBT)
+        }
+    }
+    
+    previewGoals.value = goals
+
+    previewDataRef.value.ratio = lessonData.levelData.ratio || lessonKind.kindData.ratio
+
+    store.state.fireLoadStop()
+
+}
 
 const goToLesson = (i, e) => {
     console.log(i, userData.level_passed)
@@ -188,27 +280,43 @@ const goToLesson = (i, e) => {
 
 }
 
-.level-tooltip {
+.level-info {
     filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
     border: 3px solid #DFDFDF;
-    position: absolute;
-    top: calc(100% + 55px);
-    min-width: 250px;
+    position: fixed;
+    top: 50px;
+    right: 0;
     border-radius: 10px;
 
-    left: 25%;
-    z-index: 55;
+    width: 400px;
+    height: calc(100vh - 50px);
+    border-radius: 20px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    animation: levelInfoSlideEnd 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
 }
 
-.level-tooltip .arrow-tooltip {
-    position: absolute;
-    bottom: calc(100% + 10px);
+.level-info.onpreview {
+    animation: levelInfoSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes levelInfoSlide {
+    from {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes levelInfoSlideEnd {
+    to {
+        transform: translateX(100%);
+    }
 }
 
 .start-tooltip .arrow-tooltip {
     position: absolute;
     top: calc(100% + 10px);
-    left: 50%;
     transform: translateX(-50%);
 }
 
@@ -270,6 +378,12 @@ const goToLesson = (i, e) => {
     transform: translateY(var(--pos));
 }
 
+.preview-canvas {
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 500px) {
     .lvl-btn {
         transform: translateX(calc(var(--pos) / 2));
@@ -304,6 +418,29 @@ const goToLesson = (i, e) => {
     .level-decoration-top {
         left: 0;
     }
+
+    .level-info {
+        position: fixed;
+        top: 0;
+        bottom: 60px;
+        left: 0;
+        width: 100%;
+
+        border-radius: 0;
+    }
+
+    @keyframes levelInfoSlide {
+        from {
+            transform: translateY(100%);
+        }
+    }
+
+
+    @keyframes levelInfoSlideEnd {
+        to {
+            transform: translateY(100%);
+        }
+    }
 }
 
 .lvl-btn.locked {
@@ -328,5 +465,4 @@ const goToLesson = (i, e) => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
-}
-</style>
+}</style>

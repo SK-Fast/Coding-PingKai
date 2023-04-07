@@ -59,6 +59,7 @@ export const blocklyJSON = [
         "nextStatement": "Action",
         "previousStatement": "Action",
         "colour": 20,
+        "kindoblock": "normalblock",
         "args0": [
             {
                 "type": "field_image",
@@ -71,6 +72,7 @@ export const blocklyJSON = [
     {
         "type": "turn_right",
         "message0": '%1 หันไปทางขวา',
+        "kindoblock": "normalblock",
         "nextStatement": "Action",
         "previousStatement": "Action",
         "colour": 25,
@@ -87,6 +89,7 @@ export const blocklyJSON = [
         "type": "go_forward",
         "message0": '%1 ไปข้างหน้า',
         "nextStatement": "Action",
+        "kindoblock": "normalblock",
         "previousStatement": "Action",
         "tooltip": "ให้ไก่เดินไปทางด้านหน้าของไก่",
         "colour": 30,
@@ -101,6 +104,7 @@ export const blocklyJSON = [
     },
     {
         "type": "go_backward",
+        "kindoblock": "normalblock",
         "message0": '%1 ไปข้างหลัง',
         "nextStatement": "Action",
         "previousStatement": "Action",
@@ -117,6 +121,7 @@ export const blocklyJSON = [
     },
     {
         "type": "until_flag",
+        "kindoblock": "loop",
         "message0": "%1 ทำซ่ำจนกว่าจะเจอธง",
         "args0": [
             {
@@ -137,6 +142,7 @@ export const blocklyJSON = [
     },
     {
         "type": "if_can_walk",
+        "kindoblock": "if",
         "message0": "ถ้าเดินไป %1 ต่อได้",
         "args0": [
             
@@ -162,6 +168,7 @@ export const blocklyJSON = [
     },
     {
         "type": "is_over_flag",
+        "kindoblock": "variable",
         "message0": "%1 อยู่ที่ธงหรือไม่",
         "args0": [
             {

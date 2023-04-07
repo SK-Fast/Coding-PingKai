@@ -436,6 +436,8 @@ export const init = async (e, data) => {
         cellSize: cellSize,
         lvlPos: blockPos,
         interpreter: null,
-        chickFrames: chickFrames
+        chickFrames: chickFrames,
+        appView: app.view,
+        pixiApp: app,
     }
 }

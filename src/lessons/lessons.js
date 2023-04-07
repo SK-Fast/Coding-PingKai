@@ -44,6 +44,13 @@ export const sections = [
     }
 ]
 
+export const kindOBlockName = {
+    normalblock: "การใช้คำสั่งพื้นฐาน",
+    loop: "การใช้คำสั่งวนซ่ำ",
+    if: "การใช้คำสั่งเงื่อนไข",
+    variable: "การเก็บค่าตัวแปร",
+}
+
 export function findLevel(i) {
     let ii = 0
 
