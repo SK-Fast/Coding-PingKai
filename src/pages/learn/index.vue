@@ -164,6 +164,8 @@ const openPreview = async (i) => {
         return
     }
 
+    previewID.value = i
+
     previewingLesson.value = true
 
     store.state.fireLoading()
@@ -178,8 +180,6 @@ const openPreview = async (i) => {
         oldApp.view.remove()
         oldApp.destroy(true)
     }
-
-    previewID.value = i
 
     previewIsLocked.value = i > userData.level_passed && import.meta.env.MODE !== 'development'
 
@@ -226,6 +226,8 @@ const goToLesson = (i, e) => {
 
         return
     }
+
+    store.state.fireLoadStop()
 
     lvlLoading.value = true
 
