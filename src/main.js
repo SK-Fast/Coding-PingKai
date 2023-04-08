@@ -59,7 +59,8 @@ const store = createStore({
             volume: {
                 master: window.localStorage.getItem('volume_master') || 1,
             }
-        }
+        },
+        userData: null
     },
     computed: {
         count() {

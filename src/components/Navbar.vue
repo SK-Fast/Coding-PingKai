@@ -41,22 +41,65 @@ const openLogin = () => {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" v-if="!store.state.user">
-                        <router-link to="/" class="nav-link">{{ $t("home") }}</router-link>
+                        <router-link to="/" class="nav-link">
+                            <vue-feather class="m-nav-icon" type="home"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="20"></vue-feather>
+                            <span>หน้าหลัก</span>
+
+                        </router-link>
                     </li>
 
                     <li class="nav-item" v-if="store.state.user">
-                        <router-link to="/dashboard" class="nav-link">{{ $t("home") }}</router-link>
+                        <router-link to="/dashboard" class="nav-link">
+                            <vue-feather class="m-nav-icon" type="home"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="20"></vue-feather>
+                            <span>หน้าหลัก</span>
+
+                        </router-link>
                     </li>
 
                     <li class="nav-item nav-pop" v-if="store.state.user">
-                        <router-link to="/learn" class="nav-link">{{ $t("learn") }}</router-link>
+                        <router-link to="/learn" class="nav-link"><vue-feather class="m-nav-icon" type="book"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="20"></vue-feather>
+                            <span>บทเรียน</span>
+
+                        </router-link>
                     </li>
 
                     <li class="nav-item nav-pop">
-                        <router-link to="/credits" class="nav-link">{{ $t("credits") }}</router-link>
+                        <router-link to="/credits" class="nav-link"><vue-feather class="m-nav-icon" type="users"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="20"></vue-feather>
+                        <span>ผู้จัดทำ</span>
+
+                        </router-link>
                     </li>
                 </ul>
                 <form class="d-flex align-items-center">
+                    
+                    <div class="pb-1 d-flex align-items-center me-3" v-if="store.state.user !== null && route.meta['navbarStyle'] == 'landing'">
+                        <img src="@/assets/exp_light.png" height="25">
+                        <p class="text-monospace m-0 ms-1 text-white">{{ store.state['userData'] ? store.state.userData.exp : '0' }}</p>
+                    </div>
+                    
+                    <div class="pb-1 d-flex align-items-center me-3" v-else v-if="store.state.user !== null">
+                        <img src="@/assets/exp.png" height="25">
+                        <p class="text-monospace m-0 ms-1 text-warning">{{ store.state['userData'] ? store.state.userData.exp : '0' }}</p>
+                    </div>
+
+                    <div class="pb-1 d-flex align-items-center me-3" v-if="store.state.user !== null && route.meta['navbarStyle'] == 'landing'">
+                        <img src="@/assets/streak_light.png" height="25">
+                        <p class="text-monospace m-0 ms-1 text-white">{{ store.state['userData'] ? store.state.userData.streak : '0' }}</p>
+                    </div>
+
+                    <div class="pb-1 d-flex align-items-center me-3" v-else v-if="store.state.user !== null">
+                        <img src="@/assets/streak.png" height="25">
+                        <p class="text-monospace m-0 ms-1 text-primary">{{ store.state['userData'] ? store.state.userData.streak : '0' }}</p>
+                    </div>
+                    
                     <router-link class="icon-link nav-item" to="/settings/general"
                         v-if="store.state.user !== null"><vue-feather class="m-nav-icon" type="settings"
                             :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
@@ -122,4 +165,41 @@ const openLogin = () => {
 .nav-pop {
     overflow: hidden;
 }
+
+.nav-item .nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+
+<style>
+
+.nav-item .nav-link span {
+    font-size: 0px;
+    transition-property: font-size, opacity;
+    transition-duration: 0.25s;
+    opacity: 0;
+}
+
+.nav-item:hover .nav-link span {
+    font-size: 14px;
+    margin-left: 0.5rem;
+    opacity: 1;
+}
+
+.nav-item .router-link-active span {
+    font-size: 14px;
+    margin-left: 0.5rem;
+    opacity: 1;
+}
+
+.nav-item .router-link-active svg {
+    stroke: #FF7733;
+}
+
+.navbar.landing .nav-item .router-link-active svg {
+    stroke: white;
+}
+
 </style>
