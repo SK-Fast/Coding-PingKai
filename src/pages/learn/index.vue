@@ -177,7 +177,7 @@ const openPreview = async (i) => {
 
     previewID.value = i
 
-    previewIsLocked.value = i > userData.level_passed //&& import.meta.env.MODE !== 'development'
+    previewIsLocked.value = i > userData.level_passed && import.meta.env.MODE !== 'development'
 
     previewLessonData.value = lessonData
     let canvasprev = await lessonKind.init(previewCanvas.value, lessonData.levelData)

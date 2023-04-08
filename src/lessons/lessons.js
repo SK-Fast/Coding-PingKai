@@ -41,7 +41,20 @@ export const sections = [
                 levelData: () => {return import("./w1/w1_9.js")}
             }*/
         ]
+    },
+    /*
+    {
+        title: "น้อนไก่นักวาด",
+        desc: "ช่วยไก่น้อยในการผจญภัยของเขา",
+
+        levels: [
+            {
+                title: "W2-1",
+                levelData: () => {return import("./w2/w2_1.js")}
+            }
+        ]
     }
+    */
 ]
 
 export const kindOBlockName = {
