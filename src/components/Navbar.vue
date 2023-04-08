@@ -69,6 +69,17 @@ const openLogin = () => {
                         </router-link>
                     </li>
 
+                    <!--
+                    <li class="nav-item nav-pop">
+                        <router-link to="/leaderboard" class="nav-link"><vue-feather class="m-nav-icon" type="award"
+                            :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"
+                            size="20"></vue-feather>
+                            <span>กระดานคะแนน</span>
+
+                        </router-link>
+                    </li>
+                    -->
+
                     <li class="nav-item nav-pop">
                         <router-link to="/credits" class="nav-link"><vue-feather class="m-nav-icon" type="users"
                             :stroke="route.meta['navbarStyle'] == 'landing' ? '#FFF' : '#B3B3B3'"

@@ -491,14 +491,15 @@ const evalCode = async (code) => {
 
         const userData = await getUserData(store)
 
+        let isLevelPassUpdate = false;
+
         if (userData.level_passed == parseInt(levelID)) {
-            await writeUserData(store.state.user, {
-                level_passed: parseInt(levelID) + 1
-            })
+            isLevelPassUpdate = true
         }
 
         await writeUserData(store.state.user, {
-            exp: userData.exp + 10,
+            level_passed: isLevelPassUpdate ? parseInt(levelID) + 1 : userData.level_passed,
+            exp: isLevelPassUpdate ? userData.exp + 10 : userData.exp + 5,
             last_level_date: new Date()
         })
 
