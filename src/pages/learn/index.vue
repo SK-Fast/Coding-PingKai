@@ -317,7 +317,7 @@ const goToLesson = (i, e) => {
 .start-tooltip .arrow-tooltip {
     position: absolute;
     top: calc(100% + 10px);
-    transform: translateX(-50%);
+    right: 25%;
 }
 
 @keyframes tooltipFloatin {
