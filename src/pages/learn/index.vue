@@ -160,6 +160,10 @@ const closePreview = async () => {
 }
 
 const openPreview = async (i) => {
+    if (previewID.value == i) {
+        return
+    }
+
     previewingLesson.value = true
 
     store.state.fireLoading()
