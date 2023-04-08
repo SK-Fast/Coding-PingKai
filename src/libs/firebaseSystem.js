@@ -158,6 +158,9 @@ export async function getUserData(store) {
     const docData = await getDoc(userDoc)
 
     if (docData.exists()) {
+
+        store.state.userData = docData.data()
+
         return docData.data()
     } else {
         return false
