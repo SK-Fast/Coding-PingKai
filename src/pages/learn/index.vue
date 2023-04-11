@@ -151,6 +151,8 @@ let oldApp;
 const closePreview = async () => {
     previewingLesson.value = false
 
+    previewID.value = -1
+
     if (oldApp) {
         oldApp.view.remove()
         oldApp.destroy(true)
