@@ -15,7 +15,7 @@
   "dependencies": {
     "@rive-app/canvas": "^1.0.97",
     "animejs": "^3.2.1",
-    "audio-loader": "^1.0.3",
+    "audio-loader": "^0.5.0",
     "audio-play": "^2.3.1",
     "blockly": "^9.2.1",
     "bootstrap": "^5.2.1",
@@ -28,6 +28,7 @@
     "feather-icons": "^4.29.0",
     "firebase": "^9.12.1",
     "get-folder-size": "^4.0.0",
+    "is-mobile": "^4.0.0",
     "json-tree-view-vue3": "^0.2.3",
     "jspython-interpreter": "^2.1.13",
     "monaco-editor": "^0.36.1",
