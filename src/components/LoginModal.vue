@@ -45,6 +45,46 @@ const closeL = () => {
     modalBase.value.closeModal()
 }
 
+const anonymousLogin = async (t) => {
+    const { getAuth, signInAnonymously, updateProfile } = await import('firebase/auth')
+
+    const auth = getAuth()
+
+    const result = await signInAnonymously(auth).catch((error) => {
+        loggingIn.value = false
+
+        let errS = error.toString()
+        let errRegex = errS.match(/\([^{}]*\)/)
+
+        if (knownErrors[errRegex[0]]) {
+            errorMsg.value = knownErrors[errRegex[0]]
+        } else {
+            errorMsg.value = error
+        }
+    })
+
+    loggingIn.value = true
+
+    if (result['user']) {
+        loginPromise(result)
+
+        let isNewUser = await newUserData(result.user)
+        closeL()
+
+        loggingIn.value = false
+
+        await updateProfile(auth.currentUser, {
+            displayName: "Anonymous"
+        })
+
+        if (isNewUser) {
+            router.push("/workspace/0")
+        } else if (loginKind == "login") {
+            router.push("/dashboard")
+        }
+    }
+}
+
 const socialLogin = async (t) => {
     const { getAuth, FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
 
@@ -117,17 +157,18 @@ defineExpose({ openL, closeL })
 
         <div v-if="loggingIn == false">
             <h3 class="text-subtext">เข้าสู่ระบบด้วยโซเชียลมีเดีย</h3>
+            <ThirdPartyButton text="ลงชื่อแบบไม่ใช้รหัสผ่าน" @click="anonymousLogin()" image="/anonymous.png" />
             <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="socialLogin('google')" image="/google.png" />
             <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" @click="socialLogin('facebook')" image="/facebook.png" />
         </div>
         <!--
-                    <hr />
-                    <h3 class="text-subtext">Email Login</h3>
-                    <input class="w-100 form-control" placeholder="Email Address" ref="emailAddress" />
-                    <h3 class="text-subtext mt-2">Phone Login</h3>
-                    <input class="w-100 form-control" placeholder="Phone number" />
-                    <button class="btn btn-primary w-100 mt-2">Continue</button>
-                    -->
+                        <hr />
+                        <h3 class="text-subtext">Email Login</h3>
+                        <input class="w-100 form-control" placeholder="Email Address" ref="emailAddress" />
+                        <h3 class="text-subtext mt-2">Phone Login</h3>
+                        <input class="w-100 form-control" placeholder="Phone number" />
+                        <button class="btn btn-primary w-100 mt-2">Continue</button>
+                        -->
     </Modal>
 </template>
 
