@@ -86,13 +86,58 @@
 
 <body>
   <div id="preload-i" style="width: 100vw;height: 100vh;z-index: 9999999;">
-    <img src="/logo_preload.png" width="100" height="100" alt="กำลังโหลด..." style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" />
+    <img src="/logo_preload.png" width="100" height="100" alt="กำลังโหลด..."
+      style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" />
 
-    <div id="updatesFound" style="position: absolute;top: calc(50% + 110px);left: 50%;transform: translate(-50%, -50%);">
+    <div id="updatesFound"
+      style="position: absolute;top: calc(50% + 110px);left: 50%;transform: translate(-50%, -50%);">
       <p style="margin-top: 10px;">ตรวจพบการอัปเดต กรุณาอัปเดตแอปพลิเคชันเพื่อไปต่อ</p>
       <button id="updateBtn">อัปเดต</button>
     </div>
   </div>
+
+  <script defer>
+    console.log("Backup checking for updates...")
+
+    const versionRes = await fetch("/version.json", { cache: "no-store" })
+    const versionData = await versionRes.json()
+
+    const backupAppUpdate = async () => {
+      console.log("Updating")
+
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations()
+
+        let prog = 0
+        for (let registration of registrations) {
+          registration.update()
+          console.log("Updating Register ", prog)
+          prog++
+        }
+
+        const names = await caches.keys()
+
+        prog = 0
+
+        for (let name of names) {
+          caches.delete(name)
+          console.log("Clearing Cache ", name)
+        }
+      }
+
+      location.href = location.href
+    }
+
+    if (versionData.version != __APP_VERSION__) {
+      document.querySelector("#updatesFound").classList.add('foundUpdate')
+      document.querySelector("#updateBtn").addEventListener('click', () => {
+        document.querySelector("#updateBtn").textContent = "กำลังอัปเดต"
+        document.querySelector("#updateBtn").setAttribute('disabled', 'disabled')
+
+        backupAppUpdate()
+      })
+    }
+  </script>
 
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
