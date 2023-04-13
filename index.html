@@ -19,44 +19,80 @@
   <meta property="og:url" content="https://pikai.devpixels.xyz/">
   <meta property="og:title" content="โค้ดดิ้ง ปิ้งไก่">
   <meta property="og:description" content="อัลกอริทึม สำหรับทุกคน!">
-  <meta property="og:image"
-    content="https://pikai.devpixels.xyz/metabanner.png">
+  <meta property="og:image" content="https://pikai.devpixels.xyz/metabanner.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://pikai.devpixels.xyz/">
   <meta property="twitter:title" content="โค้ดดิ้ง ปิ้งไก่">
   <meta property="twitter:description" content="อัลกอริทึม สำหรับทุกคน!">
-  <meta property="twitter:image"
-    content="https://pikai.devpixels.xyz/metabanner.png">
+  <meta property="twitter:image" content="https://pikai.devpixels.xyz/metabanner.png">
 
-    <style>
-      #preload-i {
-        background-color: #F3F3F3;
-        position: fixed;
-        top: 0;
-        left: 0;
-      }
-      
-      .preload-loaded {
-        animation: preloadLoaded 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        animation-fill-mode: forwards;
-      }
+  <style>
+    #preload-i {
+      background-color: #F3F3F3;
+      position: fixed;
+      top: 0;
+      left: 0;
 
-      @keyframes preloadLoaded {
-        to {
-          transform: scale(1.2);
-          opacity: 0;
-          background-color: #f3f3f300
-        }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .preload-loaded {
+      animation: preloadLoaded 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      animation-fill-mode: forwards;
+    }
+
+    #updateBtn {
+      display: inline-block;
+      background-color: #FF7733;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #updatesFound {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+    }
+
+    #updatesFound.foundUpdate {
+      opacity: 1;
+    }
+
+    #updateBtn:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    @keyframes preloadLoaded {
+      to {
+        transform: scale(1.2);
+        opacity: 0;
+        background-color: #f3f3f300
       }
-    </style>
+    }
+  </style>
 </head>
 
 <body>
   <div id="preload-i" style="width: 100vw;height: 100vh;z-index: 9999999;">
-    <img style="margin: 0;position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);" src="/logo_preload.png" width="100" height="100" alt="กำลังโหลด..."/>
-</div>
+    <img src="/logo_preload.png" width="100" height="100" alt="กำลังโหลด..." style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" />
+
+    <div id="updatesFound" style="position: absolute;top: calc(50% + 110px);left: 50%;transform: translate(-50%, -50%);">
+      <p style="margin-top: 10px;">ตรวจพบการอัปเดต กรุณาอัปเดตแอปพลิเคชันเพื่อไปต่อ</p>
+      <button id="updateBtn">อัปเดต</button>
+    </div>
+  </div>
 
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>

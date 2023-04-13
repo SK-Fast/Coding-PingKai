@@ -20,33 +20,47 @@ const router = createRouter({
     routes: Routes
 })
 
+const updateAppMain = async() => {
+    console.log("Updating")
+
+    if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations()
+
+        let prog = 0
+        for (let registration of registrations) {
+            registration.update()
+            console.log("Updating Register ", prog)
+            prog++
+        }
+
+        const names = await caches.keys()
+
+        prog = 0
+
+        for (let name of names) {
+            caches.delete(name)
+            console.log("Clearing Cache ", name)
+        }
+    }
+
+    location.href = location.href
+}
+
 const pre_CheckForUpdates = async () => {
     console.log("Checking for updates...")
+
+    if (import.meta.env.MODE == 'development') {
+        console.log("Devmode detected, skipping updates...")
+        return
+    }
 
     const versionRes = await fetch("/version.json", { cache: "no-store" })
     const versionData = await versionRes.json()
 
     if (versionData.version != __APP_VERSION__) {
-        console.log("Updating tp version ", versionData.version)
-
-        if ('serviceWorker' in navigator) {
-            const registrations = await navigator.serviceWorker.getRegistrations()
-
-            for (let registration of registrations) {
-                registration.update()
-            }
-
-            const names = await caches.keys()
-
-            for (let name of names) {
-                caches.delete(name)
-                console.log("Clearing Cache ", name)
-            }
-        }
-
-        window.location.reload(true)
+        return true
     } else {
-        console.log("No updates found, continuing...")
+        return false
     }
 }
 
@@ -78,6 +92,19 @@ const initVueApp = async () => {
 
     if (urlParams.get('skip-loading')) {
         document.getElementById("preload-i").style.display = "none"
+    }
+
+    const hasUpdates = await pre_CheckForUpdates()
+
+    if (hasUpdates) {
+        document.querySelector("#updatesFound").classList.add('foundUpdate')
+        document.querySelector("#updateBtn").addEventListener('click', () => {
+            document.querySelector("#updateBtn").textContent = "กำลังอัปเดต"  
+            document.querySelector("#updateBtn").setAttribute('disabled', 'disabled')
+
+            updateAppMain()
+        })
+        return   
     }
 
     const [fapp, fuser] = await initApp()
