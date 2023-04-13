@@ -97,46 +97,59 @@
   </div>
 
   <script defer>
-    console.log("Backup checking for updates...")
+    async function waitAppVer() {
+      console.log("Waiting for __APP_VERSION__");
+      while (!window.hasOwnProperty("__APP_VERSION__"))
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("__APP_VERSION__ Defined");
+    }
 
-    const versionRes = await fetch("/version.json", { cache: "no-store" })
-    const versionData = await versionRes.json()
+    async function mainBackupUpdater() {
+      console.log("Backup checking for updates...")
 
-    const backupAppUpdate = async () => {
-      console.log("Updating")
+      await waitAppVer()
 
-      if ('serviceWorker' in navigator) {
-        const registrations = await navigator.serviceWorker.getRegistrations()
+      const versionRes = await fetch("/version.json", { cache: "no-store" })
+      const versionData = await versionRes.json()
 
-        let prog = 0
-        for (let registration of registrations) {
-          registration.update()
-          console.log("Updating Register ", prog)
-          prog++
+      const backupAppUpdate = async () => {
+        console.log("Updating")
+
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations()
+
+          let prog = 0
+          for (let registration of registrations) {
+            registration.update()
+            console.log("Updating Register ", prog)
+            prog++
+          }
+
+          const names = await caches.keys()
+
+          prog = 0
+
+          for (let name of names) {
+            caches.delete(name)
+            console.log("Clearing Cache ", name)
+          }
         }
 
-        const names = await caches.keys()
-
-        prog = 0
-
-        for (let name of names) {
-          caches.delete(name)
-          console.log("Clearing Cache ", name)
-        }
+        location.href = location.href
       }
 
-      location.href = location.href
+      if (versionData.version != __APP_VERSION__) {
+        document.querySelector("#updatesFound").classList.add('foundUpdate')
+        document.querySelector("#updateBtn").addEventListener('click', () => {
+          document.querySelector("#updateBtn").textContent = "กำลังอัปเดต"
+          document.querySelector("#updateBtn").setAttribute('disabled', 'disabled')
+
+          backupAppUpdate()
+        })
+      }
     }
 
-    if (versionData.version != __APP_VERSION__) {
-      document.querySelector("#updatesFound").classList.add('foundUpdate')
-      document.querySelector("#updateBtn").addEventListener('click', () => {
-        document.querySelector("#updateBtn").textContent = "กำลังอัปเดต"
-        document.querySelector("#updateBtn").setAttribute('disabled', 'disabled')
-
-        backupAppUpdate()
-      })
-    }
+    mainBackupUpdater()
   </script>
 
   <div id="app"></div>
