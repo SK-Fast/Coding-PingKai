@@ -50,6 +50,8 @@ const anonymousLogin = async (t) => {
 
     const auth = getAuth()
 
+    loggingIn.value = true
+
     const result = await signInAnonymously(auth).catch((error) => {
         loggingIn.value = false
 
@@ -62,8 +64,6 @@ const anonymousLogin = async (t) => {
             errorMsg.value = error
         }
     })
-
-    loggingIn.value = true
 
     if (result['user']) {
         loginPromise(result)
