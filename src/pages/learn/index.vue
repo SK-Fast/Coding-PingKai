@@ -84,7 +84,7 @@ const dataLoading = ref(true)
 
 const lvlLoading = ref(false)
 const previewingLesson = ref(false)
-const previewID = ref(0)
+const previewID = ref(-1)
 const previewIsLocked = ref(false)
 const firstTimeHide = ref(true)
 const previewCanvas = ref()
