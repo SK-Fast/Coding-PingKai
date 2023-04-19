@@ -8,18 +8,24 @@
             <div class="ms-md-3 ms-0 flex-grow-1">
                 <div class="card bg-light-200 p-md-0 p-2 h-100 w-100" @click="continueSection">
                     <div class="card-body d-flex flex-column text-box-body">
-                        <div class="text-scrollable">
-                            <p ref="textBox">{{ textContent }}</p>
-                        </div>
-
-                        <div>
-                            <div v-if="buttonContinue">
-                                <div class="float-end">
-                                    <button class="btn btn-secondary me-2" v-if="previousBtnEnabled"
-                                        @click="previousSection">ขั้นตอนที่แล้ว</button>
-                                    <button class="btn btn-primary" v-if="nextBtnEnabled"
-                                        @click="continueSection">ไปต่อ</button>
+                        <div class="text-scrollable d-flex">
+                            <div class="flex-grow-1 d-flex flex-column">
+                                <div class="flex-grow-1">
+                                    <p ref="textBox">{{ textContent }}</p>
                                 </div>
+
+                                <div v-if="buttonContinue">
+                                    <div class="float-end">
+                                        <button class="btn btn-secondary me-2" v-if="previousBtnEnabled"
+                                            @click="previousSection">ขั้นตอนที่แล้ว</button>
+                                        <button class="btn btn-primary" v-if="nextBtnEnabled"
+                                            @click="continueSection">ไปต่อ</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end tutorial-vid" v-if="vidURL !== ''">
+                                <video width="320" height="150" muted autoplay loop :src="vidURL"></video>
                             </div>
                         </div>
 
@@ -37,6 +43,7 @@ const textContent = ref(null)
 let sectionIndex = 0
 let dialogue = []
 const buttonContinue = ref(false)
+const vidURL = ref("")
 const nextBtnEnabled = ref(true)
 const previousBtnEnabled = ref(true)
 let blockCount = 0
@@ -94,6 +101,14 @@ const runSection = async (section) => {
         if (doRun) {
             if (data.type == "txt") {
                 textContent.value = ""
+            }
+
+            if (data.type == "vid") {
+                vidURL.value = data.src
+            }
+
+            if (data.type == "vid-close") {
+                vidURL.value = ""
             }
 
             if (data.type == "txt" || data.type == "txt-continue") {
@@ -224,7 +239,7 @@ defineExpose({ runDialogue, typeText, resetText, blockCountUpdate })
 
 <style scoped>
 .tutorial-view {
-    height: 200px;
+    height: 220px;
 }
 
 .text-box-body {
@@ -266,5 +281,21 @@ defineExpose({ runDialogue, typeText, resetText, blockCountUpdate })
 
 .nextBtn img {
     image-rendering: optimizeSpeed;
+}
+
+.tutorial-vid {
+    border-radius: 10px;
+    background-color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    .tutorial-vid {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
 }
 </style>

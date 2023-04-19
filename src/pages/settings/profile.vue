@@ -5,19 +5,18 @@
             class="card-body p-4 d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-center">
             <div title="อัปโหลดรูปภาพของคุณ" class="avatar-container img-rounded me-md-2">
                 <a class="avatar img-rounded" @click="promptPFPUpload" :style="'background-image: url(\'' + (userImg) + '\')'">
-                    <a
-                        class="avatar-status bg-light-400 d-flex justify-content-center align-items-center">
-                        <vue-feather type="image" size="20" stroke="black"></vue-feather>
-                    </a>
+               
                 </a>
             </div>
 
             <div class="flex-grow-1 d-flex flex-column ms-md-2 text-md-start text-center">
                 <h3>{{ userDisplayName }}</h3>
-                <p>อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText"
+                <p v-if="!store.state.user.isAnonymous">อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText"
                         class="d-none">{{ store.state.user ? store.state.user.email : "email not found" }}</span> <span
                         class="text-primary"><a ref="emailRevealText" @click="emailReveal">ดูอีเมล</a></span></p>
-                <div class="d-flex justify-content-md-start justify-content-center">
+                
+                <p v-if="store.state.user.isAnonymous" class="text-danger">คุณกำลังใช้บัญชีแบบไม่ระบุตัวตนอยู่ ข้อมูลบัญชีจะถูกเก็บบนเครื่องนี้เท่านั้น</p>
+                <div v-if="!store.state.user.isAnonymous" class="d-flex justify-content-md-start justify-content-center">
                     <button @click="changeUsername" class="btn btn-primary">เปลี่ยนชื่อ</button>
                     <!--
                     <button class="btn btn-primary">ดู Profile</button>
@@ -29,7 +28,7 @@
         </div>
     </div>
 
-    <div class="card mt-2">
+    <div class="card mt-2" v-if="store.state.user.providerData.length != 0">
         <div class="card-body p-4">
             <p>การเชื่อมต่อ</p>
             <div class="card" v-for="providerData in store.state.user.providerData">
@@ -57,9 +56,9 @@
     </div>
     -->
 
-    <h2 class="mt-4">การตั้งค่าเพิ่มเติม</h2>
+    <h2 class="mt-4" v-if="!store.state.user.isAnonymous">การตั้งค่าเพิ่มเติม</h2>
 
-    <ConfigCard title="ลบบัญชี" desc="ทำการลบบัญชีโดยถาวร" class="mt-2">
+    <ConfigCard title="ลบบัญชี" desc="ทำการลบบัญชีโดยถาวร" class="mt-2" v-if="!store.state.user.isAnonymous">
         <button class="btn btn-danger" @click="deleteAccount">ลบบัญชี</button>
     </ConfigCard>
 </template>
