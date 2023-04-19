@@ -5,7 +5,6 @@ import settings_profile from '@/pages/settings/profile.vue'
 import settings_dev from '@/pages/settings/dev.vue'
 import settings_preferences from '@/pages/settings/preferences.vue'
 
-import exit from '@/pages/exit/exit.vue'
 import IDE from '@/pages/ide/index.vue'
 import dashboard from '@/pages/dashboard/index.vue'
 import LearnPage from '@/pages/learn/index.vue'
@@ -52,10 +51,6 @@ export default [
               component: settings_dev,
             },
           ],  
-    },
-    {
-        path: '/exit',
-        component: exit
     },
     {
         path: '/workspace/:id',
