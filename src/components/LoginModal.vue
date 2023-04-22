@@ -22,8 +22,13 @@ const knownErrors = {
 
 let loginPromise;
 let loginKind = "login"
+const refKindOf = ref("")
 
-const openL = async (kindOf) => {
+const openL = async (kindOf = "login") => {
+    refKindOf.value = kindOf
+
+    console.log(refKindOf.value)
+
     modalBase.value.openModal()
 
     loginKind = kindOf
@@ -31,6 +36,9 @@ const openL = async (kindOf) => {
     if (kindOf == "reauth") {
         modalTitle.value = "กรุณาลงชื่อเข้าใช้ใหม่เพื่อไปต่อ"
         modalSub.value = "ลงชื่อเข้าใช้เพื่อไปต่อ"
+    } else if (kindOf == "linkaccount") {
+        modalTitle.value = "ลิงค์บัญชี"
+        modalSub.value = "กรุณาเลือกวิธีลิงค์ปัญชี"
     } else {
         modalTitle.value = "กรุณาลงชื่อเข้าใช้เพื่อใช้ โค้ดดิง ปิ้งไก่"
         modalSub.value = t('signin')
@@ -77,10 +85,12 @@ const anonymousLogin = async (t) => {
             displayName: "Anonymous"
         })
 
-        if (isNewUser) {
-            router.push("/workspace/0")
-        } else if (loginKind == "login") {
-            router.push("/dashboard")
+        if (refKindOf.value == "login") {
+            if (isNewUser) {
+                router.push("/workspace/0")
+            } else if (loginKind == "login") {
+                router.push("/dashboard")
+            }
         }
     }
 }
@@ -127,10 +137,12 @@ const socialLogin = async (t) => {
 
         loggingIn.value = false
 
-        if (isNewUser) {
-            router.push("/workspace/0")
-        } else if (loginKind == "login") {
-            router.push("/dashboard")
+        if (refKindOf.value == "login") {
+            if (isNewUser) {
+                router.push("/workspace/0")
+            } else if (loginKind == "login") {
+                router.push("/dashboard")
+            }
         }
     }
 
@@ -157,7 +169,8 @@ defineExpose({ openL, closeL })
 
         <div v-if="loggingIn == false">
             <h3 class="text-subtext">เข้าสู่ระบบด้วยโซเชียลมีเดีย</h3>
-            <ThirdPartyButton text="ลงชื่อแบบไม่ใช้รหัสผ่าน" @click="anonymousLogin()" image="/anonymous.png" />
+            <ThirdPartyButton v-if="refKindOf !== 'linkaccount'" text="ลงชื่อแบบไม่ใช้รหัสผ่าน" @click="anonymousLogin()"
+                image="/anonymous.png" />
             <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Google" @click="socialLogin('google')" image="/google.png" />
             <ThirdPartyButton text="ลงชื่อเข้าใช้ด้วย Facebook" @click="socialLogin('facebook')" image="/facebook.png" />
         </div>

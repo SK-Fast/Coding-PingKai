@@ -4,18 +4,22 @@
         <div
             class="card-body p-4 d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-center">
             <div title="อัปโหลดรูปภาพของคุณ" class="avatar-container img-rounded me-md-2">
-                <a class="avatar img-rounded" @click="promptPFPUpload" :style="'background-image: url(\'' + (userImg) + '\')'">
-               
+                <a class="avatar img-rounded" @click="promptPFPUpload"
+                    :style="'background-image: url(\'' + (userImg) + '\')'">
+
                 </a>
             </div>
 
             <div class="flex-grow-1 d-flex flex-column ms-md-2 text-md-start text-center">
                 <h3>{{ userDisplayName }}</h3>
-                <p v-if="!store.state.user.isAnonymous">อีเมล: <span ref="unrevealedText">*************@********</span> <span ref="revealedText"
-                        class="d-none">{{ store.state.user ? store.state.user.email : "email not found" }}</span> <span
-                        class="text-primary"><a ref="emailRevealText" @click="emailReveal">ดูอีเมล</a></span></p>
-                
-                <p v-if="store.state.user.isAnonymous" class="text-danger">คุณกำลังใช้บัญชีแบบไม่ระบุตัวตนอยู่ ข้อมูลบัญชีจะถูกเก็บบนเครื่องนี้เท่านั้น</p>
+                <p v-if="!store.state.user.isAnonymous">อีเมล: <span ref="unrevealedText">*************@********</span>
+                    <span ref="revealedText" class="d-none">{{ store.state.user ? store.state.user.email : "email not found"
+                    }}</span> <span class="text-primary"><a ref="emailRevealText"
+                            @click="emailReveal">ดูอีเมล</a></span>
+                </p>
+
+                <p v-if="store.state.user.isAnonymous" class="text-danger">คุณกำลังใช้บัญชีแบบไม่ระบุตัวตนอยู่
+                    ข้อมูลบัญชีจะถูกเก็บบนเครื่องนี้เท่านั้น</p>
                 <div v-if="!store.state.user.isAnonymous" class="d-flex justify-content-md-start justify-content-center">
                     <button @click="changeUsername" class="btn btn-primary">เปลี่ยนชื่อ</button>
                     <!--
@@ -43,6 +47,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="card mt-2" v-if="store.state.user.isAnonymous">
+        <div class="card-body p-4">
+            <p>การเชื่อมต่อ</p>
+            <button class="btn btn-primary" @click="linkAnonymous">เชื่อมต่อกับโซเชียลมีเดีย</button>
         </div>
     </div>
 
@@ -188,6 +199,30 @@ const emailReveal = async () => {
     }
 }
 
+const linkAnonymous = async () => {
+    const { linkWithCredential, reauthenticateWithCredential } = await import('@firebase/auth');
+
+    let credential = await store.state.fireLoginModal("linkaccount")
+
+    await reauthenticateWithCredential(store.state.user, credential)
+
+    await linkWithCredential(store.state.user, credential).catch((reason) => {
+        Swal.fire({
+            title: 'ข้อผิดพลาด',
+            text: toString(reason),
+            icon: 'error',
+            confirmButtonText: 'ปิด',
+        })
+    })
+
+    userDisplayName.value = store.state.user.displayName
+
+    Swal.fire({
+        title: 'ลิงค์บัญชีเสร็จสิ้น!',
+        icon: 'success',
+        confirmButtonText: 'ปิด',
+    })
+}
 
 const deleteAccount = async () => {
     const { deleteUser, reauthenticateWithCredential } = await import('@firebase/auth');
