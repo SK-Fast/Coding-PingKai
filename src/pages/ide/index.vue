@@ -14,8 +14,8 @@
     <div class="editor-top flex-row justify-content-center" :class="{ 'loading': !codeDone }">
         <div class="d-flex align-items-center p-2 ms-3">
             <a @click="requestEnd" href="#"><vue-feather type="home" class="me-2" stroke="#606060" /></a>
-            <a @click="toggleBlocksMenu" id="blocksMenuBtn" class="blockmenu-btn me-2 d-md-none d-block"><img
-                    src="@/assets/blocks_icon.svg"></a>
+            <!--<a @click="toggleBlocksMenu" id="blocksMenuBtn" class="blockmenu-btn me-2 d-md-none d-block"><img
+                    src="@/assets/blocks_icon.svg"></a>-->
 
             <img src="@/assets/logo/Logo_Text.png" class="me-2" height="35">
         </div>
@@ -584,16 +584,14 @@ const blockMenuOn = ref(true)
 const openBlocksMenu = () => {
     blockMenuOn.value = true
 
-    setTimeout(() => {
-        toolboxE.style.display = "block"
-    }, 10);
+    blocklyWorkspace.getFlyout().setVisible(true)
 }
 
 
 const closeBlocksMenu = () => {
     blockMenuOn.value = false
 
-    toolboxE.style.display = "none"
+    blocklyWorkspace.getFlyout().setVisible(false)
 }
 
 const toggleBlocksMenu = () => {
@@ -804,6 +802,10 @@ const toggleBlocksMenu = () => {
         transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
         top: calc(40vh - 50px);
         box-shadow: 0 -0.5rem 1rem rgb(0 0 0 / 7%) !important;
+    }
+
+    .editor-container {
+        height: 100vh;
     }
 }
 
