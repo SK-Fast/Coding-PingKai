@@ -61,7 +61,42 @@ onMounted(async () => {
     }
 })
 const logoutClicked = () => {
-    promptLogout()
+    if (store.state.user.isAnonymous) {
+        annoymousDeleteAccount()
+    } else {
+        promptLogout()
+    }
+}
+
+const annoymousDeleteAccount = async () => {
+    const { deleteUser } = await import('@firebase/auth');
+
+    const res = await Swal.fire({
+        title: 'ยืนยันการลงชื่อออก',
+        html: `
+        <p>บัญชีนี้เป็นบัญชีแบบไม่ใช้รหัสผ่าน คุณจะไม่สามารถลงชื่อใหม่ได้อีกแล้ว และข้อมูลของคุณจะหายไป คุณยืนยันหรือไม่</p>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก',
+    })
+
+    if (res.isConfirmed) {
+        setTimeout(async () => {
+            const { deleteUserData } = await import('libs/firebaseSystem.js')
+
+
+            await deleteUserData(store.state.user)
+
+            await deleteUser(store.state.user)
+
+            document.body.classList.add("circle-close")
+
+            setTimeout(async () => {
+                window.location.href = '/?deleted=true'
+            }, 1200)
+        }, 200)
+    }
 }
 </script>
 
