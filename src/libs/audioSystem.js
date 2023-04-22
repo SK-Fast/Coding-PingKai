@@ -10,7 +10,9 @@ export const playAudio = async(fileName, config) => {
     if (loadedAudios[filePath]) {
         audioFile = loadedAudios[filePath]
     } else {
-        audioFile = await load.default(`/audio/${fileName}`)
+        const aC = new window.AudioContext()
+
+        audioFile = await load.default(aC, filePath)
 
         loadedAudios[filePath] = audioFile
     }
