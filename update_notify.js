@@ -10,7 +10,7 @@ config({
 })
 
 async function main() {
-    const hook = new Webhook(process.env.UPDATE_WEBHOOK);
+    const hook = new Webhook(process.env['UPDATE_WEBHOOK'] ? process.env['UPDATE_WEBHOOK'] : process.argv[2]);
 
     const size = await getFolderSize.loose('./dist');
 
