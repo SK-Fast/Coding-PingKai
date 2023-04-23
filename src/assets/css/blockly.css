@@ -176,3 +176,31 @@
         opacity: 0;
     }
 }
+
+.blocklyDropDownDiv {
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.blocklyAngleCircle {
+    fill: var(--bs-light-200);
+}
+
+.blocklyAngleLine {
+    stroke: var(--bs-primary);
+    stroke-width: 5;
+}
+
+.blocklyAngleGauge {
+    fill: var(--bs-secondary);
+}
+
+.blocklyAngleMarks {
+    stroke: rgba(0, 0, 0, 0.485);
+    stroke-width: 2;
+}
+
+.type-header text {
+    color: var(--bs-light-500);
+    font-family: "Bai Jamjuree", 'Ubuntu Mono', monospace !important;
+}

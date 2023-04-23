@@ -1,10 +1,55 @@
 export const blocks = [
-
+    {
+        "kind": "label",
+        "text": "บล็อก",
+        "web-class": "type-header"
+    },
+    {
+        "kind": "block",
+        "type": "chickdraw_turn_right",
+        "inputs": {
+            "DEGREES": {
+                "shadow": {
+                    "type": "chickdraw_angle_def",
+                    "fields": {
+                        "DEGREES": 45
+                    }
+                }
+            },
+        }
+    },
+    {
+        "kind": "block",
+        "type": "chickdraw_forward",
+        "inputs": {
+            "FORCE": {
+                "shadow": {
+                    "type": "chickdraw_walk_unit",
+                    "fields": {
+                        "FORCE": "50"
+                    }
+                }
+            },
+        }
+    },
+    {
+        "kind": "label",
+        "text": "ประเภทตัวแปร",
+        "web-class": "type-header"
+    },
+    {
+        "kind": "block",
+        "type": "chickdraw_angle_def"
+    },
+    {
+        "kind": "block",
+        "type": "chickdraw_walk_unit"
+    },
 ]
 
-export const levelKind = () => {return import("@/lesson_kind/chickdraw.js")}
+export const levelKind = () => { return import("@/lesson_kind/chickdraw.js") }
 export const levelData = {
-    title: "การใช้งานพื้นฐาน",
+    title: "การวาดพื้นฐาน",
 }
 
 export const dialogue = [

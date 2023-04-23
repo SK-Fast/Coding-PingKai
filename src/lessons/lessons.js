@@ -42,7 +42,6 @@ export const sections = [
             }*/
         ]
     },
-    /*
     {
         title: "น้อนไก่นักวาด",
         desc: "ช่วยไก่น้อยในการผจญภัยของเขา",
@@ -54,7 +53,6 @@ export const sections = [
             }
         ]
     }
-    */
 ]
 
 export const kindOBlockName = {
