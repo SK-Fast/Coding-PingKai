@@ -199,6 +199,10 @@ const openPreview = async (i) => {
     for (const b of lessonData.blocks) {
         const bT = blockset.blocklyJSON.find((e) => b.type == e.type)
 
+        if (!bT) {
+            continue
+        }
+
         let procBT = kindOBlockName[bT.kindoblock]
 
         if (!goals.find((e) => e == procBT)) {
