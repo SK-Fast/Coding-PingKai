@@ -20,6 +20,20 @@ export const blocks = [
     },
     {
         "kind": "block",
+        "type": "chickdraw_turn_left",
+        "inputs": {
+            "DEGREES": {
+                "shadow": {
+                    "type": "chickdraw_angle_def",
+                    "fields": {
+                        "DEGREES": 45
+                    }
+                }
+            },
+        }
+    },
+    {
+        "kind": "block",
         "type": "chickdraw_forward",
         "inputs": {
             "FORCE": {
@@ -50,6 +64,7 @@ export const blocks = [
 export const levelKind = () => { return import("@/lesson_kind/chickdraw.js") }
 export const levelData = {
     title: "การวาดพื้นฐาน",
+    data: [{ "from": [0, 0], "to": [50, 0] }]
 }
 
 export const dialogue = [

@@ -18,7 +18,7 @@ export const blocklyJSON = [
         "message0": 'หมุนไปทาง %1 %2',
         "nextStatement": "Action",
         "previousStatement": "Action",
-        "colour": 20,
+        "colour": 22,
         "kindoblock": "normalblock",
         "args0": [
             {
@@ -28,9 +28,9 @@ export const blocklyJSON = [
                 "height": 15
             },
             {
-                "type": "field_angle",
+                "type": "input_value",
                 "name": "DEGREES",
-                "angle": 45
+                "check": "Number"
             },
         ]
     },

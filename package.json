@@ -31,6 +31,7 @@
     "is-mobile": "^4.0.0",
     "json-tree-view-vue3": "^0.2.3",
     "jspython-interpreter": "^2.1.13",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.36.1",
     "path": "^0.12.7",
     "pixi.js": "^7.1.2",
