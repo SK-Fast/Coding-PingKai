@@ -64,7 +64,7 @@ export const blocks = [
 export const levelKind = () => { return import("@/lesson_kind/chickdraw.js") }
 export const levelData = {
     title: "การวาดพื้นฐาน",
-    data: [{ "from": [0, 0], "to": [50, 90] }]
+    data:  [{"from":[0,0],"to":[50,0]},{"from":[50,0],"to":[50,-50]}]
 }
 
 export const dialogue = [
