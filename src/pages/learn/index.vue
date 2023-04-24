@@ -38,7 +38,7 @@
                     </div>
 
                     <div v-if="level.y < -95" class="level-decoration"></div>
-                    <div v-if="level.y > 85" class="level-decoration  level-decoration-top"></div>
+                    <div v-if="level.y > 95" class="level-decoration  level-decoration-top"></div>
                 </div>
             </div>
         </div>
