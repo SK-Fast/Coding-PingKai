@@ -311,14 +311,6 @@ onMounted(async () => {
             toolboxE = document.querySelectorAll('.injectionDiv .blocklyFlyout')[1]
 
         } else {
-
-            await Swal.fire({
-                title: 'ไม่เจอบทเรียน',
-                text: "ไม่พบบทเรียนในระบบ",
-                icon: 'error',
-                confirmButtonText: 'ออก',
-            })
-
             router.push('/learn')
         }
     }
