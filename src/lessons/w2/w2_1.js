@@ -72,6 +72,7 @@ export const dialogue = [
         {
             type: "txt",
             text: "ยินดีต้อนรับสู่โค้ดดิ้งปิ้งไก่!"
+            
         },
     ]
 ]
