@@ -5,11 +5,27 @@ export const pythonSnippets = [
     {
         label: 'go_forward',
         kind: monaco.languages.CompletionItemKind.Snippet,
-        documentation: 'ให้ไก่เดินไปทางด้านหน้าของไก่',
+        documentation: 'เดินไปข้างหน้าตาม Unit',
         insertText: [
-            'go_forward()'
+            'go_forward(unit)'
         ].join('\n')
-    }
+    },
+    {
+        label: 'rotate_left',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'หมุนไปทางซ้ายตาม Degrees',
+        insertText: [
+            'rotate_left(degrees)'
+        ].join('\n')
+    },
+    {
+        label: 'rotate_right',
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        documentation: 'หมุนไปทางขวาตาม Degrees',
+        insertText: [
+            'rotate_right(unit)'
+        ].join('\n')
+    },
 ]
 
 export const blocklyJSON = [
