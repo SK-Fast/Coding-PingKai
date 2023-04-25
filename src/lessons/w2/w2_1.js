@@ -7,44 +7,14 @@ export const blocks = [
     {
         "kind": "block",
         "type": "chickdraw_turn_right",
-        "inputs": {
-            "DEGREES": {
-                "shadow": {
-                    "type": "chickdraw_angle_def",
-                    "fields": {
-                        "DEGREES": 45
-                    }
-                }
-            },
-        }
     },
     {
         "kind": "block",
         "type": "chickdraw_turn_left",
-        "inputs": {
-            "DEGREES": {
-                "shadow": {
-                    "type": "chickdraw_angle_def",
-                    "fields": {
-                        "DEGREES": 45
-                    }
-                }
-            },
-        }
     },
     {
         "kind": "block",
         "type": "chickdraw_forward",
-        "inputs": {
-            "FORCE": {
-                "shadow": {
-                    "type": "chickdraw_walk_unit",
-                    "fields": {
-                        "FORCE": "50"
-                    }
-                }
-            },
-        }
     },
     {
         "kind": "label",
@@ -71,8 +41,14 @@ export const dialogue = [
     [
         {
             type: "txt",
-            text: "ยินดีต้อนรับสู่โค้ดดิ้งปิ้งไก่!"
+            text: "ว้าว ขอแสดงความยินดีด้วยที่คุณมาถึงด่านนี้!"
+            
+        },
+        {
+            type: "txt",
+            text: "ลองใช้ Block ด้านข้างที่เขียนว่า ไปข้างหน้า แล้วลาก Block ที่เขียนว่า จำนวนก้าวดูสิ"
             
         },
     ]
+    
 ]

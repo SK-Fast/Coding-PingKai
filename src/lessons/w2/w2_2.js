@@ -7,44 +7,15 @@ export const blocks = [
     {
         "kind": "block",
         "type": "chickdraw_turn_right",
-        "inputs": {
-            "DEGREES": {
-                "shadow": {
-                    "type": "chickdraw_angle_def",
-                    "fields": {
-                        "DEGREES": 45
-                    }
-                }
-            },
-        }
+
     },
     {
         "kind": "block",
         "type": "chickdraw_turn_left",
-        "inputs": {
-            "DEGREES": {
-                "shadow": {
-                    "type": "chickdraw_angle_def",
-                    "fields": {
-                        "DEGREES": 45
-                    }
-                }
-            },
-        }
     },
     {
         "kind": "block",
         "type": "chickdraw_forward",
-        "inputs": {
-            "FORCE": {
-                "shadow": {
-                    "type": "chickdraw_walk_unit",
-                    "fields": {
-                        "FORCE": "50"
-                    }
-                }
-            },
-        }
     },
     {
         "kind": "label",
@@ -64,14 +35,14 @@ export const blocks = [
 export const levelKind = () => { return import("@/lesson_kind/chickdraw.js") }
 export const levelData = {
     title: "การวาดพื้นฐาน",
-    data:  [{"from":[0,0],"to":[50,0]},{"from":[50,0],"to":[50,-50]}]
+    data:  [{"from":[0,0],"to":[50,0]},{"from":[50,0],"to":[25,-43]},{"from":[25,-43],"to":[0,0]}]
 }
 
 export const dialogue = [
     [
         {
             type: "txt",
-            text: "ยินดีต้อนรับสู่โค้ดดิ้งปิ้งไก่!"
+            text: "ลองใช้ BLock จากด่านที่แล้วดูสิ!"
             
         },
     ]
