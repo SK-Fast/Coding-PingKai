@@ -1,7 +1,12 @@
 <script setup>
 import { inject, onMounted, ref } from 'vue';
+import { getUserData } from '../../libs/firebaseSystem.js'
+import { getMaxLevel } from '@/lessons/lessons.js'
+import Swal from 'sweetalert2';
 
 const store = inject("store")
+const router = inject("router")
+
 const captureCard = ref()
 const confettiView = ref()
 const canShare = ref(false)
@@ -11,6 +16,21 @@ const cofiDefaults = { startVelocity: 30, spread: 360, ticks: 200, zIndex: 0, pa
 onMounted(async () => {
     if (navigator['share']) {
         canShare.value = true
+    }
+
+    const userData = await getUserData(store)
+
+    if (userData.level_passed < getMaxLevel()) {
+        Swal.fire({
+            title: 'เห้',
+            text: "จะโกงเบ๋อ อย่าโกงสิ",
+            icon: 'error',
+            confirmButtonText: 'ปิด',
+        })
+
+        router.push('/learn')
+
+        return
     }
 
     setTimeout(async () => {
