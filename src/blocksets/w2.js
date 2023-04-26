@@ -110,7 +110,7 @@ export const blocklyJSON = [
         "type": "chickdraw_walk_unit",
         "message0": '%1 ก้าว',
         "colour": 10,
-        "kindoblock": "normalblock",
+        "kindoblock": "datatype",
         "output": "Number",
         "args0": [
             {

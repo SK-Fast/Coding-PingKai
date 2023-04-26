@@ -54,6 +54,14 @@ export const sections = [
             {
                 title: "W2-2",
                 levelData: () => {return import("./w2/w2_2.js")}
+            },
+            {
+                title: "W2-3",
+                levelData: () => {return import("./w2/w2_3.js")}
+            },
+            {
+                title: "W2-4",
+                levelData: () => {return import("./w2/w2_4.js")}
             }
         ]
     }
@@ -64,6 +72,7 @@ export const kindOBlockName = {
     loop: "การใช้คำสั่งวนซ่ำ",
     if: "การใช้คำสั่งเงื่อนไข",
     variable: "การเก็บค่าตัวแปร",
+    datatype: "ประเภทตัวแปร",
 }
 
 export function findLevel(i) {
