@@ -8,10 +8,6 @@ const canShare = ref(false)
 
 const cofiDefaults = { startVelocity: 30, spread: 360, ticks: 200, zIndex: 0, particleCount: 100 };
 
-function randomInRange(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
 onMounted(async () => {
     if (navigator['share']) {
         canShare.value = true
@@ -34,22 +30,20 @@ onMounted(async () => {
 
     const ctx = captureCard.value.getContext('2d')
 
+    const fontFace = new FontFace('bai', 'url(/fonts/bai.woff2)');
+    const fontFaceThai = new FontFace('bai', 'url(/fonts/bai2.woff2)');
+
+    await fontFace.load()
+    await fontFaceThai.load()
+
+    document.fonts.add(fontFace);
+    document.fonts.add(fontFaceThai);
+
     const background = new Image();
     background.src = "/congrats_card.png";
 
     background.onload = async () => {
         ctx.drawImage(background, 0, 0);
-
-        ctx.save();
-
-        const fontFace = new FontFace('bai', 'url(/fonts/bai.woff2)');
-        const fontFaceThai = new FontFace('bai', 'url(/fonts/bai2.woff2)');
-
-        await fontFace.load()
-        await fontFaceThai.load()
-
-        document.fonts.add(fontFace);
-        document.fonts.add(fontFaceThai);
 
         ctx.font = "bold 45px bai";
         ctx.fillStyle = "white"
@@ -79,9 +73,8 @@ function urltoFile(url, filename, mimeType) {
 
 const shareImg = async () => {
     const image = captureCard.value.toDataURL("image/png")
-    image.replace("image/png", "image/octet-stream")
 
-    const finalFile = await urltoFile(image, "congrats.png", "image/octet-stream")
+    const finalFile = await urltoFile(image, "congrats.png", "image/png")
 
     navigator.share({
         files: [finalFile]
