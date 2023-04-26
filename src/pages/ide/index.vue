@@ -130,7 +130,7 @@
 import BlockEditor from './editors/block.vue'
 import PythonEditor from './editors/python.vue'
 import { onMounted, ref, inject } from 'vue'
-import { findLevel } from '@/lessons/lessons.js'
+import { findLevel, getMaxLevel } from '@/lessons/lessons.js'
 import { playAudio } from '../../libs/audioSystem.js'
 import { giveAchievement } from '../../libs/achievementUtils.js'
 import { writeUserData, getUserData, writeStorageData, readStorageData } from '../../libs/firebaseSystem.js'
@@ -315,7 +315,11 @@ onMounted(async () => {
             toolboxE = document.querySelectorAll('.injectionDiv .blocklyFlyout')[1]
 
         } else {
-            router.push('/learn')
+            if (parseInt(levelID) >= getMaxLevel()) {
+                router.push('/congrats')
+            } else {
+                router.push('/learn')
+            }
         }
     }
 })

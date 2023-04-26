@@ -12,6 +12,8 @@ import CreditsPage from '@/pages/credits/index.vue'
 import Term_LegalPage from '@/pages/legal/term.vue'
 import Error404 from '@/pages/404.vue'
 
+import CongratsPage from '@/pages/congrat/congrat.vue'
+
 export default [
     {
         path: '/',
@@ -82,6 +84,14 @@ export default [
      {
         path: '/:anything',
         component: Error404,
+        meta: {
+            navbarStyle: "hide",
+            noScroll: true
+        },
+     },
+     {
+        path: '/congrats',
+        component: CongratsPage,
         meta: {
             navbarStyle: "hide",
             noScroll: true
