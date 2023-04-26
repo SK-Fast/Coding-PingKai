@@ -25,7 +25,8 @@
             </div>
             -->
                 <div class="lvl-container" v-for="level in levels" :style="`--animDelay: ${level.animDelay}ms;`">
-                    <div class="lvl-btn" @dblclick="(event) => goToLesson(previewID, event)" @click="(event) => openPreview(level.levelI, event)" :class="level.lvlState"
+                    <div class="lvl-btn" @dblclick="(event) => goToLesson(previewID, event)"
+                        @click="(event) => openPreview(level.levelI, event)" :class="level.lvlState"
                         :style="`--pos: ${level.y}%;`" :title="level.title">
                         <img src="@/assets/level/lock.png" width="50" height="50" v-if="level.lvlState == 'locked'">
                         <img src="@/assets/level/play.png" width="50" height="50" v-if="level.lvlState == 'continue'">
@@ -209,7 +210,7 @@ const openPreview = async (i) => {
             goals.push(procBT)
         }
     }
-    
+
     previewGoals.value = goals
 
     previewDataRef.value.ratio = lessonData.levelData.ratio || lessonKind.kindData.ratio
@@ -218,7 +219,7 @@ const openPreview = async (i) => {
 
 }
 
-const goToLesson = (i, e) => {
+const goToLesson = async (i, e) => {
     console.log(i, userData.level_passed)
     if (i > userData.level_passed && import.meta.env.MODE !== 'development') {
 
@@ -240,8 +241,25 @@ const goToLesson = (i, e) => {
     lvlLoadX.value = (e.clientX / window.innerWidth) * 100
     lvlLoadY.value = (e.clientY / window.innerHeight) * 100
 
+    let hashAdditional = ""
+
+    if (i < userData.level_passed) {
+        const res = await Swal.fire({
+            title: 'คุณต้องการที่จะทบทวนหรือไม่',
+            text: "ดูเหมื่อนว่าคุณเคยเล่นด่านนี้ิแล้วน่ะ ถ้าคุณอยากที่จะทบทวน เราจะไม่โหลดบล็อกที่คุณเคยวางครั้งที่แล้ว",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'ใช่ ฉันอยากทบทวน!',
+            cancelButtonText: 'ไม่ โหลดบล็อกที่ฉันเคยทำครั้งที่แล้ว',
+        })
+
+        if (res.isConfirmed) {
+            hashAdditional = "#relearn"
+        }
+    }
+
     setTimeout(() => {
-        router.push(`/workspace/${i}`)
+        router.push(`/workspace/${i}${hashAdditional}`)
     }, 500)
 }
 </script>
@@ -477,4 +495,5 @@ const goToLesson = (i, e) => {
     box-shadow: none;
     position: relative;
     bottom: -8px;
-}</style>
+}
+</style>

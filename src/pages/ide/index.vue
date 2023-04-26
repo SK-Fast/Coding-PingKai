@@ -289,9 +289,13 @@ onMounted(async () => {
 
             console.log('pageLoading.value', pageLoading.value)
 
-            const fileExists = await loadUserCode()
-            if (fileExists) {
-                onStartBlock.dispose(true)
+            // If user doesn't want to relearn, load the old code.
+            if (location.hash !== "#relearn") {
+                const fileExists = await loadUserCode()
+
+                if (fileExists) {
+                    onStartBlock.dispose(true)
+                }
             }
 
             pageLoading.value = false
@@ -473,7 +477,11 @@ const evalCode = async (code) => {
 
         await saveCodeUser()
 
-        const streakData = await updateStreak(store)
+        let streakData
+
+        if (location.hash !== "#relearn") {
+            streakData = await updateStreak(store)
+        }
 
         let achRes;
 
@@ -489,9 +497,15 @@ const evalCode = async (code) => {
             isLevelPassUpdate = true
         }
 
+        let pointAdd = 5
+
+        if (location.hash == "#relearn") {
+            pointAdd = 0
+        }
+
         await writeUserData(store.state.user, {
             level_passed: isLevelPassUpdate ? parseInt(levelID) + 1 : userData.level_passed,
-            exp: isLevelPassUpdate ? userData.exp + 10 : userData.exp + 5,
+            exp: isLevelPassUpdate ? userData.exp + 10 : userData.exp + pointAdd,
             last_level_date: new Date()
         })
 
