@@ -20,7 +20,7 @@
                                 stroke="#FF7733"></vue-feather>
                             ข้อตกลงในการใช้ซอฟต์แวร์</router-link>
 
-                        <a target="_none" href="/pdf/coding_pingkai_manual.pdf"><vue-feather type="file-text" size="16"
+                        <a target="_none" href="https://devpixels.xyz/files/coding_pingkai_manual.pdf"><vue-feather type="file-text" size="16"
                                 stroke="#FF7733"></vue-feather>
                             คู่มือการใช้งาน</a>
 
