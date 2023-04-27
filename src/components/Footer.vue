@@ -2,7 +2,7 @@
     <div class="footer">
         <hr />
         <div class="row justify-content-center p-3">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="d-flex justify-content-md-start justify-content-center mb-md-0 mb-2">
                     <img src="@/assets/logo/logoblack.png" alt="Coding PingKai" height="80">
                 </div>
@@ -19,6 +19,10 @@
                         <router-link target="_none" to="/legal/term"><vue-feather type="file-text" size="16"
                                 stroke="#FF7733"></vue-feather>
                             ข้อตกลงในการใช้ซอฟต์แวร์</router-link>
+
+                        <a target="_none" href="/pdf/coding_pingkai_manual.pdf"><vue-feather type="file-text" size="16"
+                                stroke="#FF7733"></vue-feather>
+                            คู่มือการใช้งาน</a>
 
                         <a class="text-danger" @click="requestIssue" :href="issueURL" target="_none"><vue-feather
                                 type="alert-triangle" size="16" stroke="#F23051"></vue-feather>
