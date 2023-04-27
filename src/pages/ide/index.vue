@@ -521,15 +521,16 @@ const evalCode = async (code) => {
 
         let moreEvents = []
 
-        if (streakData.streakUpdate == true) {
-            moreEvents.push({
-                id: "streak_update",
-                data: {
-                    streak: streakData.streak,
-                    oldStreak: streakData.oldStreak
-                }
-            })
-
+        if (streakData) {
+            if (streakData.streakUpdate == true) {
+                moreEvents.push({
+                    id: "streak_update",
+                    data: {
+                        streak: streakData.streak,
+                        oldStreak: streakData.oldStreak
+                    }
+                })
+            }
         }
 
         congratModal.value.openM(levelID, moreEvents)
