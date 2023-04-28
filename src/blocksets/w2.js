@@ -46,7 +46,7 @@ export const blocklyJSON = [
             {
                 "type": "input_value",
                 "name": "DEGREES",
-                "check": "Number"
+                "check": "degrees"
             },
         ]
     },
@@ -67,7 +67,7 @@ export const blocklyJSON = [
             {
                 "type": "input_value",
                 "name": "DEGREES",
-                "check": "Number"
+                "check": "degrees"
             },
         ]
     },
@@ -76,7 +76,7 @@ export const blocklyJSON = [
         "message0": '%1 องศา',
         "colour": 10,
         "kindoblock": "normalblock",
-        "output": "Number",
+        "output": "degrees",
         "args0": [
             {
                 "type": "field_angle",
@@ -102,7 +102,7 @@ export const blocklyJSON = [
             {
                 "type": "input_value",
                 "name": "FORCE",
-                "check": "Number"
+                "check": "steps"
             },
         ]
     },
@@ -111,7 +111,7 @@ export const blocklyJSON = [
         "message0": '%1 ก้าว',
         "colour": 10,
         "kindoblock": "datatype",
-        "output": "Number",
+        "output": "steps",
         "args0": [
             {
                 "type": "field_dropdown",
