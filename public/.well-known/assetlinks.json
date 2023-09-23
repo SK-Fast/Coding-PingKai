@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "xyz.devpixels.pikai",
+            "sha256_cert_fingerprints": [
+                "87:91:F4:C7:CD:D8:5B:BD:DD:98:16:3A:5D:11:17:D8:D6:66:B9:F5:B0:43:5D:4B:CB:E6:11:A5:D7:23:6B:DB"
+            ]
+        }
+    }
+]
