@@ -7,7 +7,8 @@
             "namespace": "android_app",
             "package_name": "xyz.devpixels.pikai",
             "sha256_cert_fingerprints": [
-                "87:91:F4:C7:CD:D8:5B:BD:DD:98:16:3A:5D:11:17:D8:D6:66:B9:F5:B0:43:5D:4B:CB:E6:11:A5:D7:23:6B:DB"
+                "87:91:F4:C7:CD:D8:5B:BD:DD:98:16:3A:5D:11:17:D8:D6:66:B9:F5:B0:43:5D:4B:CB:E6:11:A5:D7:23:6B:DB",
+                "14:42:13:0F:BD:DB:15:E0:DC:76:F4:D1:F0:87:88:ED:AC:80:9B:27:07:78:04:50:E1:F0:12:FC:F4:EA:B4:7B"
             ]
         }
     }
